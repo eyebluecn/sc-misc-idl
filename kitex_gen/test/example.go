@@ -6,7 +6,7 @@ import (
 	"context"
 	"fmt"
 	"github.com/apache/thrift/lib/go/thrift"
-	"github.com/smart-classroom/sc-misc-idl/kitex_gen/base"
+	"github.com/eyebluecn/sc-misc-idl/kitex_gen/base"
 	"strings"
 )
 

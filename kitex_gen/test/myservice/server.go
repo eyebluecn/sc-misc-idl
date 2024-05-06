@@ -3,7 +3,7 @@ package myservice
 
 import (
 	server "github.com/cloudwego/kitex/server"
-	test "github.com/smart-classroom/sc-misc-idl/kitex_gen/test"
+	test "github.com/eyebluecn/sc-misc-idl/kitex_gen/test"
 )
 
 // NewServer creates a server.Server with the given handler and options.

@@ -4,7 +4,7 @@ package myservice
 
 import (
 	server "github.com/cloudwego/kitex/server"
-	test "github.com/smart-classroom/sc-misc-idl/kitex_gen/test"
+	test "github.com/eyebluecn/sc-misc-idl/kitex_gen/test"
 )
 
 // NewInvoker creates a server.Invoker with the given handler and options.

@@ -1,4 +1,4 @@
-module code.howimetmrright.com/smart-classroom/sc-misc-idl
+module eyeblue.cn/smart-classroom/sc-misc-idl
 
 go 1.21.1
 
@@ -47,3 +47,5 @@ require (
 	google.golang.org/protobuf v1.28.1 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
+
+replace github.com/apache/thrift => github.com/apache/thrift v0.13.0

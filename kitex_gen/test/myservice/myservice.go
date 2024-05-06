@@ -5,9 +5,9 @@ package myservice
 import (
 	"context"
 	"errors"
-	test "eyeblue.cn/smart-classroom/sc-misc-idl/kitex_gen/test"
 	client "github.com/cloudwego/kitex/client"
 	kitex "github.com/cloudwego/kitex/pkg/serviceinfo"
+	test "github.com/smart-classroom/sc-misc-idl/kitex_gen/test"
 )
 
 var errInvalidMessageType = errors.New("invalid message type for service method handler")

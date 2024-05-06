@@ -2,8 +2,8 @@
 package myservice
 
 import (
-	test "eyeblue.cn/smart-classroom/sc-misc-idl/kitex_gen/test"
 	server "github.com/cloudwego/kitex/server"
+	test "github.com/smart-classroom/sc-misc-idl/kitex_gen/test"
 )
 
 // NewServer creates a server.Server with the given handler and options.

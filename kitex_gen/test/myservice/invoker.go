@@ -3,8 +3,8 @@
 package myservice
 
 import (
-	test "eyeblue.cn/smart-classroom/sc-misc-idl/kitex_gen/test"
 	server "github.com/cloudwego/kitex/server"
+	test "github.com/smart-classroom/sc-misc-idl/kitex_gen/test"
 )
 
 // NewInvoker creates a server.Invoker with the given handler and options.

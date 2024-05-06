@@ -4,9 +4,9 @@ package test
 
 import (
 	"context"
-	"eyeblue.cn/smart-classroom/sc-misc-idl/kitex_gen/base"
 	"fmt"
 	"github.com/apache/thrift/lib/go/thrift"
+	"github.com/smart-classroom/sc-misc-idl/kitex_gen/base"
 	"strings"
 )
 

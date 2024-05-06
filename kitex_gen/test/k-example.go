@@ -12,7 +12,7 @@ import (
 
 	"github.com/cloudwego/kitex/pkg/protocol/bthrift"
 
-	"eyeblue.cn/smart-classroom/sc-misc-idl/kitex_gen/base"
+	"github.com/smart-classroom/sc-misc-idl/kitex_gen/base"
 )
 
 // unused protection

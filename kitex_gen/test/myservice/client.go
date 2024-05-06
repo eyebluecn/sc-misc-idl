@@ -4,9 +4,9 @@ package myservice
 
 import (
 	"context"
-	test "eyeblue.cn/smart-classroom/sc-misc-idl/kitex_gen/test"
 	client "github.com/cloudwego/kitex/client"
 	callopt "github.com/cloudwego/kitex/client/callopt"
+	test "github.com/smart-classroom/sc-misc-idl/kitex_gen/test"
 )
 
 // Client is designed to provide IDL-compatible methods with call-option parameter for kitex framework.

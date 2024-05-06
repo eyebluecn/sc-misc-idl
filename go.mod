@@ -1,4 +1,4 @@
-module eyeblue.cn/smart-classroom/sc-misc-idl
+module github.com/smart-classroom/sc-misc-idl
 
 go 1.21.1
 

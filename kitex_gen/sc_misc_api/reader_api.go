@@ -10,8 +10,8 @@ import (
 )
 
 type ReaderLoginRequest struct {
-	Username string             `thrift:"username,1" frugal:"1,default,string" json:"username"`
-	Password string             `thrift:"password,2" frugal:"2,default,string" json:"password"`
+	Username string             `thrift:"username,1" frugal:"1,default,string" json:"username" query:"username"`
+	Password string             `thrift:"password,2" frugal:"2,default,string" json:"password" query:"password"`
 	Base     *sc_misc_base.Base `thrift:"base,255,optional" frugal:"255,optional,sc_misc_base.Base" json:"base,omitempty"`
 }
 

@@ -6,8 +6,8 @@ namespace go sc_misc_api
 
 //读者登录 请求体
 struct ReaderLoginRequest {
-	1: string username //用户名
-	2: string password //密码
+	1: string username (go.tag="json:\"username\" query:\"username\"") //用户名
+	2: string password (go.tag="json:\"password\" query:\"password\"") //密码
 
 	255: optional base.Base base //标准请求内容
 }

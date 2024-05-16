@@ -9,12 +9,12 @@ import (
 )
 
 type ColumnDTO struct {
-	Id         int64  `thrift:"id,1" frugal:"1,default,i64" json:"id"`
-	CreateTime int64  `thrift:"createTime,2" frugal:"2,default,i64" json:"createTime"`
-	UpdateTime int64  `thrift:"updateTime,3" frugal:"3,default,i64" json:"updateTime"`
-	Name       string `thrift:"name,4" frugal:"4,default,string" json:"name"`
-	AuthorId   int64  `thrift:"authorId,5" frugal:"5,default,i64" json:"authorId"`
-	Status     int32  `thrift:"status,6" frugal:"6,default,i32" json:"status"`
+	Id         int64        `thrift:"id,1" frugal:"1,default,i64" json:"id"`
+	CreateTime int64        `thrift:"createTime,2" frugal:"2,default,i64" json:"createTime"`
+	UpdateTime int64        `thrift:"updateTime,3" frugal:"3,default,i64" json:"updateTime"`
+	Name       string       `thrift:"name,4" frugal:"4,default,string" json:"name"`
+	AuthorId   int64        `thrift:"authorId,5" frugal:"5,default,i64" json:"authorId"`
+	Status     ColumnStatus `thrift:"status,6" frugal:"6,default,ColumnStatus" json:"status"`
 }
 
 func NewColumnDTO() *ColumnDTO {
@@ -45,7 +45,7 @@ func (p *ColumnDTO) GetAuthorId() (v int64) {
 	return p.AuthorId
 }
 
-func (p *ColumnDTO) GetStatus() (v int32) {
+func (p *ColumnDTO) GetStatus() (v ColumnStatus) {
 	return p.Status
 }
 func (p *ColumnDTO) SetId(val int64) {
@@ -63,7 +63,7 @@ func (p *ColumnDTO) SetName(val string) {
 func (p *ColumnDTO) SetAuthorId(val int64) {
 	p.AuthorId = val
 }
-func (p *ColumnDTO) SetStatus(val int32) {
+func (p *ColumnDTO) SetStatus(val ColumnStatus) {
 	p.Status = val
 }
 
@@ -229,11 +229,11 @@ func (p *ColumnDTO) ReadField5(iprot thrift.TProtocol) error {
 }
 func (p *ColumnDTO) ReadField6(iprot thrift.TProtocol) error {
 
-	var _field int32
+	var _field ColumnStatus
 	if v, err := iprot.ReadI32(); err != nil {
 		return err
 	} else {
-		_field = v
+		_field = ColumnStatus(v)
 	}
 	p.Status = _field
 	return nil
@@ -376,7 +376,7 @@ func (p *ColumnDTO) writeField6(oprot thrift.TProtocol) (err error) {
 	if err = oprot.WriteFieldBegin("status", thrift.I32, 6); err != nil {
 		goto WriteFieldBeginError
 	}
-	if err := oprot.WriteI32(p.Status); err != nil {
+	if err := oprot.WriteI32(int32(p.Status)); err != nil {
 		return err
 	}
 	if err = oprot.WriteFieldEnd(); err != nil {
@@ -459,7 +459,7 @@ func (p *ColumnDTO) Field5DeepEqual(src int64) bool {
 	}
 	return true
 }
-func (p *ColumnDTO) Field6DeepEqual(src int32) bool {
+func (p *ColumnDTO) Field6DeepEqual(src ColumnStatus) bool {
 
 	if p.Status != src {
 		return false

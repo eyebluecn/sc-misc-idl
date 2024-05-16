@@ -1,6 +1,7 @@
 include "../../author/model/author_model.thrift"
 include "../../column_quote/model/column_quote_model.thrift"
 include "../../subscription/model/subscription_model.thrift"
+include "../enum/column_enums.thrift"
 namespace go sc_misc_api
 
 
@@ -11,7 +12,7 @@ struct ColumnDTO {
     3: i64 updateTime //编辑时间
     4: string name //名称
     5: i64 authorId //作者id
-    6: i32 status //状态
+    6: column_enums.ColumnStatus status //状态
 }
 
 

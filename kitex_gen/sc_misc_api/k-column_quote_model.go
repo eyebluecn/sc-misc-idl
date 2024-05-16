@@ -242,7 +242,7 @@ func (p *ColumnQuoteDTO) FastReadField5(buf []byte) (int, error) {
 	} else {
 		offset += l
 
-		p.Editor = v
+		p.EditorId = v
 
 	}
 	return offset, nil
@@ -353,8 +353,8 @@ func (p *ColumnQuoteDTO) fastWriteField4(buf []byte, binaryWriter bthrift.Binary
 
 func (p *ColumnQuoteDTO) fastWriteField5(buf []byte, binaryWriter bthrift.BinaryWriter) int {
 	offset := 0
-	offset += bthrift.Binary.WriteFieldBegin(buf[offset:], "editor", thrift.I64, 5)
-	offset += bthrift.Binary.WriteI64(buf[offset:], p.Editor)
+	offset += bthrift.Binary.WriteFieldBegin(buf[offset:], "editorId", thrift.I64, 5)
+	offset += bthrift.Binary.WriteI64(buf[offset:], p.EditorId)
 
 	offset += bthrift.Binary.WriteFieldEnd(buf[offset:])
 	return offset
@@ -416,8 +416,8 @@ func (p *ColumnQuoteDTO) field4Length() int {
 
 func (p *ColumnQuoteDTO) field5Length() int {
 	l := 0
-	l += bthrift.Binary.FieldBeginLength("editor", thrift.I64, 5)
-	l += bthrift.Binary.I64Length(p.Editor)
+	l += bthrift.Binary.FieldBeginLength("editorId", thrift.I64, 5)
+	l += bthrift.Binary.I64Length(p.EditorId)
 
 	l += bthrift.Binary.FieldEndLength()
 	return l

@@ -12,7 +12,7 @@ type ColumnQuoteDTO struct {
 	CreateTime int64 `thrift:"createTime,2" frugal:"2,default,i64" json:"createTime"`
 	UpdateTime int64 `thrift:"updateTime,3" frugal:"3,default,i64" json:"updateTime"`
 	ColumnId   int64 `thrift:"columnId,4" frugal:"4,default,i64" json:"columnId"`
-	Editor     int64 `thrift:"editor,5" frugal:"5,default,i64" json:"editor"`
+	EditorId   int64 `thrift:"editorId,5" frugal:"5,default,i64" json:"editorId"`
 	Price      int64 `thrift:"price,6" frugal:"6,default,i64" json:"price"`
 	Status     int32 `thrift:"status,7" frugal:"7,default,i32" json:"status"`
 }
@@ -41,8 +41,8 @@ func (p *ColumnQuoteDTO) GetColumnId() (v int64) {
 	return p.ColumnId
 }
 
-func (p *ColumnQuoteDTO) GetEditor() (v int64) {
-	return p.Editor
+func (p *ColumnQuoteDTO) GetEditorId() (v int64) {
+	return p.EditorId
 }
 
 func (p *ColumnQuoteDTO) GetPrice() (v int64) {
@@ -64,8 +64,8 @@ func (p *ColumnQuoteDTO) SetUpdateTime(val int64) {
 func (p *ColumnQuoteDTO) SetColumnId(val int64) {
 	p.ColumnId = val
 }
-func (p *ColumnQuoteDTO) SetEditor(val int64) {
-	p.Editor = val
+func (p *ColumnQuoteDTO) SetEditorId(val int64) {
+	p.EditorId = val
 }
 func (p *ColumnQuoteDTO) SetPrice(val int64) {
 	p.Price = val
@@ -79,7 +79,7 @@ var fieldIDToName_ColumnQuoteDTO = map[int16]string{
 	2: "createTime",
 	3: "updateTime",
 	4: "columnId",
-	5: "editor",
+	5: "editorId",
 	6: "price",
 	7: "status",
 }
@@ -240,7 +240,7 @@ func (p *ColumnQuoteDTO) ReadField5(iprot thrift.TProtocol) error {
 	} else {
 		_field = v
 	}
-	p.Editor = _field
+	p.EditorId = _field
 	return nil
 }
 func (p *ColumnQuoteDTO) ReadField6(iprot thrift.TProtocol) error {
@@ -387,10 +387,10 @@ WriteFieldEndError:
 }
 
 func (p *ColumnQuoteDTO) writeField5(oprot thrift.TProtocol) (err error) {
-	if err = oprot.WriteFieldBegin("editor", thrift.I64, 5); err != nil {
+	if err = oprot.WriteFieldBegin("editorId", thrift.I64, 5); err != nil {
 		goto WriteFieldBeginError
 	}
-	if err := oprot.WriteI64(p.Editor); err != nil {
+	if err := oprot.WriteI64(p.EditorId); err != nil {
 		return err
 	}
 	if err = oprot.WriteFieldEnd(); err != nil {
@@ -463,7 +463,7 @@ func (p *ColumnQuoteDTO) DeepEqual(ano *ColumnQuoteDTO) bool {
 	if !p.Field4DeepEqual(ano.ColumnId) {
 		return false
 	}
-	if !p.Field5DeepEqual(ano.Editor) {
+	if !p.Field5DeepEqual(ano.EditorId) {
 		return false
 	}
 	if !p.Field6DeepEqual(ano.Price) {
@@ -505,7 +505,7 @@ func (p *ColumnQuoteDTO) Field4DeepEqual(src int64) bool {
 }
 func (p *ColumnQuoteDTO) Field5DeepEqual(src int64) bool {
 
-	if p.Editor != src {
+	if p.EditorId != src {
 		return false
 	}
 	return true

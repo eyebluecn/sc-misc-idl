@@ -1,11 +1,11 @@
+namespace go sc_bff_api
 
-namespace go sc_misc_api
 
-
-//读者模型
-struct ReaderDTO {
+//作者模型
+struct AuthorDTO {
     1: i64 id //id
     2: i64 createTime //创建时间
     3: i64 updateTime //编辑时间
     4: string username //昵称
+    5: string realname //真名
 }

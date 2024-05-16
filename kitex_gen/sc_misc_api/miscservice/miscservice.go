@@ -7,16 +7,31 @@ import (
 	"errors"
 	client "github.com/cloudwego/kitex/client"
 	kitex "github.com/cloudwego/kitex/pkg/serviceinfo"
+	sc_bff_api "github.com/eyebluecn/sc-misc-idl/kitex_gen/sc_bff_api"
 	sc_misc_api "github.com/eyebluecn/sc-misc-idl/kitex_gen/sc_misc_api"
 )
 
 var errInvalidMessageType = errors.New("invalid message type for service method handler")
 
 var serviceMethods = map[string]kitex.MethodInfo{
-	"ReaderLogin": kitex.NewMethodInfo(
-		readerLoginHandler,
-		newMiscServiceReaderLoginArgs,
-		newMiscServiceReaderLoginResult,
+	"ColumnOmnibus": kitex.NewMethodInfo(
+		columnOmnibusHandler,
+		newMiscServiceColumnOmnibusArgs,
+		newMiscServiceColumnOmnibusResult,
+		false,
+		kitex.WithStreamingMode(kitex.StreamingNone),
+	),
+	"ColumnPage": kitex.NewMethodInfo(
+		columnPageHandler,
+		newMiscServiceColumnPageArgs,
+		newMiscServiceColumnPageResult,
+		false,
+		kitex.WithStreamingMode(kitex.StreamingNone),
+	),
+	"ColumnDetail": kitex.NewMethodInfo(
+		columnDetailHandler,
+		newMiscServiceColumnDetailArgs,
+		newMiscServiceColumnDetailResult,
 		false,
 		kitex.WithStreamingMode(kitex.StreamingNone),
 	),
@@ -24,6 +39,20 @@ var serviceMethods = map[string]kitex.MethodInfo{
 		editorLoginHandler,
 		newMiscServiceEditorLoginArgs,
 		newMiscServiceEditorLoginResult,
+		false,
+		kitex.WithStreamingMode(kitex.StreamingNone),
+	),
+	"ReaderLogin": kitex.NewMethodInfo(
+		readerLoginHandler,
+		newMiscServiceReaderLoginArgs,
+		newMiscServiceReaderLoginResult,
+		false,
+		kitex.WithStreamingMode(kitex.StreamingNone),
+	),
+	"PaymentPaidCallback": kitex.NewMethodInfo(
+		paymentPaidCallbackHandler,
+		newMiscServicePaymentPaidCallbackArgs,
+		newMiscServicePaymentPaidCallbackResult,
 		false,
 		kitex.WithStreamingMode(kitex.StreamingNone),
 	),
@@ -93,22 +122,58 @@ func newServiceInfo(hasStreaming bool, keepStreamingMethods bool, keepNonStreami
 	return svcInfo
 }
 
-func readerLoginHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
-	realArg := arg.(*sc_misc_api.MiscServiceReaderLoginArgs)
-	realResult := result.(*sc_misc_api.MiscServiceReaderLoginResult)
-	success, err := handler.(sc_misc_api.MiscService).ReaderLogin(ctx, realArg.Request)
+func columnOmnibusHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	realArg := arg.(*sc_misc_api.MiscServiceColumnOmnibusArgs)
+	realResult := result.(*sc_misc_api.MiscServiceColumnOmnibusResult)
+	success, err := handler.(sc_misc_api.MiscService).ColumnOmnibus(ctx, realArg.Request)
 	if err != nil {
 		return err
 	}
 	realResult.Success = success
 	return nil
 }
-func newMiscServiceReaderLoginArgs() interface{} {
-	return sc_misc_api.NewMiscServiceReaderLoginArgs()
+func newMiscServiceColumnOmnibusArgs() interface{} {
+	return sc_misc_api.NewMiscServiceColumnOmnibusArgs()
 }
 
-func newMiscServiceReaderLoginResult() interface{} {
-	return sc_misc_api.NewMiscServiceReaderLoginResult()
+func newMiscServiceColumnOmnibusResult() interface{} {
+	return sc_misc_api.NewMiscServiceColumnOmnibusResult()
+}
+
+func columnPageHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	realArg := arg.(*sc_misc_api.MiscServiceColumnPageArgs)
+	realResult := result.(*sc_misc_api.MiscServiceColumnPageResult)
+	success, err := handler.(sc_misc_api.MiscService).ColumnPage(ctx, realArg.Request)
+	if err != nil {
+		return err
+	}
+	realResult.Success = success
+	return nil
+}
+func newMiscServiceColumnPageArgs() interface{} {
+	return sc_misc_api.NewMiscServiceColumnPageArgs()
+}
+
+func newMiscServiceColumnPageResult() interface{} {
+	return sc_misc_api.NewMiscServiceColumnPageResult()
+}
+
+func columnDetailHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	realArg := arg.(*sc_misc_api.MiscServiceColumnDetailArgs)
+	realResult := result.(*sc_misc_api.MiscServiceColumnDetailResult)
+	success, err := handler.(sc_misc_api.MiscService).ColumnDetail(ctx, realArg.Request)
+	if err != nil {
+		return err
+	}
+	realResult.Success = success
+	return nil
+}
+func newMiscServiceColumnDetailArgs() interface{} {
+	return sc_misc_api.NewMiscServiceColumnDetailArgs()
+}
+
+func newMiscServiceColumnDetailResult() interface{} {
+	return sc_misc_api.NewMiscServiceColumnDetailResult()
 }
 
 func editorLoginHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
@@ -129,6 +194,42 @@ func newMiscServiceEditorLoginResult() interface{} {
 	return sc_misc_api.NewMiscServiceEditorLoginResult()
 }
 
+func readerLoginHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	realArg := arg.(*sc_misc_api.MiscServiceReaderLoginArgs)
+	realResult := result.(*sc_misc_api.MiscServiceReaderLoginResult)
+	success, err := handler.(sc_misc_api.MiscService).ReaderLogin(ctx, realArg.Request)
+	if err != nil {
+		return err
+	}
+	realResult.Success = success
+	return nil
+}
+func newMiscServiceReaderLoginArgs() interface{} {
+	return sc_misc_api.NewMiscServiceReaderLoginArgs()
+}
+
+func newMiscServiceReaderLoginResult() interface{} {
+	return sc_misc_api.NewMiscServiceReaderLoginResult()
+}
+
+func paymentPaidCallbackHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	realArg := arg.(*sc_misc_api.MiscServicePaymentPaidCallbackArgs)
+	realResult := result.(*sc_misc_api.MiscServicePaymentPaidCallbackResult)
+	success, err := handler.(sc_misc_api.MiscService).PaymentPaidCallback(ctx, realArg.Request)
+	if err != nil {
+		return err
+	}
+	realResult.Success = success
+	return nil
+}
+func newMiscServicePaymentPaidCallbackArgs() interface{} {
+	return sc_misc_api.NewMiscServicePaymentPaidCallbackArgs()
+}
+
+func newMiscServicePaymentPaidCallbackResult() interface{} {
+	return sc_misc_api.NewMiscServicePaymentPaidCallbackResult()
+}
+
 type kClient struct {
 	c client.Client
 }
@@ -137,6 +238,46 @@ func newServiceClient(c client.Client) *kClient {
 	return &kClient{
 		c: c,
 	}
+}
+
+func (p *kClient) ColumnOmnibus(ctx context.Context, request *sc_bff_api.ColumnOmnibusRequest) (r *sc_bff_api.ColumnOmnibusResponse, err error) {
+	var _args sc_misc_api.MiscServiceColumnOmnibusArgs
+	_args.Request = request
+	var _result sc_misc_api.MiscServiceColumnOmnibusResult
+	if err = p.c.Call(ctx, "ColumnOmnibus", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) ColumnPage(ctx context.Context, request *sc_bff_api.ColumnPageRequest) (r *sc_bff_api.ColumnPageResponse, err error) {
+	var _args sc_misc_api.MiscServiceColumnPageArgs
+	_args.Request = request
+	var _result sc_misc_api.MiscServiceColumnPageResult
+	if err = p.c.Call(ctx, "ColumnPage", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) ColumnDetail(ctx context.Context, request *sc_bff_api.ColumnDetailRequest) (r *sc_bff_api.ColumnDetailResponse, err error) {
+	var _args sc_misc_api.MiscServiceColumnDetailArgs
+	_args.Request = request
+	var _result sc_misc_api.MiscServiceColumnDetailResult
+	if err = p.c.Call(ctx, "ColumnDetail", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) EditorLogin(ctx context.Context, request *sc_misc_api.EditorLoginRequest) (r *sc_misc_api.EditorLoginResponse, err error) {
+	var _args sc_misc_api.MiscServiceEditorLoginArgs
+	_args.Request = request
+	var _result sc_misc_api.MiscServiceEditorLoginResult
+	if err = p.c.Call(ctx, "EditorLogin", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
 }
 
 func (p *kClient) ReaderLogin(ctx context.Context, request *sc_misc_api.ReaderLoginRequest) (r *sc_misc_api.ReaderLoginResponse, err error) {
@@ -149,11 +290,11 @@ func (p *kClient) ReaderLogin(ctx context.Context, request *sc_misc_api.ReaderLo
 	return _result.GetSuccess(), nil
 }
 
-func (p *kClient) EditorLogin(ctx context.Context, request *sc_misc_api.EditorLoginRequest) (r *sc_misc_api.EditorLoginResponse, err error) {
-	var _args sc_misc_api.MiscServiceEditorLoginArgs
+func (p *kClient) PaymentPaidCallback(ctx context.Context, request *sc_bff_api.PaymentPaidCallbackRequest) (r *sc_bff_api.PaymentPaidCallbackResponse, err error) {
+	var _args sc_misc_api.MiscServicePaymentPaidCallbackArgs
 	_args.Request = request
-	var _result sc_misc_api.MiscServiceEditorLoginResult
-	if err = p.c.Call(ctx, "EditorLogin", &_args, &_result); err != nil {
+	var _result sc_misc_api.MiscServicePaymentPaidCallbackResult
+	if err = p.c.Call(ctx, "PaymentPaidCallback", &_args, &_result); err != nil {
 		return
 	}
 	return _result.GetSuccess(), nil

@@ -1,5 +1,5 @@
-include "../enums/enums.thrift"
-namespace go sc_misc_api
+include "../enums/subscription_enums.thrift"
+namespace go sc_bff_api
 
 
 //订阅模型
@@ -10,5 +10,6 @@ struct SubscriptionDTO {
     4: i64 readerId, //读者id
     5: i64 columnId, //专栏id
     6: i64 orderId, //订单id
-    7: enums.SubscriptionStatus status, //状态
+    7: subscription_enums.SubscriptionStatus status, //状态
 }
+

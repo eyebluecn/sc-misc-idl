@@ -33,7 +33,7 @@ struct ColumnPageRequest {
 
 //专栏列表 响应体
 struct ColumnPageResponse {
-	1: list<column_model.RickColumnDTO> data //数据信息
+	1: list<column_model.RichColumnDTO> data //数据信息
     2: pagination.Pagination pagination //分页指示器
 
     255: base.BaseResp baseResp //标准返回内容

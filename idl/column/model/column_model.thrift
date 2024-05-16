@@ -17,7 +17,7 @@ struct ColumnDTO {
 
 
 //富专栏模型
-struct RickColumnDTO {
+struct RichColumnDTO {
     1: ColumnDTO column //专栏本身
     2: author_model.AuthorDTO author //关联的作者
     3: column_quote_model.ColumnQuoteDTO columnQuote //关联的报价

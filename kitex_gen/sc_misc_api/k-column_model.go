@@ -393,7 +393,7 @@ func (p *ColumnDTO) field6Length() int {
 	return l
 }
 
-func (p *RickColumnDTO) FastRead(buf []byte) (int, error) {
+func (p *RichColumnDTO) FastRead(buf []byte) (int, error) {
 	var err error
 	var offset int
 	var l int
@@ -497,7 +497,7 @@ ReadStructBeginError:
 ReadFieldBeginError:
 	return offset, thrift.PrependError(fmt.Sprintf("%T read field %d begin error: ", p, fieldId), err)
 ReadFieldError:
-	return offset, thrift.PrependError(fmt.Sprintf("%T read field %d '%s' error: ", p, fieldId, fieldIDToName_RickColumnDTO[fieldId]), err)
+	return offset, thrift.PrependError(fmt.Sprintf("%T read field %d '%s' error: ", p, fieldId, fieldIDToName_RichColumnDTO[fieldId]), err)
 SkipFieldError:
 	return offset, thrift.PrependError(fmt.Sprintf("%T field %d skip type %d error: ", p, fieldId, fieldTypeId), err)
 ReadFieldEndError:
@@ -506,7 +506,7 @@ ReadStructEndError:
 	return offset, thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
 }
 
-func (p *RickColumnDTO) FastReadField1(buf []byte) (int, error) {
+func (p *RichColumnDTO) FastReadField1(buf []byte) (int, error) {
 	offset := 0
 
 	tmp := NewColumnDTO()
@@ -519,7 +519,7 @@ func (p *RickColumnDTO) FastReadField1(buf []byte) (int, error) {
 	return offset, nil
 }
 
-func (p *RickColumnDTO) FastReadField2(buf []byte) (int, error) {
+func (p *RichColumnDTO) FastReadField2(buf []byte) (int, error) {
 	offset := 0
 
 	tmp := NewAuthorDTO()
@@ -532,7 +532,7 @@ func (p *RickColumnDTO) FastReadField2(buf []byte) (int, error) {
 	return offset, nil
 }
 
-func (p *RickColumnDTO) FastReadField3(buf []byte) (int, error) {
+func (p *RichColumnDTO) FastReadField3(buf []byte) (int, error) {
 	offset := 0
 
 	tmp := NewColumnQuoteDTO()
@@ -545,7 +545,7 @@ func (p *RickColumnDTO) FastReadField3(buf []byte) (int, error) {
 	return offset, nil
 }
 
-func (p *RickColumnDTO) FastReadField4(buf []byte) (int, error) {
+func (p *RichColumnDTO) FastReadField4(buf []byte) (int, error) {
 	offset := 0
 
 	tmp := NewSubscriptionDTO()
@@ -559,13 +559,13 @@ func (p *RickColumnDTO) FastReadField4(buf []byte) (int, error) {
 }
 
 // for compatibility
-func (p *RickColumnDTO) FastWrite(buf []byte) int {
+func (p *RichColumnDTO) FastWrite(buf []byte) int {
 	return 0
 }
 
-func (p *RickColumnDTO) FastWriteNocopy(buf []byte, binaryWriter bthrift.BinaryWriter) int {
+func (p *RichColumnDTO) FastWriteNocopy(buf []byte, binaryWriter bthrift.BinaryWriter) int {
 	offset := 0
-	offset += bthrift.Binary.WriteStructBegin(buf[offset:], "RickColumnDTO")
+	offset += bthrift.Binary.WriteStructBegin(buf[offset:], "RichColumnDTO")
 	if p != nil {
 		offset += p.fastWriteField1(buf[offset:], binaryWriter)
 		offset += p.fastWriteField2(buf[offset:], binaryWriter)
@@ -577,9 +577,9 @@ func (p *RickColumnDTO) FastWriteNocopy(buf []byte, binaryWriter bthrift.BinaryW
 	return offset
 }
 
-func (p *RickColumnDTO) BLength() int {
+func (p *RichColumnDTO) BLength() int {
 	l := 0
-	l += bthrift.Binary.StructBeginLength("RickColumnDTO")
+	l += bthrift.Binary.StructBeginLength("RichColumnDTO")
 	if p != nil {
 		l += p.field1Length()
 		l += p.field2Length()
@@ -591,7 +591,7 @@ func (p *RickColumnDTO) BLength() int {
 	return l
 }
 
-func (p *RickColumnDTO) fastWriteField1(buf []byte, binaryWriter bthrift.BinaryWriter) int {
+func (p *RichColumnDTO) fastWriteField1(buf []byte, binaryWriter bthrift.BinaryWriter) int {
 	offset := 0
 	offset += bthrift.Binary.WriteFieldBegin(buf[offset:], "column", thrift.STRUCT, 1)
 	offset += p.Column.FastWriteNocopy(buf[offset:], binaryWriter)
@@ -599,7 +599,7 @@ func (p *RickColumnDTO) fastWriteField1(buf []byte, binaryWriter bthrift.BinaryW
 	return offset
 }
 
-func (p *RickColumnDTO) fastWriteField2(buf []byte, binaryWriter bthrift.BinaryWriter) int {
+func (p *RichColumnDTO) fastWriteField2(buf []byte, binaryWriter bthrift.BinaryWriter) int {
 	offset := 0
 	offset += bthrift.Binary.WriteFieldBegin(buf[offset:], "author", thrift.STRUCT, 2)
 	offset += p.Author.FastWriteNocopy(buf[offset:], binaryWriter)
@@ -607,7 +607,7 @@ func (p *RickColumnDTO) fastWriteField2(buf []byte, binaryWriter bthrift.BinaryW
 	return offset
 }
 
-func (p *RickColumnDTO) fastWriteField3(buf []byte, binaryWriter bthrift.BinaryWriter) int {
+func (p *RichColumnDTO) fastWriteField3(buf []byte, binaryWriter bthrift.BinaryWriter) int {
 	offset := 0
 	offset += bthrift.Binary.WriteFieldBegin(buf[offset:], "columnQuote", thrift.STRUCT, 3)
 	offset += p.ColumnQuote.FastWriteNocopy(buf[offset:], binaryWriter)
@@ -615,7 +615,7 @@ func (p *RickColumnDTO) fastWriteField3(buf []byte, binaryWriter bthrift.BinaryW
 	return offset
 }
 
-func (p *RickColumnDTO) fastWriteField4(buf []byte, binaryWriter bthrift.BinaryWriter) int {
+func (p *RichColumnDTO) fastWriteField4(buf []byte, binaryWriter bthrift.BinaryWriter) int {
 	offset := 0
 	offset += bthrift.Binary.WriteFieldBegin(buf[offset:], "subscription", thrift.STRUCT, 4)
 	offset += p.Subscription.FastWriteNocopy(buf[offset:], binaryWriter)
@@ -623,7 +623,7 @@ func (p *RickColumnDTO) fastWriteField4(buf []byte, binaryWriter bthrift.BinaryW
 	return offset
 }
 
-func (p *RickColumnDTO) field1Length() int {
+func (p *RichColumnDTO) field1Length() int {
 	l := 0
 	l += bthrift.Binary.FieldBeginLength("column", thrift.STRUCT, 1)
 	l += p.Column.BLength()
@@ -631,7 +631,7 @@ func (p *RickColumnDTO) field1Length() int {
 	return l
 }
 
-func (p *RickColumnDTO) field2Length() int {
+func (p *RichColumnDTO) field2Length() int {
 	l := 0
 	l += bthrift.Binary.FieldBeginLength("author", thrift.STRUCT, 2)
 	l += p.Author.BLength()
@@ -639,7 +639,7 @@ func (p *RickColumnDTO) field2Length() int {
 	return l
 }
 
-func (p *RickColumnDTO) field3Length() int {
+func (p *RichColumnDTO) field3Length() int {
 	l := 0
 	l += bthrift.Binary.FieldBeginLength("columnQuote", thrift.STRUCT, 3)
 	l += p.ColumnQuote.BLength()
@@ -647,7 +647,7 @@ func (p *RickColumnDTO) field3Length() int {
 	return l
 }
 
-func (p *RickColumnDTO) field4Length() int {
+func (p *RichColumnDTO) field4Length() int {
 	l := 0
 	l += bthrift.Binary.FieldBeginLength("subscription", thrift.STRUCT, 4)
 	l += p.Subscription.BLength()

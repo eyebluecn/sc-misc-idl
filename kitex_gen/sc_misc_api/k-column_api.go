@@ -915,9 +915,9 @@ func (p *ColumnPageResponse) FastReadField1(buf []byte) (int, error) {
 	if err != nil {
 		return offset, err
 	}
-	p.Data = make([]*RickColumnDTO, 0, size)
+	p.Data = make([]*RichColumnDTO, 0, size)
 	for i := 0; i < size; i++ {
-		_elem := NewRickColumnDTO()
+		_elem := NewRichColumnDTO()
 		if l, err := _elem.FastRead(buf[offset:]); err != nil {
 			return offset, err
 		} else {

@@ -1044,7 +1044,7 @@ func (p *ColumnPageRequest) Field255DeepEqual(src *sc_misc_base.Base) bool {
 }
 
 type ColumnPageResponse struct {
-	Data       []*RickColumnDTO         `thrift:"data,1" frugal:"1,default,list<RickColumnDTO>" json:"data"`
+	Data       []*RichColumnDTO         `thrift:"data,1" frugal:"1,default,list<RichColumnDTO>" json:"data"`
 	Pagination *sc_misc_base.Pagination `thrift:"pagination,2" frugal:"2,default,sc_misc_base.Pagination" json:"pagination"`
 	BaseResp   *sc_misc_base.BaseResp   `thrift:"baseResp,255" frugal:"255,default,sc_misc_base.BaseResp" json:"baseResp"`
 }
@@ -1057,7 +1057,7 @@ func (p *ColumnPageResponse) InitDefault() {
 	*p = ColumnPageResponse{}
 }
 
-func (p *ColumnPageResponse) GetData() (v []*RickColumnDTO) {
+func (p *ColumnPageResponse) GetData() (v []*RichColumnDTO) {
 	return p.Data
 }
 
@@ -1078,7 +1078,7 @@ func (p *ColumnPageResponse) GetBaseResp() (v *sc_misc_base.BaseResp) {
 	}
 	return p.BaseResp
 }
-func (p *ColumnPageResponse) SetData(val []*RickColumnDTO) {
+func (p *ColumnPageResponse) SetData(val []*RichColumnDTO) {
 	p.Data = val
 }
 func (p *ColumnPageResponse) SetPagination(val *sc_misc_base.Pagination) {
@@ -1179,8 +1179,8 @@ func (p *ColumnPageResponse) ReadField1(iprot thrift.TProtocol) error {
 	if err != nil {
 		return err
 	}
-	_field := make([]*RickColumnDTO, 0, size)
-	values := make([]RickColumnDTO, size)
+	_field := make([]*RichColumnDTO, 0, size)
+	values := make([]RichColumnDTO, size)
 	for i := 0; i < size; i++ {
 		_elem := &values[i]
 
@@ -1334,7 +1334,7 @@ func (p *ColumnPageResponse) DeepEqual(ano *ColumnPageResponse) bool {
 	return true
 }
 
-func (p *ColumnPageResponse) Field1DeepEqual(src []*RickColumnDTO) bool {
+func (p *ColumnPageResponse) Field1DeepEqual(src []*RichColumnDTO) bool {
 
 	if len(p.Data) != len(src) {
 		return false

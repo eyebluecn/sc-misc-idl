@@ -467,93 +467,93 @@ func (p *ColumnDTO) Field6DeepEqual(src ColumnStatus) bool {
 	return true
 }
 
-type RickColumnDTO struct {
+type RichColumnDTO struct {
 	Column       *ColumnDTO       `thrift:"column,1" frugal:"1,default,ColumnDTO" json:"column"`
 	Author       *AuthorDTO       `thrift:"author,2" frugal:"2,default,AuthorDTO" json:"author"`
 	ColumnQuote  *ColumnQuoteDTO  `thrift:"columnQuote,3" frugal:"3,default,ColumnQuoteDTO" json:"columnQuote"`
 	Subscription *SubscriptionDTO `thrift:"subscription,4" frugal:"4,default,SubscriptionDTO" json:"subscription"`
 }
 
-func NewRickColumnDTO() *RickColumnDTO {
-	return &RickColumnDTO{}
+func NewRichColumnDTO() *RichColumnDTO {
+	return &RichColumnDTO{}
 }
 
-func (p *RickColumnDTO) InitDefault() {
-	*p = RickColumnDTO{}
+func (p *RichColumnDTO) InitDefault() {
+	*p = RichColumnDTO{}
 }
 
-var RickColumnDTO_Column_DEFAULT *ColumnDTO
+var RichColumnDTO_Column_DEFAULT *ColumnDTO
 
-func (p *RickColumnDTO) GetColumn() (v *ColumnDTO) {
+func (p *RichColumnDTO) GetColumn() (v *ColumnDTO) {
 	if !p.IsSetColumn() {
-		return RickColumnDTO_Column_DEFAULT
+		return RichColumnDTO_Column_DEFAULT
 	}
 	return p.Column
 }
 
-var RickColumnDTO_Author_DEFAULT *AuthorDTO
+var RichColumnDTO_Author_DEFAULT *AuthorDTO
 
-func (p *RickColumnDTO) GetAuthor() (v *AuthorDTO) {
+func (p *RichColumnDTO) GetAuthor() (v *AuthorDTO) {
 	if !p.IsSetAuthor() {
-		return RickColumnDTO_Author_DEFAULT
+		return RichColumnDTO_Author_DEFAULT
 	}
 	return p.Author
 }
 
-var RickColumnDTO_ColumnQuote_DEFAULT *ColumnQuoteDTO
+var RichColumnDTO_ColumnQuote_DEFAULT *ColumnQuoteDTO
 
-func (p *RickColumnDTO) GetColumnQuote() (v *ColumnQuoteDTO) {
+func (p *RichColumnDTO) GetColumnQuote() (v *ColumnQuoteDTO) {
 	if !p.IsSetColumnQuote() {
-		return RickColumnDTO_ColumnQuote_DEFAULT
+		return RichColumnDTO_ColumnQuote_DEFAULT
 	}
 	return p.ColumnQuote
 }
 
-var RickColumnDTO_Subscription_DEFAULT *SubscriptionDTO
+var RichColumnDTO_Subscription_DEFAULT *SubscriptionDTO
 
-func (p *RickColumnDTO) GetSubscription() (v *SubscriptionDTO) {
+func (p *RichColumnDTO) GetSubscription() (v *SubscriptionDTO) {
 	if !p.IsSetSubscription() {
-		return RickColumnDTO_Subscription_DEFAULT
+		return RichColumnDTO_Subscription_DEFAULT
 	}
 	return p.Subscription
 }
-func (p *RickColumnDTO) SetColumn(val *ColumnDTO) {
+func (p *RichColumnDTO) SetColumn(val *ColumnDTO) {
 	p.Column = val
 }
-func (p *RickColumnDTO) SetAuthor(val *AuthorDTO) {
+func (p *RichColumnDTO) SetAuthor(val *AuthorDTO) {
 	p.Author = val
 }
-func (p *RickColumnDTO) SetColumnQuote(val *ColumnQuoteDTO) {
+func (p *RichColumnDTO) SetColumnQuote(val *ColumnQuoteDTO) {
 	p.ColumnQuote = val
 }
-func (p *RickColumnDTO) SetSubscription(val *SubscriptionDTO) {
+func (p *RichColumnDTO) SetSubscription(val *SubscriptionDTO) {
 	p.Subscription = val
 }
 
-var fieldIDToName_RickColumnDTO = map[int16]string{
+var fieldIDToName_RichColumnDTO = map[int16]string{
 	1: "column",
 	2: "author",
 	3: "columnQuote",
 	4: "subscription",
 }
 
-func (p *RickColumnDTO) IsSetColumn() bool {
+func (p *RichColumnDTO) IsSetColumn() bool {
 	return p.Column != nil
 }
 
-func (p *RickColumnDTO) IsSetAuthor() bool {
+func (p *RichColumnDTO) IsSetAuthor() bool {
 	return p.Author != nil
 }
 
-func (p *RickColumnDTO) IsSetColumnQuote() bool {
+func (p *RichColumnDTO) IsSetColumnQuote() bool {
 	return p.ColumnQuote != nil
 }
 
-func (p *RickColumnDTO) IsSetSubscription() bool {
+func (p *RichColumnDTO) IsSetSubscription() bool {
 	return p.Subscription != nil
 }
 
-func (p *RickColumnDTO) Read(iprot thrift.TProtocol) (err error) {
+func (p *RichColumnDTO) Read(iprot thrift.TProtocol) (err error) {
 
 	var fieldTypeId thrift.TType
 	var fieldId int16
@@ -623,7 +623,7 @@ ReadStructBeginError:
 ReadFieldBeginError:
 	return thrift.PrependError(fmt.Sprintf("%T read field %d begin error: ", p, fieldId), err)
 ReadFieldError:
-	return thrift.PrependError(fmt.Sprintf("%T read field %d '%s' error: ", p, fieldId, fieldIDToName_RickColumnDTO[fieldId]), err)
+	return thrift.PrependError(fmt.Sprintf("%T read field %d '%s' error: ", p, fieldId, fieldIDToName_RichColumnDTO[fieldId]), err)
 SkipFieldError:
 	return thrift.PrependError(fmt.Sprintf("%T field %d skip type %d error: ", p, fieldId, fieldTypeId), err)
 
@@ -633,7 +633,7 @@ ReadStructEndError:
 	return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
 }
 
-func (p *RickColumnDTO) ReadField1(iprot thrift.TProtocol) error {
+func (p *RichColumnDTO) ReadField1(iprot thrift.TProtocol) error {
 	_field := NewColumnDTO()
 	if err := _field.Read(iprot); err != nil {
 		return err
@@ -641,7 +641,7 @@ func (p *RickColumnDTO) ReadField1(iprot thrift.TProtocol) error {
 	p.Column = _field
 	return nil
 }
-func (p *RickColumnDTO) ReadField2(iprot thrift.TProtocol) error {
+func (p *RichColumnDTO) ReadField2(iprot thrift.TProtocol) error {
 	_field := NewAuthorDTO()
 	if err := _field.Read(iprot); err != nil {
 		return err
@@ -649,7 +649,7 @@ func (p *RickColumnDTO) ReadField2(iprot thrift.TProtocol) error {
 	p.Author = _field
 	return nil
 }
-func (p *RickColumnDTO) ReadField3(iprot thrift.TProtocol) error {
+func (p *RichColumnDTO) ReadField3(iprot thrift.TProtocol) error {
 	_field := NewColumnQuoteDTO()
 	if err := _field.Read(iprot); err != nil {
 		return err
@@ -657,7 +657,7 @@ func (p *RickColumnDTO) ReadField3(iprot thrift.TProtocol) error {
 	p.ColumnQuote = _field
 	return nil
 }
-func (p *RickColumnDTO) ReadField4(iprot thrift.TProtocol) error {
+func (p *RichColumnDTO) ReadField4(iprot thrift.TProtocol) error {
 	_field := NewSubscriptionDTO()
 	if err := _field.Read(iprot); err != nil {
 		return err
@@ -666,9 +666,9 @@ func (p *RickColumnDTO) ReadField4(iprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *RickColumnDTO) Write(oprot thrift.TProtocol) (err error) {
+func (p *RichColumnDTO) Write(oprot thrift.TProtocol) (err error) {
 	var fieldId int16
-	if err = oprot.WriteStructBegin("RickColumnDTO"); err != nil {
+	if err = oprot.WriteStructBegin("RichColumnDTO"); err != nil {
 		goto WriteStructBeginError
 	}
 	if p != nil {
@@ -706,7 +706,7 @@ WriteStructEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write struct end error: ", p), err)
 }
 
-func (p *RickColumnDTO) writeField1(oprot thrift.TProtocol) (err error) {
+func (p *RichColumnDTO) writeField1(oprot thrift.TProtocol) (err error) {
 	if err = oprot.WriteFieldBegin("column", thrift.STRUCT, 1); err != nil {
 		goto WriteFieldBeginError
 	}
@@ -723,7 +723,7 @@ WriteFieldEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 1 end error: ", p), err)
 }
 
-func (p *RickColumnDTO) writeField2(oprot thrift.TProtocol) (err error) {
+func (p *RichColumnDTO) writeField2(oprot thrift.TProtocol) (err error) {
 	if err = oprot.WriteFieldBegin("author", thrift.STRUCT, 2); err != nil {
 		goto WriteFieldBeginError
 	}
@@ -740,7 +740,7 @@ WriteFieldEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 2 end error: ", p), err)
 }
 
-func (p *RickColumnDTO) writeField3(oprot thrift.TProtocol) (err error) {
+func (p *RichColumnDTO) writeField3(oprot thrift.TProtocol) (err error) {
 	if err = oprot.WriteFieldBegin("columnQuote", thrift.STRUCT, 3); err != nil {
 		goto WriteFieldBeginError
 	}
@@ -757,7 +757,7 @@ WriteFieldEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 3 end error: ", p), err)
 }
 
-func (p *RickColumnDTO) writeField4(oprot thrift.TProtocol) (err error) {
+func (p *RichColumnDTO) writeField4(oprot thrift.TProtocol) (err error) {
 	if err = oprot.WriteFieldBegin("subscription", thrift.STRUCT, 4); err != nil {
 		goto WriteFieldBeginError
 	}
@@ -774,15 +774,15 @@ WriteFieldEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 4 end error: ", p), err)
 }
 
-func (p *RickColumnDTO) String() string {
+func (p *RichColumnDTO) String() string {
 	if p == nil {
 		return "<nil>"
 	}
-	return fmt.Sprintf("RickColumnDTO(%+v)", *p)
+	return fmt.Sprintf("RichColumnDTO(%+v)", *p)
 
 }
 
-func (p *RickColumnDTO) DeepEqual(ano *RickColumnDTO) bool {
+func (p *RichColumnDTO) DeepEqual(ano *RichColumnDTO) bool {
 	if p == ano {
 		return true
 	} else if p == nil || ano == nil {
@@ -803,28 +803,28 @@ func (p *RickColumnDTO) DeepEqual(ano *RickColumnDTO) bool {
 	return true
 }
 
-func (p *RickColumnDTO) Field1DeepEqual(src *ColumnDTO) bool {
+func (p *RichColumnDTO) Field1DeepEqual(src *ColumnDTO) bool {
 
 	if !p.Column.DeepEqual(src) {
 		return false
 	}
 	return true
 }
-func (p *RickColumnDTO) Field2DeepEqual(src *AuthorDTO) bool {
+func (p *RichColumnDTO) Field2DeepEqual(src *AuthorDTO) bool {
 
 	if !p.Author.DeepEqual(src) {
 		return false
 	}
 	return true
 }
-func (p *RickColumnDTO) Field3DeepEqual(src *ColumnQuoteDTO) bool {
+func (p *RichColumnDTO) Field3DeepEqual(src *ColumnQuoteDTO) bool {
 
 	if !p.ColumnQuote.DeepEqual(src) {
 		return false
 	}
 	return true
 }
-func (p *RickColumnDTO) Field4DeepEqual(src *SubscriptionDTO) bool {
+func (p *RichColumnDTO) Field4DeepEqual(src *SubscriptionDTO) bool {
 
 	if !p.Subscription.DeepEqual(src) {
 		return false

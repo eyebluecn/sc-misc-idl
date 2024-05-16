@@ -270,7 +270,7 @@ func (p *ColumnQuoteDTO) FastReadField7(buf []byte) (int, error) {
 	} else {
 		offset += l
 
-		p.Status = v
+		p.Status = ColumnQuoteStatus(v)
 
 	}
 	return offset, nil
@@ -372,7 +372,7 @@ func (p *ColumnQuoteDTO) fastWriteField6(buf []byte, binaryWriter bthrift.Binary
 func (p *ColumnQuoteDTO) fastWriteField7(buf []byte, binaryWriter bthrift.BinaryWriter) int {
 	offset := 0
 	offset += bthrift.Binary.WriteFieldBegin(buf[offset:], "status", thrift.I32, 7)
-	offset += bthrift.Binary.WriteI32(buf[offset:], p.Status)
+	offset += bthrift.Binary.WriteI32(buf[offset:], int32(p.Status))
 
 	offset += bthrift.Binary.WriteFieldEnd(buf[offset:])
 	return offset
@@ -435,7 +435,7 @@ func (p *ColumnQuoteDTO) field6Length() int {
 func (p *ColumnQuoteDTO) field7Length() int {
 	l := 0
 	l += bthrift.Binary.FieldBeginLength("status", thrift.I32, 7)
-	l += bthrift.Binary.I32Length(p.Status)
+	l += bthrift.Binary.I32Length(int32(p.Status))
 
 	l += bthrift.Binary.FieldEndLength()
 	return l

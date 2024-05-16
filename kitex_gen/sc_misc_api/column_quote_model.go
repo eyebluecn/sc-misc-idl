@@ -8,13 +8,13 @@ import (
 )
 
 type ColumnQuoteDTO struct {
-	Id         int64 `thrift:"id,1" frugal:"1,default,i64" json:"id"`
-	CreateTime int64 `thrift:"createTime,2" frugal:"2,default,i64" json:"createTime"`
-	UpdateTime int64 `thrift:"updateTime,3" frugal:"3,default,i64" json:"updateTime"`
-	ColumnId   int64 `thrift:"columnId,4" frugal:"4,default,i64" json:"columnId"`
-	EditorId   int64 `thrift:"editorId,5" frugal:"5,default,i64" json:"editorId"`
-	Price      int64 `thrift:"price,6" frugal:"6,default,i64" json:"price"`
-	Status     int32 `thrift:"status,7" frugal:"7,default,i32" json:"status"`
+	Id         int64             `thrift:"id,1" frugal:"1,default,i64" json:"id"`
+	CreateTime int64             `thrift:"createTime,2" frugal:"2,default,i64" json:"createTime"`
+	UpdateTime int64             `thrift:"updateTime,3" frugal:"3,default,i64" json:"updateTime"`
+	ColumnId   int64             `thrift:"columnId,4" frugal:"4,default,i64" json:"columnId"`
+	EditorId   int64             `thrift:"editorId,5" frugal:"5,default,i64" json:"editorId"`
+	Price      int64             `thrift:"price,6" frugal:"6,default,i64" json:"price"`
+	Status     ColumnQuoteStatus `thrift:"status,7" frugal:"7,default,ColumnQuoteStatus" json:"status"`
 }
 
 func NewColumnQuoteDTO() *ColumnQuoteDTO {
@@ -49,7 +49,7 @@ func (p *ColumnQuoteDTO) GetPrice() (v int64) {
 	return p.Price
 }
 
-func (p *ColumnQuoteDTO) GetStatus() (v int32) {
+func (p *ColumnQuoteDTO) GetStatus() (v ColumnQuoteStatus) {
 	return p.Status
 }
 func (p *ColumnQuoteDTO) SetId(val int64) {
@@ -70,7 +70,7 @@ func (p *ColumnQuoteDTO) SetEditorId(val int64) {
 func (p *ColumnQuoteDTO) SetPrice(val int64) {
 	p.Price = val
 }
-func (p *ColumnQuoteDTO) SetStatus(val int32) {
+func (p *ColumnQuoteDTO) SetStatus(val ColumnQuoteStatus) {
 	p.Status = val
 }
 
@@ -256,11 +256,11 @@ func (p *ColumnQuoteDTO) ReadField6(iprot thrift.TProtocol) error {
 }
 func (p *ColumnQuoteDTO) ReadField7(iprot thrift.TProtocol) error {
 
-	var _field int32
+	var _field ColumnQuoteStatus
 	if v, err := iprot.ReadI32(); err != nil {
 		return err
 	} else {
-		_field = v
+		_field = ColumnQuoteStatus(v)
 	}
 	p.Status = _field
 	return nil
@@ -424,7 +424,7 @@ func (p *ColumnQuoteDTO) writeField7(oprot thrift.TProtocol) (err error) {
 	if err = oprot.WriteFieldBegin("status", thrift.I32, 7); err != nil {
 		goto WriteFieldBeginError
 	}
-	if err := oprot.WriteI32(p.Status); err != nil {
+	if err := oprot.WriteI32(int32(p.Status)); err != nil {
 		return err
 	}
 	if err = oprot.WriteFieldEnd(); err != nil {
@@ -517,7 +517,7 @@ func (p *ColumnQuoteDTO) Field6DeepEqual(src int64) bool {
 	}
 	return true
 }
-func (p *ColumnQuoteDTO) Field7DeepEqual(src int32) bool {
+func (p *ColumnQuoteDTO) Field7DeepEqual(src ColumnQuoteStatus) bool {
 
 	if p.Status != src {
 		return false

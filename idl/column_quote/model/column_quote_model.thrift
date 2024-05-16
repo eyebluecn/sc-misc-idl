@@ -1,3 +1,4 @@
+include "../enum/column_quote_enums.thrift"
 namespace go sc_misc_api
 
 
@@ -9,5 +10,5 @@ struct ColumnQuoteDTO {
     4: i64 columnId //专栏id
     5: i64 editorId //编辑id
     6: i64 price //价格
-    7: i32 status //状态
+    7: column_quote_enums.ColumnQuoteStatus status //状态
 }

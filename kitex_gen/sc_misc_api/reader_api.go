@@ -5,7 +5,6 @@ package sc_misc_api
 import (
 	"fmt"
 	"github.com/apache/thrift/lib/go/thrift"
-	"github.com/eyebluecn/sc-misc-idl/kitex_gen/sc_bff_api"
 	"github.com/eyebluecn/sc-misc-idl/kitex_gen/sc_misc_base"
 	"strings"
 )
@@ -301,7 +300,7 @@ func (p *ReaderLoginRequest) Field255DeepEqual(src *sc_misc_base.Base) bool {
 }
 
 type ReaderLoginResponse struct {
-	Data     *sc_bff_api.ReaderDTO  `thrift:"data,1" frugal:"1,default,sc_bff_api.ReaderDTO" json:"data"`
+	Data     *ReaderDTO             `thrift:"data,1" frugal:"1,default,ReaderDTO" json:"data"`
 	BaseResp *sc_misc_base.BaseResp `thrift:"baseResp,255" frugal:"255,default,sc_misc_base.BaseResp" json:"baseResp"`
 }
 
@@ -313,9 +312,9 @@ func (p *ReaderLoginResponse) InitDefault() {
 	*p = ReaderLoginResponse{}
 }
 
-var ReaderLoginResponse_Data_DEFAULT *sc_bff_api.ReaderDTO
+var ReaderLoginResponse_Data_DEFAULT *ReaderDTO
 
-func (p *ReaderLoginResponse) GetData() (v *sc_bff_api.ReaderDTO) {
+func (p *ReaderLoginResponse) GetData() (v *ReaderDTO) {
 	if !p.IsSetData() {
 		return ReaderLoginResponse_Data_DEFAULT
 	}
@@ -330,7 +329,7 @@ func (p *ReaderLoginResponse) GetBaseResp() (v *sc_misc_base.BaseResp) {
 	}
 	return p.BaseResp
 }
-func (p *ReaderLoginResponse) SetData(val *sc_bff_api.ReaderDTO) {
+func (p *ReaderLoginResponse) SetData(val *ReaderDTO) {
 	p.Data = val
 }
 func (p *ReaderLoginResponse) SetBaseResp(val *sc_misc_base.BaseResp) {
@@ -415,7 +414,7 @@ ReadStructEndError:
 }
 
 func (p *ReaderLoginResponse) ReadField1(iprot thrift.TProtocol) error {
-	_field := sc_bff_api.NewReaderDTO()
+	_field := NewReaderDTO()
 	if err := _field.Read(iprot); err != nil {
 		return err
 	}
@@ -520,7 +519,7 @@ func (p *ReaderLoginResponse) DeepEqual(ano *ReaderLoginResponse) bool {
 	return true
 }
 
-func (p *ReaderLoginResponse) Field1DeepEqual(src *sc_bff_api.ReaderDTO) bool {
+func (p *ReaderLoginResponse) Field1DeepEqual(src *ReaderDTO) bool {
 
 	if !p.Data.DeepEqual(src) {
 		return false

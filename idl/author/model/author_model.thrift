@@ -1,4 +1,4 @@
-namespace go sc_bff_api
+namespace go sc_misc_api
 
 
 //作者模型

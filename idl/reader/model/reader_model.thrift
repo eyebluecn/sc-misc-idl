@@ -1,5 +1,5 @@
 
-namespace go sc_bff_api
+namespace go sc_misc_api
 
 
 //读者模型

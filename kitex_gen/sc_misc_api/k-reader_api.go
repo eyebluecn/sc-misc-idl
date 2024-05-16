@@ -12,7 +12,6 @@ import (
 
 	"github.com/cloudwego/kitex/pkg/protocol/bthrift"
 
-	"github.com/eyebluecn/sc-misc-idl/kitex_gen/sc_bff_api"
 	"github.com/eyebluecn/sc-misc-idl/kitex_gen/sc_misc_base"
 )
 
@@ -24,7 +23,6 @@ var (
 	_ = reflect.Type(nil)
 	_ = thrift.TProtocol(nil)
 	_ = bthrift.BinaryWriter(nil)
-	_ = sc_bff_api.KitexUnusedProtection
 	_ = sc_misc_base.KitexUnusedProtection
 )
 
@@ -343,7 +341,7 @@ ReadStructEndError:
 func (p *ReaderLoginResponse) FastReadField1(buf []byte) (int, error) {
 	offset := 0
 
-	tmp := sc_bff_api.NewReaderDTO()
+	tmp := NewReaderDTO()
 	if l, err := tmp.FastRead(buf[offset:]); err != nil {
 		return offset, err
 	} else {

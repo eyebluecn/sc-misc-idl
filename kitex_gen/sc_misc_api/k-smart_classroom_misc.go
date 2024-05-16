@@ -11,8 +11,6 @@ import (
 	"github.com/apache/thrift/lib/go/thrift"
 
 	"github.com/cloudwego/kitex/pkg/protocol/bthrift"
-
-	"github.com/eyebluecn/sc-misc-idl/kitex_gen/sc_bff_api"
 )
 
 // unused protection
@@ -23,7 +21,6 @@ var (
 	_ = reflect.Type(nil)
 	_ = thrift.TProtocol(nil)
 	_ = bthrift.BinaryWriter(nil)
-	_ = sc_bff_api.KitexUnusedProtection
 )
 
 func (p *MiscServiceColumnOmnibusArgs) FastRead(buf []byte) (int, error) {
@@ -100,7 +97,7 @@ ReadStructEndError:
 func (p *MiscServiceColumnOmnibusArgs) FastReadField1(buf []byte) (int, error) {
 	offset := 0
 
-	tmp := sc_bff_api.NewColumnOmnibusRequest()
+	tmp := NewColumnOmnibusRequest()
 	if l, err := tmp.FastRead(buf[offset:]); err != nil {
 		return offset, err
 	} else {
@@ -227,7 +224,7 @@ ReadStructEndError:
 func (p *MiscServiceColumnOmnibusResult) FastReadField0(buf []byte) (int, error) {
 	offset := 0
 
-	tmp := sc_bff_api.NewColumnOmnibusResponse()
+	tmp := NewColumnOmnibusResponse()
 	if l, err := tmp.FastRead(buf[offset:]); err != nil {
 		return offset, err
 	} else {
@@ -358,7 +355,7 @@ ReadStructEndError:
 func (p *MiscServiceColumnPageArgs) FastReadField1(buf []byte) (int, error) {
 	offset := 0
 
-	tmp := sc_bff_api.NewColumnPageRequest()
+	tmp := NewColumnPageRequest()
 	if l, err := tmp.FastRead(buf[offset:]); err != nil {
 		return offset, err
 	} else {
@@ -485,7 +482,7 @@ ReadStructEndError:
 func (p *MiscServiceColumnPageResult) FastReadField0(buf []byte) (int, error) {
 	offset := 0
 
-	tmp := sc_bff_api.NewColumnPageResponse()
+	tmp := NewColumnPageResponse()
 	if l, err := tmp.FastRead(buf[offset:]); err != nil {
 		return offset, err
 	} else {
@@ -616,7 +613,7 @@ ReadStructEndError:
 func (p *MiscServiceColumnDetailArgs) FastReadField1(buf []byte) (int, error) {
 	offset := 0
 
-	tmp := sc_bff_api.NewColumnDetailRequest()
+	tmp := NewColumnDetailRequest()
 	if l, err := tmp.FastRead(buf[offset:]); err != nil {
 		return offset, err
 	} else {
@@ -743,7 +740,7 @@ ReadStructEndError:
 func (p *MiscServiceColumnDetailResult) FastReadField0(buf []byte) (int, error) {
 	offset := 0
 
-	tmp := sc_bff_api.NewColumnDetailResponse()
+	tmp := NewColumnDetailResponse()
 	if l, err := tmp.FastRead(buf[offset:]); err != nil {
 		return offset, err
 	} else {
@@ -1390,7 +1387,7 @@ ReadStructEndError:
 func (p *MiscServicePaymentPaidCallbackArgs) FastReadField1(buf []byte) (int, error) {
 	offset := 0
 
-	tmp := sc_bff_api.NewPaymentPaidCallbackRequest()
+	tmp := NewPaymentPaidCallbackRequest()
 	if l, err := tmp.FastRead(buf[offset:]); err != nil {
 		return offset, err
 	} else {
@@ -1517,7 +1514,7 @@ ReadStructEndError:
 func (p *MiscServicePaymentPaidCallbackResult) FastReadField0(buf []byte) (int, error) {
 	offset := 0
 
-	tmp := sc_bff_api.NewPaymentPaidCallbackResponse()
+	tmp := NewPaymentPaidCallbackResponse()
 	if l, err := tmp.FastRead(buf[offset:]); err != nil {
 		return offset, err
 	} else {

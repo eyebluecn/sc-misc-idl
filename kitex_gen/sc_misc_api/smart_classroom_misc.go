@@ -6,21 +6,20 @@ import (
 	"context"
 	"fmt"
 	"github.com/apache/thrift/lib/go/thrift"
-	"github.com/eyebluecn/sc-misc-idl/kitex_gen/sc_bff_api"
 )
 
 type MiscService interface {
-	ColumnOmnibus(ctx context.Context, request *sc_bff_api.ColumnOmnibusRequest) (r *sc_bff_api.ColumnOmnibusResponse, err error)
+	ColumnOmnibus(ctx context.Context, request *ColumnOmnibusRequest) (r *ColumnOmnibusResponse, err error)
 
-	ColumnPage(ctx context.Context, request *sc_bff_api.ColumnPageRequest) (r *sc_bff_api.ColumnPageResponse, err error)
+	ColumnPage(ctx context.Context, request *ColumnPageRequest) (r *ColumnPageResponse, err error)
 
-	ColumnDetail(ctx context.Context, request *sc_bff_api.ColumnDetailRequest) (r *sc_bff_api.ColumnDetailResponse, err error)
+	ColumnDetail(ctx context.Context, request *ColumnDetailRequest) (r *ColumnDetailResponse, err error)
 
 	EditorLogin(ctx context.Context, request *EditorLoginRequest) (r *EditorLoginResponse, err error)
 
 	ReaderLogin(ctx context.Context, request *ReaderLoginRequest) (r *ReaderLoginResponse, err error)
 
-	PaymentPaidCallback(ctx context.Context, request *sc_bff_api.PaymentPaidCallbackRequest) (r *sc_bff_api.PaymentPaidCallbackResponse, err error)
+	PaymentPaidCallback(ctx context.Context, request *PaymentPaidCallbackRequest) (r *PaymentPaidCallbackResponse, err error)
 }
 
 type MiscServiceClient struct {
@@ -49,7 +48,7 @@ func (p *MiscServiceClient) Client_() thrift.TClient {
 	return p.c
 }
 
-func (p *MiscServiceClient) ColumnOmnibus(ctx context.Context, request *sc_bff_api.ColumnOmnibusRequest) (r *sc_bff_api.ColumnOmnibusResponse, err error) {
+func (p *MiscServiceClient) ColumnOmnibus(ctx context.Context, request *ColumnOmnibusRequest) (r *ColumnOmnibusResponse, err error) {
 	var _args MiscServiceColumnOmnibusArgs
 	_args.Request = request
 	var _result MiscServiceColumnOmnibusResult
@@ -58,7 +57,7 @@ func (p *MiscServiceClient) ColumnOmnibus(ctx context.Context, request *sc_bff_a
 	}
 	return _result.GetSuccess(), nil
 }
-func (p *MiscServiceClient) ColumnPage(ctx context.Context, request *sc_bff_api.ColumnPageRequest) (r *sc_bff_api.ColumnPageResponse, err error) {
+func (p *MiscServiceClient) ColumnPage(ctx context.Context, request *ColumnPageRequest) (r *ColumnPageResponse, err error) {
 	var _args MiscServiceColumnPageArgs
 	_args.Request = request
 	var _result MiscServiceColumnPageResult
@@ -67,7 +66,7 @@ func (p *MiscServiceClient) ColumnPage(ctx context.Context, request *sc_bff_api.
 	}
 	return _result.GetSuccess(), nil
 }
-func (p *MiscServiceClient) ColumnDetail(ctx context.Context, request *sc_bff_api.ColumnDetailRequest) (r *sc_bff_api.ColumnDetailResponse, err error) {
+func (p *MiscServiceClient) ColumnDetail(ctx context.Context, request *ColumnDetailRequest) (r *ColumnDetailResponse, err error) {
 	var _args MiscServiceColumnDetailArgs
 	_args.Request = request
 	var _result MiscServiceColumnDetailResult
@@ -94,7 +93,7 @@ func (p *MiscServiceClient) ReaderLogin(ctx context.Context, request *ReaderLogi
 	}
 	return _result.GetSuccess(), nil
 }
-func (p *MiscServiceClient) PaymentPaidCallback(ctx context.Context, request *sc_bff_api.PaymentPaidCallbackRequest) (r *sc_bff_api.PaymentPaidCallbackResponse, err error) {
+func (p *MiscServiceClient) PaymentPaidCallback(ctx context.Context, request *PaymentPaidCallbackRequest) (r *PaymentPaidCallbackResponse, err error) {
 	var _args MiscServicePaymentPaidCallbackArgs
 	_args.Request = request
 	var _result MiscServicePaymentPaidCallbackResult
@@ -169,7 +168,7 @@ func (p *miscServiceProcessorColumnOmnibus) Process(ctx context.Context, seqId i
 	iprot.ReadMessageEnd()
 	var err2 error
 	result := MiscServiceColumnOmnibusResult{}
-	var retval *sc_bff_api.ColumnOmnibusResponse
+	var retval *ColumnOmnibusResponse
 	if retval, err2 = p.handler.ColumnOmnibus(ctx, args.Request); err2 != nil {
 		x := thrift.NewTApplicationException(thrift.INTERNAL_ERROR, "Internal error processing ColumnOmnibus: "+err2.Error())
 		oprot.WriteMessageBegin("ColumnOmnibus", thrift.EXCEPTION, seqId)
@@ -217,7 +216,7 @@ func (p *miscServiceProcessorColumnPage) Process(ctx context.Context, seqId int3
 	iprot.ReadMessageEnd()
 	var err2 error
 	result := MiscServiceColumnPageResult{}
-	var retval *sc_bff_api.ColumnPageResponse
+	var retval *ColumnPageResponse
 	if retval, err2 = p.handler.ColumnPage(ctx, args.Request); err2 != nil {
 		x := thrift.NewTApplicationException(thrift.INTERNAL_ERROR, "Internal error processing ColumnPage: "+err2.Error())
 		oprot.WriteMessageBegin("ColumnPage", thrift.EXCEPTION, seqId)
@@ -265,7 +264,7 @@ func (p *miscServiceProcessorColumnDetail) Process(ctx context.Context, seqId in
 	iprot.ReadMessageEnd()
 	var err2 error
 	result := MiscServiceColumnDetailResult{}
-	var retval *sc_bff_api.ColumnDetailResponse
+	var retval *ColumnDetailResponse
 	if retval, err2 = p.handler.ColumnDetail(ctx, args.Request); err2 != nil {
 		x := thrift.NewTApplicationException(thrift.INTERNAL_ERROR, "Internal error processing ColumnDetail: "+err2.Error())
 		oprot.WriteMessageBegin("ColumnDetail", thrift.EXCEPTION, seqId)
@@ -409,7 +408,7 @@ func (p *miscServiceProcessorPaymentPaidCallback) Process(ctx context.Context, s
 	iprot.ReadMessageEnd()
 	var err2 error
 	result := MiscServicePaymentPaidCallbackResult{}
-	var retval *sc_bff_api.PaymentPaidCallbackResponse
+	var retval *PaymentPaidCallbackResponse
 	if retval, err2 = p.handler.PaymentPaidCallback(ctx, args.Request); err2 != nil {
 		x := thrift.NewTApplicationException(thrift.INTERNAL_ERROR, "Internal error processing PaymentPaidCallback: "+err2.Error())
 		oprot.WriteMessageBegin("PaymentPaidCallback", thrift.EXCEPTION, seqId)
@@ -439,7 +438,7 @@ func (p *miscServiceProcessorPaymentPaidCallback) Process(ctx context.Context, s
 }
 
 type MiscServiceColumnOmnibusArgs struct {
-	Request *sc_bff_api.ColumnOmnibusRequest `thrift:"request,1" frugal:"1,default,sc_bff_api.ColumnOmnibusRequest" json:"request"`
+	Request *ColumnOmnibusRequest `thrift:"request,1" frugal:"1,default,ColumnOmnibusRequest" json:"request"`
 }
 
 func NewMiscServiceColumnOmnibusArgs() *MiscServiceColumnOmnibusArgs {
@@ -450,15 +449,15 @@ func (p *MiscServiceColumnOmnibusArgs) InitDefault() {
 	*p = MiscServiceColumnOmnibusArgs{}
 }
 
-var MiscServiceColumnOmnibusArgs_Request_DEFAULT *sc_bff_api.ColumnOmnibusRequest
+var MiscServiceColumnOmnibusArgs_Request_DEFAULT *ColumnOmnibusRequest
 
-func (p *MiscServiceColumnOmnibusArgs) GetRequest() (v *sc_bff_api.ColumnOmnibusRequest) {
+func (p *MiscServiceColumnOmnibusArgs) GetRequest() (v *ColumnOmnibusRequest) {
 	if !p.IsSetRequest() {
 		return MiscServiceColumnOmnibusArgs_Request_DEFAULT
 	}
 	return p.Request
 }
-func (p *MiscServiceColumnOmnibusArgs) SetRequest(val *sc_bff_api.ColumnOmnibusRequest) {
+func (p *MiscServiceColumnOmnibusArgs) SetRequest(val *ColumnOmnibusRequest) {
 	p.Request = val
 }
 
@@ -527,7 +526,7 @@ ReadStructEndError:
 }
 
 func (p *MiscServiceColumnOmnibusArgs) ReadField1(iprot thrift.TProtocol) error {
-	_field := sc_bff_api.NewColumnOmnibusRequest()
+	_field := NewColumnOmnibusRequest()
 	if err := _field.Read(iprot); err != nil {
 		return err
 	}
@@ -600,7 +599,7 @@ func (p *MiscServiceColumnOmnibusArgs) DeepEqual(ano *MiscServiceColumnOmnibusAr
 	return true
 }
 
-func (p *MiscServiceColumnOmnibusArgs) Field1DeepEqual(src *sc_bff_api.ColumnOmnibusRequest) bool {
+func (p *MiscServiceColumnOmnibusArgs) Field1DeepEqual(src *ColumnOmnibusRequest) bool {
 
 	if !p.Request.DeepEqual(src) {
 		return false
@@ -609,7 +608,7 @@ func (p *MiscServiceColumnOmnibusArgs) Field1DeepEqual(src *sc_bff_api.ColumnOmn
 }
 
 type MiscServiceColumnOmnibusResult struct {
-	Success *sc_bff_api.ColumnOmnibusResponse `thrift:"success,0,optional" frugal:"0,optional,sc_bff_api.ColumnOmnibusResponse" json:"success,omitempty"`
+	Success *ColumnOmnibusResponse `thrift:"success,0,optional" frugal:"0,optional,ColumnOmnibusResponse" json:"success,omitempty"`
 }
 
 func NewMiscServiceColumnOmnibusResult() *MiscServiceColumnOmnibusResult {
@@ -620,16 +619,16 @@ func (p *MiscServiceColumnOmnibusResult) InitDefault() {
 	*p = MiscServiceColumnOmnibusResult{}
 }
 
-var MiscServiceColumnOmnibusResult_Success_DEFAULT *sc_bff_api.ColumnOmnibusResponse
+var MiscServiceColumnOmnibusResult_Success_DEFAULT *ColumnOmnibusResponse
 
-func (p *MiscServiceColumnOmnibusResult) GetSuccess() (v *sc_bff_api.ColumnOmnibusResponse) {
+func (p *MiscServiceColumnOmnibusResult) GetSuccess() (v *ColumnOmnibusResponse) {
 	if !p.IsSetSuccess() {
 		return MiscServiceColumnOmnibusResult_Success_DEFAULT
 	}
 	return p.Success
 }
 func (p *MiscServiceColumnOmnibusResult) SetSuccess(x interface{}) {
-	p.Success = x.(*sc_bff_api.ColumnOmnibusResponse)
+	p.Success = x.(*ColumnOmnibusResponse)
 }
 
 var fieldIDToName_MiscServiceColumnOmnibusResult = map[int16]string{
@@ -697,7 +696,7 @@ ReadStructEndError:
 }
 
 func (p *MiscServiceColumnOmnibusResult) ReadField0(iprot thrift.TProtocol) error {
-	_field := sc_bff_api.NewColumnOmnibusResponse()
+	_field := NewColumnOmnibusResponse()
 	if err := _field.Read(iprot); err != nil {
 		return err
 	}
@@ -772,7 +771,7 @@ func (p *MiscServiceColumnOmnibusResult) DeepEqual(ano *MiscServiceColumnOmnibus
 	return true
 }
 
-func (p *MiscServiceColumnOmnibusResult) Field0DeepEqual(src *sc_bff_api.ColumnOmnibusResponse) bool {
+func (p *MiscServiceColumnOmnibusResult) Field0DeepEqual(src *ColumnOmnibusResponse) bool {
 
 	if !p.Success.DeepEqual(src) {
 		return false
@@ -781,7 +780,7 @@ func (p *MiscServiceColumnOmnibusResult) Field0DeepEqual(src *sc_bff_api.ColumnO
 }
 
 type MiscServiceColumnPageArgs struct {
-	Request *sc_bff_api.ColumnPageRequest `thrift:"request,1" frugal:"1,default,sc_bff_api.ColumnPageRequest" json:"request"`
+	Request *ColumnPageRequest `thrift:"request,1" frugal:"1,default,ColumnPageRequest" json:"request"`
 }
 
 func NewMiscServiceColumnPageArgs() *MiscServiceColumnPageArgs {
@@ -792,15 +791,15 @@ func (p *MiscServiceColumnPageArgs) InitDefault() {
 	*p = MiscServiceColumnPageArgs{}
 }
 
-var MiscServiceColumnPageArgs_Request_DEFAULT *sc_bff_api.ColumnPageRequest
+var MiscServiceColumnPageArgs_Request_DEFAULT *ColumnPageRequest
 
-func (p *MiscServiceColumnPageArgs) GetRequest() (v *sc_bff_api.ColumnPageRequest) {
+func (p *MiscServiceColumnPageArgs) GetRequest() (v *ColumnPageRequest) {
 	if !p.IsSetRequest() {
 		return MiscServiceColumnPageArgs_Request_DEFAULT
 	}
 	return p.Request
 }
-func (p *MiscServiceColumnPageArgs) SetRequest(val *sc_bff_api.ColumnPageRequest) {
+func (p *MiscServiceColumnPageArgs) SetRequest(val *ColumnPageRequest) {
 	p.Request = val
 }
 
@@ -869,7 +868,7 @@ ReadStructEndError:
 }
 
 func (p *MiscServiceColumnPageArgs) ReadField1(iprot thrift.TProtocol) error {
-	_field := sc_bff_api.NewColumnPageRequest()
+	_field := NewColumnPageRequest()
 	if err := _field.Read(iprot); err != nil {
 		return err
 	}
@@ -942,7 +941,7 @@ func (p *MiscServiceColumnPageArgs) DeepEqual(ano *MiscServiceColumnPageArgs) bo
 	return true
 }
 
-func (p *MiscServiceColumnPageArgs) Field1DeepEqual(src *sc_bff_api.ColumnPageRequest) bool {
+func (p *MiscServiceColumnPageArgs) Field1DeepEqual(src *ColumnPageRequest) bool {
 
 	if !p.Request.DeepEqual(src) {
 		return false
@@ -951,7 +950,7 @@ func (p *MiscServiceColumnPageArgs) Field1DeepEqual(src *sc_bff_api.ColumnPageRe
 }
 
 type MiscServiceColumnPageResult struct {
-	Success *sc_bff_api.ColumnPageResponse `thrift:"success,0,optional" frugal:"0,optional,sc_bff_api.ColumnPageResponse" json:"success,omitempty"`
+	Success *ColumnPageResponse `thrift:"success,0,optional" frugal:"0,optional,ColumnPageResponse" json:"success,omitempty"`
 }
 
 func NewMiscServiceColumnPageResult() *MiscServiceColumnPageResult {
@@ -962,16 +961,16 @@ func (p *MiscServiceColumnPageResult) InitDefault() {
 	*p = MiscServiceColumnPageResult{}
 }
 
-var MiscServiceColumnPageResult_Success_DEFAULT *sc_bff_api.ColumnPageResponse
+var MiscServiceColumnPageResult_Success_DEFAULT *ColumnPageResponse
 
-func (p *MiscServiceColumnPageResult) GetSuccess() (v *sc_bff_api.ColumnPageResponse) {
+func (p *MiscServiceColumnPageResult) GetSuccess() (v *ColumnPageResponse) {
 	if !p.IsSetSuccess() {
 		return MiscServiceColumnPageResult_Success_DEFAULT
 	}
 	return p.Success
 }
 func (p *MiscServiceColumnPageResult) SetSuccess(x interface{}) {
-	p.Success = x.(*sc_bff_api.ColumnPageResponse)
+	p.Success = x.(*ColumnPageResponse)
 }
 
 var fieldIDToName_MiscServiceColumnPageResult = map[int16]string{
@@ -1039,7 +1038,7 @@ ReadStructEndError:
 }
 
 func (p *MiscServiceColumnPageResult) ReadField0(iprot thrift.TProtocol) error {
-	_field := sc_bff_api.NewColumnPageResponse()
+	_field := NewColumnPageResponse()
 	if err := _field.Read(iprot); err != nil {
 		return err
 	}
@@ -1114,7 +1113,7 @@ func (p *MiscServiceColumnPageResult) DeepEqual(ano *MiscServiceColumnPageResult
 	return true
 }
 
-func (p *MiscServiceColumnPageResult) Field0DeepEqual(src *sc_bff_api.ColumnPageResponse) bool {
+func (p *MiscServiceColumnPageResult) Field0DeepEqual(src *ColumnPageResponse) bool {
 
 	if !p.Success.DeepEqual(src) {
 		return false
@@ -1123,7 +1122,7 @@ func (p *MiscServiceColumnPageResult) Field0DeepEqual(src *sc_bff_api.ColumnPage
 }
 
 type MiscServiceColumnDetailArgs struct {
-	Request *sc_bff_api.ColumnDetailRequest `thrift:"request,1" frugal:"1,default,sc_bff_api.ColumnDetailRequest" json:"request"`
+	Request *ColumnDetailRequest `thrift:"request,1" frugal:"1,default,ColumnDetailRequest" json:"request"`
 }
 
 func NewMiscServiceColumnDetailArgs() *MiscServiceColumnDetailArgs {
@@ -1134,15 +1133,15 @@ func (p *MiscServiceColumnDetailArgs) InitDefault() {
 	*p = MiscServiceColumnDetailArgs{}
 }
 
-var MiscServiceColumnDetailArgs_Request_DEFAULT *sc_bff_api.ColumnDetailRequest
+var MiscServiceColumnDetailArgs_Request_DEFAULT *ColumnDetailRequest
 
-func (p *MiscServiceColumnDetailArgs) GetRequest() (v *sc_bff_api.ColumnDetailRequest) {
+func (p *MiscServiceColumnDetailArgs) GetRequest() (v *ColumnDetailRequest) {
 	if !p.IsSetRequest() {
 		return MiscServiceColumnDetailArgs_Request_DEFAULT
 	}
 	return p.Request
 }
-func (p *MiscServiceColumnDetailArgs) SetRequest(val *sc_bff_api.ColumnDetailRequest) {
+func (p *MiscServiceColumnDetailArgs) SetRequest(val *ColumnDetailRequest) {
 	p.Request = val
 }
 
@@ -1211,7 +1210,7 @@ ReadStructEndError:
 }
 
 func (p *MiscServiceColumnDetailArgs) ReadField1(iprot thrift.TProtocol) error {
-	_field := sc_bff_api.NewColumnDetailRequest()
+	_field := NewColumnDetailRequest()
 	if err := _field.Read(iprot); err != nil {
 		return err
 	}
@@ -1284,7 +1283,7 @@ func (p *MiscServiceColumnDetailArgs) DeepEqual(ano *MiscServiceColumnDetailArgs
 	return true
 }
 
-func (p *MiscServiceColumnDetailArgs) Field1DeepEqual(src *sc_bff_api.ColumnDetailRequest) bool {
+func (p *MiscServiceColumnDetailArgs) Field1DeepEqual(src *ColumnDetailRequest) bool {
 
 	if !p.Request.DeepEqual(src) {
 		return false
@@ -1293,7 +1292,7 @@ func (p *MiscServiceColumnDetailArgs) Field1DeepEqual(src *sc_bff_api.ColumnDeta
 }
 
 type MiscServiceColumnDetailResult struct {
-	Success *sc_bff_api.ColumnDetailResponse `thrift:"success,0,optional" frugal:"0,optional,sc_bff_api.ColumnDetailResponse" json:"success,omitempty"`
+	Success *ColumnDetailResponse `thrift:"success,0,optional" frugal:"0,optional,ColumnDetailResponse" json:"success,omitempty"`
 }
 
 func NewMiscServiceColumnDetailResult() *MiscServiceColumnDetailResult {
@@ -1304,16 +1303,16 @@ func (p *MiscServiceColumnDetailResult) InitDefault() {
 	*p = MiscServiceColumnDetailResult{}
 }
 
-var MiscServiceColumnDetailResult_Success_DEFAULT *sc_bff_api.ColumnDetailResponse
+var MiscServiceColumnDetailResult_Success_DEFAULT *ColumnDetailResponse
 
-func (p *MiscServiceColumnDetailResult) GetSuccess() (v *sc_bff_api.ColumnDetailResponse) {
+func (p *MiscServiceColumnDetailResult) GetSuccess() (v *ColumnDetailResponse) {
 	if !p.IsSetSuccess() {
 		return MiscServiceColumnDetailResult_Success_DEFAULT
 	}
 	return p.Success
 }
 func (p *MiscServiceColumnDetailResult) SetSuccess(x interface{}) {
-	p.Success = x.(*sc_bff_api.ColumnDetailResponse)
+	p.Success = x.(*ColumnDetailResponse)
 }
 
 var fieldIDToName_MiscServiceColumnDetailResult = map[int16]string{
@@ -1381,7 +1380,7 @@ ReadStructEndError:
 }
 
 func (p *MiscServiceColumnDetailResult) ReadField0(iprot thrift.TProtocol) error {
-	_field := sc_bff_api.NewColumnDetailResponse()
+	_field := NewColumnDetailResponse()
 	if err := _field.Read(iprot); err != nil {
 		return err
 	}
@@ -1456,7 +1455,7 @@ func (p *MiscServiceColumnDetailResult) DeepEqual(ano *MiscServiceColumnDetailRe
 	return true
 }
 
-func (p *MiscServiceColumnDetailResult) Field0DeepEqual(src *sc_bff_api.ColumnDetailResponse) bool {
+func (p *MiscServiceColumnDetailResult) Field0DeepEqual(src *ColumnDetailResponse) bool {
 
 	if !p.Success.DeepEqual(src) {
 		return false
@@ -2149,7 +2148,7 @@ func (p *MiscServiceReaderLoginResult) Field0DeepEqual(src *ReaderLoginResponse)
 }
 
 type MiscServicePaymentPaidCallbackArgs struct {
-	Request *sc_bff_api.PaymentPaidCallbackRequest `thrift:"request,1" frugal:"1,default,sc_bff_api.PaymentPaidCallbackRequest" json:"request"`
+	Request *PaymentPaidCallbackRequest `thrift:"request,1" frugal:"1,default,PaymentPaidCallbackRequest" json:"request"`
 }
 
 func NewMiscServicePaymentPaidCallbackArgs() *MiscServicePaymentPaidCallbackArgs {
@@ -2160,15 +2159,15 @@ func (p *MiscServicePaymentPaidCallbackArgs) InitDefault() {
 	*p = MiscServicePaymentPaidCallbackArgs{}
 }
 
-var MiscServicePaymentPaidCallbackArgs_Request_DEFAULT *sc_bff_api.PaymentPaidCallbackRequest
+var MiscServicePaymentPaidCallbackArgs_Request_DEFAULT *PaymentPaidCallbackRequest
 
-func (p *MiscServicePaymentPaidCallbackArgs) GetRequest() (v *sc_bff_api.PaymentPaidCallbackRequest) {
+func (p *MiscServicePaymentPaidCallbackArgs) GetRequest() (v *PaymentPaidCallbackRequest) {
 	if !p.IsSetRequest() {
 		return MiscServicePaymentPaidCallbackArgs_Request_DEFAULT
 	}
 	return p.Request
 }
-func (p *MiscServicePaymentPaidCallbackArgs) SetRequest(val *sc_bff_api.PaymentPaidCallbackRequest) {
+func (p *MiscServicePaymentPaidCallbackArgs) SetRequest(val *PaymentPaidCallbackRequest) {
 	p.Request = val
 }
 
@@ -2237,7 +2236,7 @@ ReadStructEndError:
 }
 
 func (p *MiscServicePaymentPaidCallbackArgs) ReadField1(iprot thrift.TProtocol) error {
-	_field := sc_bff_api.NewPaymentPaidCallbackRequest()
+	_field := NewPaymentPaidCallbackRequest()
 	if err := _field.Read(iprot); err != nil {
 		return err
 	}
@@ -2310,7 +2309,7 @@ func (p *MiscServicePaymentPaidCallbackArgs) DeepEqual(ano *MiscServicePaymentPa
 	return true
 }
 
-func (p *MiscServicePaymentPaidCallbackArgs) Field1DeepEqual(src *sc_bff_api.PaymentPaidCallbackRequest) bool {
+func (p *MiscServicePaymentPaidCallbackArgs) Field1DeepEqual(src *PaymentPaidCallbackRequest) bool {
 
 	if !p.Request.DeepEqual(src) {
 		return false
@@ -2319,7 +2318,7 @@ func (p *MiscServicePaymentPaidCallbackArgs) Field1DeepEqual(src *sc_bff_api.Pay
 }
 
 type MiscServicePaymentPaidCallbackResult struct {
-	Success *sc_bff_api.PaymentPaidCallbackResponse `thrift:"success,0,optional" frugal:"0,optional,sc_bff_api.PaymentPaidCallbackResponse" json:"success,omitempty"`
+	Success *PaymentPaidCallbackResponse `thrift:"success,0,optional" frugal:"0,optional,PaymentPaidCallbackResponse" json:"success,omitempty"`
 }
 
 func NewMiscServicePaymentPaidCallbackResult() *MiscServicePaymentPaidCallbackResult {
@@ -2330,16 +2329,16 @@ func (p *MiscServicePaymentPaidCallbackResult) InitDefault() {
 	*p = MiscServicePaymentPaidCallbackResult{}
 }
 
-var MiscServicePaymentPaidCallbackResult_Success_DEFAULT *sc_bff_api.PaymentPaidCallbackResponse
+var MiscServicePaymentPaidCallbackResult_Success_DEFAULT *PaymentPaidCallbackResponse
 
-func (p *MiscServicePaymentPaidCallbackResult) GetSuccess() (v *sc_bff_api.PaymentPaidCallbackResponse) {
+func (p *MiscServicePaymentPaidCallbackResult) GetSuccess() (v *PaymentPaidCallbackResponse) {
 	if !p.IsSetSuccess() {
 		return MiscServicePaymentPaidCallbackResult_Success_DEFAULT
 	}
 	return p.Success
 }
 func (p *MiscServicePaymentPaidCallbackResult) SetSuccess(x interface{}) {
-	p.Success = x.(*sc_bff_api.PaymentPaidCallbackResponse)
+	p.Success = x.(*PaymentPaidCallbackResponse)
 }
 
 var fieldIDToName_MiscServicePaymentPaidCallbackResult = map[int16]string{
@@ -2407,7 +2406,7 @@ ReadStructEndError:
 }
 
 func (p *MiscServicePaymentPaidCallbackResult) ReadField0(iprot thrift.TProtocol) error {
-	_field := sc_bff_api.NewPaymentPaidCallbackResponse()
+	_field := NewPaymentPaidCallbackResponse()
 	if err := _field.Read(iprot); err != nil {
 		return err
 	}
@@ -2482,7 +2481,7 @@ func (p *MiscServicePaymentPaidCallbackResult) DeepEqual(ano *MiscServicePayment
 	return true
 }
 
-func (p *MiscServicePaymentPaidCallbackResult) Field0DeepEqual(src *sc_bff_api.PaymentPaidCallbackResponse) bool {
+func (p *MiscServicePaymentPaidCallbackResult) Field0DeepEqual(src *PaymentPaidCallbackResponse) bool {
 
 	if !p.Success.DeepEqual(src) {
 		return false

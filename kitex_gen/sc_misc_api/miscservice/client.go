@@ -6,18 +6,17 @@ import (
 	"context"
 	client "github.com/cloudwego/kitex/client"
 	callopt "github.com/cloudwego/kitex/client/callopt"
-	sc_bff_api "github.com/eyebluecn/sc-misc-idl/kitex_gen/sc_bff_api"
 	sc_misc_api "github.com/eyebluecn/sc-misc-idl/kitex_gen/sc_misc_api"
 )
 
 // Client is designed to provide IDL-compatible methods with call-option parameter for kitex framework.
 type Client interface {
-	ColumnOmnibus(ctx context.Context, request *sc_bff_api.ColumnOmnibusRequest, callOptions ...callopt.Option) (r *sc_bff_api.ColumnOmnibusResponse, err error)
-	ColumnPage(ctx context.Context, request *sc_bff_api.ColumnPageRequest, callOptions ...callopt.Option) (r *sc_bff_api.ColumnPageResponse, err error)
-	ColumnDetail(ctx context.Context, request *sc_bff_api.ColumnDetailRequest, callOptions ...callopt.Option) (r *sc_bff_api.ColumnDetailResponse, err error)
+	ColumnOmnibus(ctx context.Context, request *sc_misc_api.ColumnOmnibusRequest, callOptions ...callopt.Option) (r *sc_misc_api.ColumnOmnibusResponse, err error)
+	ColumnPage(ctx context.Context, request *sc_misc_api.ColumnPageRequest, callOptions ...callopt.Option) (r *sc_misc_api.ColumnPageResponse, err error)
+	ColumnDetail(ctx context.Context, request *sc_misc_api.ColumnDetailRequest, callOptions ...callopt.Option) (r *sc_misc_api.ColumnDetailResponse, err error)
 	EditorLogin(ctx context.Context, request *sc_misc_api.EditorLoginRequest, callOptions ...callopt.Option) (r *sc_misc_api.EditorLoginResponse, err error)
 	ReaderLogin(ctx context.Context, request *sc_misc_api.ReaderLoginRequest, callOptions ...callopt.Option) (r *sc_misc_api.ReaderLoginResponse, err error)
-	PaymentPaidCallback(ctx context.Context, request *sc_bff_api.PaymentPaidCallbackRequest, callOptions ...callopt.Option) (r *sc_bff_api.PaymentPaidCallbackResponse, err error)
+	PaymentPaidCallback(ctx context.Context, request *sc_misc_api.PaymentPaidCallbackRequest, callOptions ...callopt.Option) (r *sc_misc_api.PaymentPaidCallbackResponse, err error)
 }
 
 // NewClient creates a client for the service defined in IDL.
@@ -49,17 +48,17 @@ type kMiscServiceClient struct {
 	*kClient
 }
 
-func (p *kMiscServiceClient) ColumnOmnibus(ctx context.Context, request *sc_bff_api.ColumnOmnibusRequest, callOptions ...callopt.Option) (r *sc_bff_api.ColumnOmnibusResponse, err error) {
+func (p *kMiscServiceClient) ColumnOmnibus(ctx context.Context, request *sc_misc_api.ColumnOmnibusRequest, callOptions ...callopt.Option) (r *sc_misc_api.ColumnOmnibusResponse, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
 	return p.kClient.ColumnOmnibus(ctx, request)
 }
 
-func (p *kMiscServiceClient) ColumnPage(ctx context.Context, request *sc_bff_api.ColumnPageRequest, callOptions ...callopt.Option) (r *sc_bff_api.ColumnPageResponse, err error) {
+func (p *kMiscServiceClient) ColumnPage(ctx context.Context, request *sc_misc_api.ColumnPageRequest, callOptions ...callopt.Option) (r *sc_misc_api.ColumnPageResponse, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
 	return p.kClient.ColumnPage(ctx, request)
 }
 
-func (p *kMiscServiceClient) ColumnDetail(ctx context.Context, request *sc_bff_api.ColumnDetailRequest, callOptions ...callopt.Option) (r *sc_bff_api.ColumnDetailResponse, err error) {
+func (p *kMiscServiceClient) ColumnDetail(ctx context.Context, request *sc_misc_api.ColumnDetailRequest, callOptions ...callopt.Option) (r *sc_misc_api.ColumnDetailResponse, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
 	return p.kClient.ColumnDetail(ctx, request)
 }
@@ -74,7 +73,7 @@ func (p *kMiscServiceClient) ReaderLogin(ctx context.Context, request *sc_misc_a
 	return p.kClient.ReaderLogin(ctx, request)
 }
 
-func (p *kMiscServiceClient) PaymentPaidCallback(ctx context.Context, request *sc_bff_api.PaymentPaidCallbackRequest, callOptions ...callopt.Option) (r *sc_bff_api.PaymentPaidCallbackResponse, err error) {
+func (p *kMiscServiceClient) PaymentPaidCallback(ctx context.Context, request *sc_misc_api.PaymentPaidCallbackRequest, callOptions ...callopt.Option) (r *sc_misc_api.PaymentPaidCallbackResponse, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
 	return p.kClient.PaymentPaidCallback(ctx, request)
 }

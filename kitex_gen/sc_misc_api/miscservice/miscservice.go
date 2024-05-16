@@ -7,7 +7,6 @@ import (
 	"errors"
 	client "github.com/cloudwego/kitex/client"
 	kitex "github.com/cloudwego/kitex/pkg/serviceinfo"
-	sc_bff_api "github.com/eyebluecn/sc-misc-idl/kitex_gen/sc_bff_api"
 	sc_misc_api "github.com/eyebluecn/sc-misc-idl/kitex_gen/sc_misc_api"
 )
 
@@ -240,7 +239,7 @@ func newServiceClient(c client.Client) *kClient {
 	}
 }
 
-func (p *kClient) ColumnOmnibus(ctx context.Context, request *sc_bff_api.ColumnOmnibusRequest) (r *sc_bff_api.ColumnOmnibusResponse, err error) {
+func (p *kClient) ColumnOmnibus(ctx context.Context, request *sc_misc_api.ColumnOmnibusRequest) (r *sc_misc_api.ColumnOmnibusResponse, err error) {
 	var _args sc_misc_api.MiscServiceColumnOmnibusArgs
 	_args.Request = request
 	var _result sc_misc_api.MiscServiceColumnOmnibusResult
@@ -250,7 +249,7 @@ func (p *kClient) ColumnOmnibus(ctx context.Context, request *sc_bff_api.ColumnO
 	return _result.GetSuccess(), nil
 }
 
-func (p *kClient) ColumnPage(ctx context.Context, request *sc_bff_api.ColumnPageRequest) (r *sc_bff_api.ColumnPageResponse, err error) {
+func (p *kClient) ColumnPage(ctx context.Context, request *sc_misc_api.ColumnPageRequest) (r *sc_misc_api.ColumnPageResponse, err error) {
 	var _args sc_misc_api.MiscServiceColumnPageArgs
 	_args.Request = request
 	var _result sc_misc_api.MiscServiceColumnPageResult
@@ -260,7 +259,7 @@ func (p *kClient) ColumnPage(ctx context.Context, request *sc_bff_api.ColumnPage
 	return _result.GetSuccess(), nil
 }
 
-func (p *kClient) ColumnDetail(ctx context.Context, request *sc_bff_api.ColumnDetailRequest) (r *sc_bff_api.ColumnDetailResponse, err error) {
+func (p *kClient) ColumnDetail(ctx context.Context, request *sc_misc_api.ColumnDetailRequest) (r *sc_misc_api.ColumnDetailResponse, err error) {
 	var _args sc_misc_api.MiscServiceColumnDetailArgs
 	_args.Request = request
 	var _result sc_misc_api.MiscServiceColumnDetailResult
@@ -290,7 +289,7 @@ func (p *kClient) ReaderLogin(ctx context.Context, request *sc_misc_api.ReaderLo
 	return _result.GetSuccess(), nil
 }
 
-func (p *kClient) PaymentPaidCallback(ctx context.Context, request *sc_bff_api.PaymentPaidCallbackRequest) (r *sc_bff_api.PaymentPaidCallbackResponse, err error) {
+func (p *kClient) PaymentPaidCallback(ctx context.Context, request *sc_misc_api.PaymentPaidCallbackRequest) (r *sc_misc_api.PaymentPaidCallbackResponse, err error) {
 	var _args sc_misc_api.MiscServicePaymentPaidCallbackArgs
 	_args.Request = request
 	var _result sc_misc_api.MiscServicePaymentPaidCallbackResult

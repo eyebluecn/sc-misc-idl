@@ -1,7 +1,7 @@
 include "../../author/model/author_model.thrift"
 include "../../column_quote/model/column_quote_model.thrift"
 include "../../subscription/model/subscription_model.thrift"
-namespace go sc_bff_api
+namespace go sc_misc_api
 
 
 //专栏模型

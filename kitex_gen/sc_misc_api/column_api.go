@@ -529,12 +529,13 @@ func (p *ColumnOmnibusResponse) Field255DeepEqual(src *sc_misc_base.BaseResp) bo
 }
 
 type ColumnPageRequest struct {
-	PageNum  int64              `thrift:"pageNum,1" frugal:"1,default,i64" json:"pageNum"`
-	PageSize int64              `thrift:"pageSize,2" frugal:"2,default,i64" json:"pageSize"`
-	Name     *string            `thrift:"name,4,optional" frugal:"4,optional,string" json:"name,omitempty"`
-	AuthorId *int64             `thrift:"authorId,5,optional" frugal:"5,optional,i64" json:"authorId,omitempty"`
-	Status   *ColumnStatus      `thrift:"status,6,optional" frugal:"6,optional,ColumnStatus" json:"status,omitempty"`
-	Base     *sc_misc_base.Base `thrift:"base,255,optional" frugal:"255,optional,sc_misc_base.Base" json:"base,omitempty"`
+	PageNum        int64                        `thrift:"pageNum,1" frugal:"1,default,i64" json:"pageNum"`
+	PageSize       int64                        `thrift:"pageSize,2" frugal:"2,default,i64" json:"pageSize"`
+	Name           *string                      `thrift:"name,4,optional" frugal:"4,optional,string" json:"name,omitempty"`
+	AuthorId       *int64                       `thrift:"authorId,5,optional" frugal:"5,optional,i64" json:"authorId,omitempty"`
+	Status         *ColumnStatus                `thrift:"status,6,optional" frugal:"6,optional,ColumnStatus" json:"status,omitempty"`
+	ReaderOperator *sc_misc_base.ReaderOperator `thrift:"readerOperator,7" frugal:"7,default,sc_misc_base.ReaderOperator" json:"readerOperator"`
+	Base           *sc_misc_base.Base           `thrift:"base,255,optional" frugal:"255,optional,sc_misc_base.Base" json:"base,omitempty"`
 }
 
 func NewColumnPageRequest() *ColumnPageRequest {
@@ -580,6 +581,15 @@ func (p *ColumnPageRequest) GetStatus() (v ColumnStatus) {
 	return *p.Status
 }
 
+var ColumnPageRequest_ReaderOperator_DEFAULT *sc_misc_base.ReaderOperator
+
+func (p *ColumnPageRequest) GetReaderOperator() (v *sc_misc_base.ReaderOperator) {
+	if !p.IsSetReaderOperator() {
+		return ColumnPageRequest_ReaderOperator_DEFAULT
+	}
+	return p.ReaderOperator
+}
+
 var ColumnPageRequest_Base_DEFAULT *sc_misc_base.Base
 
 func (p *ColumnPageRequest) GetBase() (v *sc_misc_base.Base) {
@@ -603,6 +613,9 @@ func (p *ColumnPageRequest) SetAuthorId(val *int64) {
 func (p *ColumnPageRequest) SetStatus(val *ColumnStatus) {
 	p.Status = val
 }
+func (p *ColumnPageRequest) SetReaderOperator(val *sc_misc_base.ReaderOperator) {
+	p.ReaderOperator = val
+}
 func (p *ColumnPageRequest) SetBase(val *sc_misc_base.Base) {
 	p.Base = val
 }
@@ -613,6 +626,7 @@ var fieldIDToName_ColumnPageRequest = map[int16]string{
 	4:   "name",
 	5:   "authorId",
 	6:   "status",
+	7:   "readerOperator",
 	255: "base",
 }
 
@@ -626,6 +640,10 @@ func (p *ColumnPageRequest) IsSetAuthorId() bool {
 
 func (p *ColumnPageRequest) IsSetStatus() bool {
 	return p.Status != nil
+}
+
+func (p *ColumnPageRequest) IsSetReaderOperator() bool {
+	return p.ReaderOperator != nil
 }
 
 func (p *ColumnPageRequest) IsSetBase() bool {
@@ -686,6 +704,14 @@ func (p *ColumnPageRequest) Read(iprot thrift.TProtocol) (err error) {
 		case 6:
 			if fieldTypeId == thrift.I32 {
 				if err = p.ReadField6(iprot); err != nil {
+					goto ReadFieldError
+				}
+			} else if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		case 7:
+			if fieldTypeId == thrift.STRUCT {
+				if err = p.ReadField7(iprot); err != nil {
 					goto ReadFieldError
 				}
 			} else if err = iprot.Skip(fieldTypeId); err != nil {
@@ -784,6 +810,14 @@ func (p *ColumnPageRequest) ReadField6(iprot thrift.TProtocol) error {
 	p.Status = _field
 	return nil
 }
+func (p *ColumnPageRequest) ReadField7(iprot thrift.TProtocol) error {
+	_field := sc_misc_base.NewReaderOperator()
+	if err := _field.Read(iprot); err != nil {
+		return err
+	}
+	p.ReaderOperator = _field
+	return nil
+}
 func (p *ColumnPageRequest) ReadField255(iprot thrift.TProtocol) error {
 	_field := sc_misc_base.NewBase()
 	if err := _field.Read(iprot); err != nil {
@@ -817,6 +851,10 @@ func (p *ColumnPageRequest) Write(oprot thrift.TProtocol) (err error) {
 		}
 		if err = p.writeField6(oprot); err != nil {
 			fieldId = 6
+			goto WriteFieldError
+		}
+		if err = p.writeField7(oprot); err != nil {
+			fieldId = 7
 			goto WriteFieldError
 		}
 		if err = p.writeField255(oprot); err != nil {
@@ -932,6 +970,23 @@ WriteFieldEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 6 end error: ", p), err)
 }
 
+func (p *ColumnPageRequest) writeField7(oprot thrift.TProtocol) (err error) {
+	if err = oprot.WriteFieldBegin("readerOperator", thrift.STRUCT, 7); err != nil {
+		goto WriteFieldBeginError
+	}
+	if err := p.ReaderOperator.Write(oprot); err != nil {
+		return err
+	}
+	if err = oprot.WriteFieldEnd(); err != nil {
+		goto WriteFieldEndError
+	}
+	return nil
+WriteFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 7 begin error: ", p), err)
+WriteFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 7 end error: ", p), err)
+}
+
 func (p *ColumnPageRequest) writeField255(oprot thrift.TProtocol) (err error) {
 	if p.IsSetBase() {
 		if err = oprot.WriteFieldBegin("base", thrift.STRUCT, 255); err != nil {
@@ -978,6 +1033,9 @@ func (p *ColumnPageRequest) DeepEqual(ano *ColumnPageRequest) bool {
 		return false
 	}
 	if !p.Field6DeepEqual(ano.Status) {
+		return false
+	}
+	if !p.Field7DeepEqual(ano.ReaderOperator) {
 		return false
 	}
 	if !p.Field255DeepEqual(ano.Base) {
@@ -1032,6 +1090,13 @@ func (p *ColumnPageRequest) Field6DeepEqual(src *ColumnStatus) bool {
 		return false
 	}
 	if *p.Status != *src {
+		return false
+	}
+	return true
+}
+func (p *ColumnPageRequest) Field7DeepEqual(src *sc_misc_base.ReaderOperator) bool {
+
+	if !p.ReaderOperator.DeepEqual(src) {
 		return false
 	}
 	return true

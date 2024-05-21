@@ -533,7 +533,7 @@ type ColumnPageRequest struct {
 	PageSize int64              `thrift:"pageSize,2" frugal:"2,default,i64" json:"pageSize"`
 	Name     *string            `thrift:"name,4,optional" frugal:"4,optional,string" json:"name,omitempty"`
 	AuthorId *int64             `thrift:"authorId,5,optional" frugal:"5,optional,i64" json:"authorId,omitempty"`
-	Status   *int32             `thrift:"status,6,optional" frugal:"6,optional,i32" json:"status,omitempty"`
+	Status   *ColumnStatus      `thrift:"status,6,optional" frugal:"6,optional,ColumnStatus" json:"status,omitempty"`
 	Base     *sc_misc_base.Base `thrift:"base,255,optional" frugal:"255,optional,sc_misc_base.Base" json:"base,omitempty"`
 }
 
@@ -571,9 +571,9 @@ func (p *ColumnPageRequest) GetAuthorId() (v int64) {
 	return *p.AuthorId
 }
 
-var ColumnPageRequest_Status_DEFAULT int32
+var ColumnPageRequest_Status_DEFAULT ColumnStatus
 
-func (p *ColumnPageRequest) GetStatus() (v int32) {
+func (p *ColumnPageRequest) GetStatus() (v ColumnStatus) {
 	if !p.IsSetStatus() {
 		return ColumnPageRequest_Status_DEFAULT
 	}
@@ -600,7 +600,7 @@ func (p *ColumnPageRequest) SetName(val *string) {
 func (p *ColumnPageRequest) SetAuthorId(val *int64) {
 	p.AuthorId = val
 }
-func (p *ColumnPageRequest) SetStatus(val *int32) {
+func (p *ColumnPageRequest) SetStatus(val *ColumnStatus) {
 	p.Status = val
 }
 func (p *ColumnPageRequest) SetBase(val *sc_misc_base.Base) {
@@ -774,11 +774,12 @@ func (p *ColumnPageRequest) ReadField5(iprot thrift.TProtocol) error {
 }
 func (p *ColumnPageRequest) ReadField6(iprot thrift.TProtocol) error {
 
-	var _field *int32
+	var _field *ColumnStatus
 	if v, err := iprot.ReadI32(); err != nil {
 		return err
 	} else {
-		_field = &v
+		tmp := ColumnStatus(v)
+		_field = &tmp
 	}
 	p.Status = _field
 	return nil
@@ -917,7 +918,7 @@ func (p *ColumnPageRequest) writeField6(oprot thrift.TProtocol) (err error) {
 		if err = oprot.WriteFieldBegin("status", thrift.I32, 6); err != nil {
 			goto WriteFieldBeginError
 		}
-		if err := oprot.WriteI32(*p.Status); err != nil {
+		if err := oprot.WriteI32(int32(*p.Status)); err != nil {
 			return err
 		}
 		if err = oprot.WriteFieldEnd(); err != nil {
@@ -1023,7 +1024,7 @@ func (p *ColumnPageRequest) Field5DeepEqual(src *int64) bool {
 	}
 	return true
 }
-func (p *ColumnPageRequest) Field6DeepEqual(src *int32) bool {
+func (p *ColumnPageRequest) Field6DeepEqual(src *ColumnStatus) bool {
 
 	if p.Status == src {
 		return true

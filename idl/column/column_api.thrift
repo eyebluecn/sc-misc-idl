@@ -1,6 +1,7 @@
 include "../base/base.thrift"
 include "../base/pagination.thrift"
 include "model/column_model.thrift"
+include "enum/column_enums.thrift"
 namespace go sc_misc_api
 
 //请求体
@@ -26,7 +27,7 @@ struct ColumnPageRequest {
 	2: i64 pageSize //每页大小
 	4: optional string name //名称
 	5: optional i64 authorId //作者id
-	6: optional i32 status //状态
+	6: optional column_enums.ColumnStatus status //状态
 
     255: optional base.Base base //标准请求内容
 }

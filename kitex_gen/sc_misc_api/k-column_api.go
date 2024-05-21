@@ -630,7 +630,9 @@ func (p *ColumnPageRequest) FastReadField6(buf []byte) (int, error) {
 		return offset, err
 	} else {
 		offset += l
-		p.Status = &v
+
+		tmp := ColumnStatus(v)
+		p.Status = &tmp
 
 	}
 	return offset, nil
@@ -661,8 +663,8 @@ func (p *ColumnPageRequest) FastWriteNocopy(buf []byte, binaryWriter bthrift.Bin
 		offset += p.fastWriteField1(buf[offset:], binaryWriter)
 		offset += p.fastWriteField2(buf[offset:], binaryWriter)
 		offset += p.fastWriteField5(buf[offset:], binaryWriter)
-		offset += p.fastWriteField6(buf[offset:], binaryWriter)
 		offset += p.fastWriteField4(buf[offset:], binaryWriter)
+		offset += p.fastWriteField6(buf[offset:], binaryWriter)
 		offset += p.fastWriteField255(buf[offset:], binaryWriter)
 	}
 	offset += bthrift.Binary.WriteFieldStop(buf[offset:])
@@ -730,7 +732,7 @@ func (p *ColumnPageRequest) fastWriteField6(buf []byte, binaryWriter bthrift.Bin
 	offset := 0
 	if p.IsSetStatus() {
 		offset += bthrift.Binary.WriteFieldBegin(buf[offset:], "status", thrift.I32, 6)
-		offset += bthrift.Binary.WriteI32(buf[offset:], *p.Status)
+		offset += bthrift.Binary.WriteI32(buf[offset:], int32(*p.Status))
 
 		offset += bthrift.Binary.WriteFieldEnd(buf[offset:])
 	}
@@ -791,7 +793,7 @@ func (p *ColumnPageRequest) field6Length() int {
 	l := 0
 	if p.IsSetStatus() {
 		l += bthrift.Binary.FieldBeginLength("status", thrift.I32, 6)
-		l += bthrift.Binary.I32Length(*p.Status)
+		l += bthrift.Binary.I32Length(int32(*p.Status))
 
 		l += bthrift.Binary.FieldEndLength()
 	}

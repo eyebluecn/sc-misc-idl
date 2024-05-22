@@ -29,7 +29,7 @@ struct RichColumnPageRequest {
 	4: optional string name //名称
 	5: optional i64 authorId //作者id
 	6: optional column_enums.ColumnStatus status //状态
-	7: operator.ReaderOperator readerOperator //读者操作者
+	7: operator.Operator operator //读者操作者
 
     255: optional base.Base base //标准请求内容
 }

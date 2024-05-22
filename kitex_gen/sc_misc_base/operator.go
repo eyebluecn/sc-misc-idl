@@ -3,44 +3,97 @@
 package sc_misc_base
 
 import (
+	"database/sql"
+	"database/sql/driver"
 	"fmt"
 	"github.com/apache/thrift/lib/go/thrift"
 	"strings"
 )
 
-type ReaderOperator struct {
-	ReaderId int64  `thrift:"readerId,1" frugal:"1,default,i64" json:"readerId"`
-	Username string `thrift:"username,4" frugal:"4,default,string" json:"username"`
+type OperatorType int64
+
+const (
+	OperatorType_READER OperatorType = 0
+	OperatorType_EDITOR OperatorType = 1
+)
+
+func (p OperatorType) String() string {
+	switch p {
+	case OperatorType_READER:
+		return "READER"
+	case OperatorType_EDITOR:
+		return "EDITOR"
+	}
+	return "<UNSET>"
 }
 
-func NewReaderOperator() *ReaderOperator {
-	return &ReaderOperator{}
+func OperatorTypeFromString(s string) (OperatorType, error) {
+	switch s {
+	case "READER":
+		return OperatorType_READER, nil
+	case "EDITOR":
+		return OperatorType_EDITOR, nil
+	}
+	return OperatorType(0), fmt.Errorf("not a valid OperatorType string")
 }
 
-func (p *ReaderOperator) InitDefault() {
-	*p = ReaderOperator{}
+func OperatorTypePtr(v OperatorType) *OperatorType { return &v }
+func (p *OperatorType) Scan(value interface{}) (err error) {
+	var result sql.NullInt64
+	err = result.Scan(value)
+	*p = OperatorType(result.Int64)
+	return
 }
 
-func (p *ReaderOperator) GetReaderId() (v int64) {
-	return p.ReaderId
+func (p *OperatorType) Value() (driver.Value, error) {
+	if p == nil {
+		return nil, nil
+	}
+	return int64(*p), nil
 }
 
-func (p *ReaderOperator) GetUsername() (v string) {
+type Operator struct {
+	OperatorId int64        `thrift:"operatorId,1" frugal:"1,default,i64" json:"operatorId"`
+	Type       OperatorType `thrift:"type,2" frugal:"2,default,OperatorType" json:"type"`
+	Username   string       `thrift:"username,4" frugal:"4,default,string" json:"username"`
+}
+
+func NewOperator() *Operator {
+	return &Operator{}
+}
+
+func (p *Operator) InitDefault() {
+	*p = Operator{}
+}
+
+func (p *Operator) GetOperatorId() (v int64) {
+	return p.OperatorId
+}
+
+func (p *Operator) GetType() (v OperatorType) {
+	return p.Type
+}
+
+func (p *Operator) GetUsername() (v string) {
 	return p.Username
 }
-func (p *ReaderOperator) SetReaderId(val int64) {
-	p.ReaderId = val
+func (p *Operator) SetOperatorId(val int64) {
+	p.OperatorId = val
 }
-func (p *ReaderOperator) SetUsername(val string) {
+func (p *Operator) SetType(val OperatorType) {
+	p.Type = val
+}
+func (p *Operator) SetUsername(val string) {
 	p.Username = val
 }
 
-var fieldIDToName_ReaderOperator = map[int16]string{
-	1: "readerId",
+var fieldIDToName_Operator = map[int16]string{
+	1: "operatorId",
+	2: "type",
 	4: "username",
 }
 
-func (p *ReaderOperator) Read(iprot thrift.TProtocol) (err error) {
+func (p *Operator) Read(iprot thrift.TProtocol) (err error) {
 
 	var fieldTypeId thrift.TType
 	var fieldId int16
@@ -62,6 +115,14 @@ func (p *ReaderOperator) Read(iprot thrift.TProtocol) (err error) {
 		case 1:
 			if fieldTypeId == thrift.I64 {
 				if err = p.ReadField1(iprot); err != nil {
+					goto ReadFieldError
+				}
+			} else if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		case 2:
+			if fieldTypeId == thrift.I32 {
+				if err = p.ReadField2(iprot); err != nil {
 					goto ReadFieldError
 				}
 			} else if err = iprot.Skip(fieldTypeId); err != nil {
@@ -94,7 +155,7 @@ ReadStructBeginError:
 ReadFieldBeginError:
 	return thrift.PrependError(fmt.Sprintf("%T read field %d begin error: ", p, fieldId), err)
 ReadFieldError:
-	return thrift.PrependError(fmt.Sprintf("%T read field %d '%s' error: ", p, fieldId, fieldIDToName_ReaderOperator[fieldId]), err)
+	return thrift.PrependError(fmt.Sprintf("%T read field %d '%s' error: ", p, fieldId, fieldIDToName_Operator[fieldId]), err)
 SkipFieldError:
 	return thrift.PrependError(fmt.Sprintf("%T field %d skip type %d error: ", p, fieldId, fieldTypeId), err)
 
@@ -104,7 +165,7 @@ ReadStructEndError:
 	return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
 }
 
-func (p *ReaderOperator) ReadField1(iprot thrift.TProtocol) error {
+func (p *Operator) ReadField1(iprot thrift.TProtocol) error {
 
 	var _field int64
 	if v, err := iprot.ReadI64(); err != nil {
@@ -112,10 +173,21 @@ func (p *ReaderOperator) ReadField1(iprot thrift.TProtocol) error {
 	} else {
 		_field = v
 	}
-	p.ReaderId = _field
+	p.OperatorId = _field
 	return nil
 }
-func (p *ReaderOperator) ReadField4(iprot thrift.TProtocol) error {
+func (p *Operator) ReadField2(iprot thrift.TProtocol) error {
+
+	var _field OperatorType
+	if v, err := iprot.ReadI32(); err != nil {
+		return err
+	} else {
+		_field = OperatorType(v)
+	}
+	p.Type = _field
+	return nil
+}
+func (p *Operator) ReadField4(iprot thrift.TProtocol) error {
 
 	var _field string
 	if v, err := iprot.ReadString(); err != nil {
@@ -127,14 +199,18 @@ func (p *ReaderOperator) ReadField4(iprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *ReaderOperator) Write(oprot thrift.TProtocol) (err error) {
+func (p *Operator) Write(oprot thrift.TProtocol) (err error) {
 	var fieldId int16
-	if err = oprot.WriteStructBegin("ReaderOperator"); err != nil {
+	if err = oprot.WriteStructBegin("Operator"); err != nil {
 		goto WriteStructBeginError
 	}
 	if p != nil {
 		if err = p.writeField1(oprot); err != nil {
 			fieldId = 1
+			goto WriteFieldError
+		}
+		if err = p.writeField2(oprot); err != nil {
+			fieldId = 2
 			goto WriteFieldError
 		}
 		if err = p.writeField4(oprot); err != nil {
@@ -159,11 +235,11 @@ WriteStructEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write struct end error: ", p), err)
 }
 
-func (p *ReaderOperator) writeField1(oprot thrift.TProtocol) (err error) {
-	if err = oprot.WriteFieldBegin("readerId", thrift.I64, 1); err != nil {
+func (p *Operator) writeField1(oprot thrift.TProtocol) (err error) {
+	if err = oprot.WriteFieldBegin("operatorId", thrift.I64, 1); err != nil {
 		goto WriteFieldBeginError
 	}
-	if err := oprot.WriteI64(p.ReaderId); err != nil {
+	if err := oprot.WriteI64(p.OperatorId); err != nil {
 		return err
 	}
 	if err = oprot.WriteFieldEnd(); err != nil {
@@ -176,7 +252,24 @@ WriteFieldEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 1 end error: ", p), err)
 }
 
-func (p *ReaderOperator) writeField4(oprot thrift.TProtocol) (err error) {
+func (p *Operator) writeField2(oprot thrift.TProtocol) (err error) {
+	if err = oprot.WriteFieldBegin("type", thrift.I32, 2); err != nil {
+		goto WriteFieldBeginError
+	}
+	if err := oprot.WriteI32(int32(p.Type)); err != nil {
+		return err
+	}
+	if err = oprot.WriteFieldEnd(); err != nil {
+		goto WriteFieldEndError
+	}
+	return nil
+WriteFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 2 begin error: ", p), err)
+WriteFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 2 end error: ", p), err)
+}
+
+func (p *Operator) writeField4(oprot thrift.TProtocol) (err error) {
 	if err = oprot.WriteFieldBegin("username", thrift.STRING, 4); err != nil {
 		goto WriteFieldBeginError
 	}
@@ -193,21 +286,24 @@ WriteFieldEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 4 end error: ", p), err)
 }
 
-func (p *ReaderOperator) String() string {
+func (p *Operator) String() string {
 	if p == nil {
 		return "<nil>"
 	}
-	return fmt.Sprintf("ReaderOperator(%+v)", *p)
+	return fmt.Sprintf("Operator(%+v)", *p)
 
 }
 
-func (p *ReaderOperator) DeepEqual(ano *ReaderOperator) bool {
+func (p *Operator) DeepEqual(ano *Operator) bool {
 	if p == ano {
 		return true
 	} else if p == nil || ano == nil {
 		return false
 	}
-	if !p.Field1DeepEqual(ano.ReaderId) {
+	if !p.Field1DeepEqual(ano.OperatorId) {
+		return false
+	}
+	if !p.Field2DeepEqual(ano.Type) {
 		return false
 	}
 	if !p.Field4DeepEqual(ano.Username) {
@@ -216,237 +312,21 @@ func (p *ReaderOperator) DeepEqual(ano *ReaderOperator) bool {
 	return true
 }
 
-func (p *ReaderOperator) Field1DeepEqual(src int64) bool {
+func (p *Operator) Field1DeepEqual(src int64) bool {
 
-	if p.ReaderId != src {
+	if p.OperatorId != src {
 		return false
 	}
 	return true
 }
-func (p *ReaderOperator) Field4DeepEqual(src string) bool {
+func (p *Operator) Field2DeepEqual(src OperatorType) bool {
 
-	if strings.Compare(p.Username, src) != 0 {
+	if p.Type != src {
 		return false
 	}
 	return true
 }
-
-type EditorOperator struct {
-	EditorId int64  `thrift:"editorId,1" frugal:"1,default,i64" json:"editorId"`
-	Username string `thrift:"username,4" frugal:"4,default,string" json:"username"`
-}
-
-func NewEditorOperator() *EditorOperator {
-	return &EditorOperator{}
-}
-
-func (p *EditorOperator) InitDefault() {
-	*p = EditorOperator{}
-}
-
-func (p *EditorOperator) GetEditorId() (v int64) {
-	return p.EditorId
-}
-
-func (p *EditorOperator) GetUsername() (v string) {
-	return p.Username
-}
-func (p *EditorOperator) SetEditorId(val int64) {
-	p.EditorId = val
-}
-func (p *EditorOperator) SetUsername(val string) {
-	p.Username = val
-}
-
-var fieldIDToName_EditorOperator = map[int16]string{
-	1: "editorId",
-	4: "username",
-}
-
-func (p *EditorOperator) Read(iprot thrift.TProtocol) (err error) {
-
-	var fieldTypeId thrift.TType
-	var fieldId int16
-
-	if _, err = iprot.ReadStructBegin(); err != nil {
-		goto ReadStructBeginError
-	}
-
-	for {
-		_, fieldTypeId, fieldId, err = iprot.ReadFieldBegin()
-		if err != nil {
-			goto ReadFieldBeginError
-		}
-		if fieldTypeId == thrift.STOP {
-			break
-		}
-
-		switch fieldId {
-		case 1:
-			if fieldTypeId == thrift.I64 {
-				if err = p.ReadField1(iprot); err != nil {
-					goto ReadFieldError
-				}
-			} else if err = iprot.Skip(fieldTypeId); err != nil {
-				goto SkipFieldError
-			}
-		case 4:
-			if fieldTypeId == thrift.STRING {
-				if err = p.ReadField4(iprot); err != nil {
-					goto ReadFieldError
-				}
-			} else if err = iprot.Skip(fieldTypeId); err != nil {
-				goto SkipFieldError
-			}
-		default:
-			if err = iprot.Skip(fieldTypeId); err != nil {
-				goto SkipFieldError
-			}
-		}
-		if err = iprot.ReadFieldEnd(); err != nil {
-			goto ReadFieldEndError
-		}
-	}
-	if err = iprot.ReadStructEnd(); err != nil {
-		goto ReadStructEndError
-	}
-
-	return nil
-ReadStructBeginError:
-	return thrift.PrependError(fmt.Sprintf("%T read struct begin error: ", p), err)
-ReadFieldBeginError:
-	return thrift.PrependError(fmt.Sprintf("%T read field %d begin error: ", p, fieldId), err)
-ReadFieldError:
-	return thrift.PrependError(fmt.Sprintf("%T read field %d '%s' error: ", p, fieldId, fieldIDToName_EditorOperator[fieldId]), err)
-SkipFieldError:
-	return thrift.PrependError(fmt.Sprintf("%T field %d skip type %d error: ", p, fieldId, fieldTypeId), err)
-
-ReadFieldEndError:
-	return thrift.PrependError(fmt.Sprintf("%T read field end error", p), err)
-ReadStructEndError:
-	return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
-}
-
-func (p *EditorOperator) ReadField1(iprot thrift.TProtocol) error {
-
-	var _field int64
-	if v, err := iprot.ReadI64(); err != nil {
-		return err
-	} else {
-		_field = v
-	}
-	p.EditorId = _field
-	return nil
-}
-func (p *EditorOperator) ReadField4(iprot thrift.TProtocol) error {
-
-	var _field string
-	if v, err := iprot.ReadString(); err != nil {
-		return err
-	} else {
-		_field = v
-	}
-	p.Username = _field
-	return nil
-}
-
-func (p *EditorOperator) Write(oprot thrift.TProtocol) (err error) {
-	var fieldId int16
-	if err = oprot.WriteStructBegin("EditorOperator"); err != nil {
-		goto WriteStructBeginError
-	}
-	if p != nil {
-		if err = p.writeField1(oprot); err != nil {
-			fieldId = 1
-			goto WriteFieldError
-		}
-		if err = p.writeField4(oprot); err != nil {
-			fieldId = 4
-			goto WriteFieldError
-		}
-	}
-	if err = oprot.WriteFieldStop(); err != nil {
-		goto WriteFieldStopError
-	}
-	if err = oprot.WriteStructEnd(); err != nil {
-		goto WriteStructEndError
-	}
-	return nil
-WriteStructBeginError:
-	return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
-WriteFieldError:
-	return thrift.PrependError(fmt.Sprintf("%T write field %d error: ", p, fieldId), err)
-WriteFieldStopError:
-	return thrift.PrependError(fmt.Sprintf("%T write field stop error: ", p), err)
-WriteStructEndError:
-	return thrift.PrependError(fmt.Sprintf("%T write struct end error: ", p), err)
-}
-
-func (p *EditorOperator) writeField1(oprot thrift.TProtocol) (err error) {
-	if err = oprot.WriteFieldBegin("editorId", thrift.I64, 1); err != nil {
-		goto WriteFieldBeginError
-	}
-	if err := oprot.WriteI64(p.EditorId); err != nil {
-		return err
-	}
-	if err = oprot.WriteFieldEnd(); err != nil {
-		goto WriteFieldEndError
-	}
-	return nil
-WriteFieldBeginError:
-	return thrift.PrependError(fmt.Sprintf("%T write field 1 begin error: ", p), err)
-WriteFieldEndError:
-	return thrift.PrependError(fmt.Sprintf("%T write field 1 end error: ", p), err)
-}
-
-func (p *EditorOperator) writeField4(oprot thrift.TProtocol) (err error) {
-	if err = oprot.WriteFieldBegin("username", thrift.STRING, 4); err != nil {
-		goto WriteFieldBeginError
-	}
-	if err := oprot.WriteString(p.Username); err != nil {
-		return err
-	}
-	if err = oprot.WriteFieldEnd(); err != nil {
-		goto WriteFieldEndError
-	}
-	return nil
-WriteFieldBeginError:
-	return thrift.PrependError(fmt.Sprintf("%T write field 4 begin error: ", p), err)
-WriteFieldEndError:
-	return thrift.PrependError(fmt.Sprintf("%T write field 4 end error: ", p), err)
-}
-
-func (p *EditorOperator) String() string {
-	if p == nil {
-		return "<nil>"
-	}
-	return fmt.Sprintf("EditorOperator(%+v)", *p)
-
-}
-
-func (p *EditorOperator) DeepEqual(ano *EditorOperator) bool {
-	if p == ano {
-		return true
-	} else if p == nil || ano == nil {
-		return false
-	}
-	if !p.Field1DeepEqual(ano.EditorId) {
-		return false
-	}
-	if !p.Field4DeepEqual(ano.Username) {
-		return false
-	}
-	return true
-}
-
-func (p *EditorOperator) Field1DeepEqual(src int64) bool {
-
-	if p.EditorId != src {
-		return false
-	}
-	return true
-}
-func (p *EditorOperator) Field4DeepEqual(src string) bool {
+func (p *Operator) Field4DeepEqual(src string) bool {
 
 	if strings.Compare(p.Username, src) != 0 {
 		return false

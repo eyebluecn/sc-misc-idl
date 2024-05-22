@@ -1,12 +1,13 @@
 namespace go sc_misc_base
 
-//操作者：读者
-struct ReaderOperator {
-    1: i64 readerId //读者id
-    4: string username //昵称
+enum OperatorType {
+    READER = 0 //读者
+    EDITOR = 1 //小编
 }
-//操作者：小编
-struct EditorOperator {
-    1: i64 editorId //小编id
+
+//操作者：读者
+struct Operator {
+    1: i64 operatorId //操作者id
+    2: OperatorType type //操作者类型
     4: string username //昵称
 }

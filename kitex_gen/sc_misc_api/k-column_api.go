@@ -655,13 +655,13 @@ func (p *RichColumnPageRequest) FastReadField6(buf []byte) (int, error) {
 func (p *RichColumnPageRequest) FastReadField7(buf []byte) (int, error) {
 	offset := 0
 
-	tmp := sc_misc_base.NewReaderOperator()
+	tmp := sc_misc_base.NewOperator()
 	if l, err := tmp.FastRead(buf[offset:]); err != nil {
 		return offset, err
 	} else {
 		offset += l
 	}
-	p.ReaderOperator = tmp
+	p.Operator = tmp
 	return offset, nil
 }
 
@@ -770,8 +770,8 @@ func (p *RichColumnPageRequest) fastWriteField6(buf []byte, binaryWriter bthrift
 
 func (p *RichColumnPageRequest) fastWriteField7(buf []byte, binaryWriter bthrift.BinaryWriter) int {
 	offset := 0
-	offset += bthrift.Binary.WriteFieldBegin(buf[offset:], "readerOperator", thrift.STRUCT, 7)
-	offset += p.ReaderOperator.FastWriteNocopy(buf[offset:], binaryWriter)
+	offset += bthrift.Binary.WriteFieldBegin(buf[offset:], "operator", thrift.STRUCT, 7)
+	offset += p.Operator.FastWriteNocopy(buf[offset:], binaryWriter)
 	offset += bthrift.Binary.WriteFieldEnd(buf[offset:])
 	return offset
 }
@@ -839,8 +839,8 @@ func (p *RichColumnPageRequest) field6Length() int {
 
 func (p *RichColumnPageRequest) field7Length() int {
 	l := 0
-	l += bthrift.Binary.FieldBeginLength("readerOperator", thrift.STRUCT, 7)
-	l += p.ReaderOperator.BLength()
+	l += bthrift.Binary.FieldBeginLength("operator", thrift.STRUCT, 7)
+	l += p.Operator.BLength()
 	l += bthrift.Binary.FieldEndLength()
 	return l
 }

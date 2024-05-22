@@ -359,7 +359,8 @@ func (p *ColumnOmnibusRequest) Field255DeepEqual(src *sc_misc_base.Base) bool {
 }
 
 type ColumnOmnibusResponse struct {
-	BaseResp *sc_misc_base.BaseResp `thrift:"baseResp,255" frugal:"255,default,sc_misc_base.BaseResp" json:"baseResp"`
+	RichColumnDTO *RichColumnDTO         `thrift:"richColumnDTO,1" frugal:"1,default,RichColumnDTO" json:"richColumnDTO"`
+	BaseResp      *sc_misc_base.BaseResp `thrift:"baseResp,255" frugal:"255,default,sc_misc_base.BaseResp" json:"baseResp"`
 }
 
 func NewColumnOmnibusResponse() *ColumnOmnibusResponse {
@@ -370,6 +371,15 @@ func (p *ColumnOmnibusResponse) InitDefault() {
 	*p = ColumnOmnibusResponse{}
 }
 
+var ColumnOmnibusResponse_RichColumnDTO_DEFAULT *RichColumnDTO
+
+func (p *ColumnOmnibusResponse) GetRichColumnDTO() (v *RichColumnDTO) {
+	if !p.IsSetRichColumnDTO() {
+		return ColumnOmnibusResponse_RichColumnDTO_DEFAULT
+	}
+	return p.RichColumnDTO
+}
+
 var ColumnOmnibusResponse_BaseResp_DEFAULT *sc_misc_base.BaseResp
 
 func (p *ColumnOmnibusResponse) GetBaseResp() (v *sc_misc_base.BaseResp) {
@@ -378,12 +388,20 @@ func (p *ColumnOmnibusResponse) GetBaseResp() (v *sc_misc_base.BaseResp) {
 	}
 	return p.BaseResp
 }
+func (p *ColumnOmnibusResponse) SetRichColumnDTO(val *RichColumnDTO) {
+	p.RichColumnDTO = val
+}
 func (p *ColumnOmnibusResponse) SetBaseResp(val *sc_misc_base.BaseResp) {
 	p.BaseResp = val
 }
 
 var fieldIDToName_ColumnOmnibusResponse = map[int16]string{
+	1:   "richColumnDTO",
 	255: "baseResp",
+}
+
+func (p *ColumnOmnibusResponse) IsSetRichColumnDTO() bool {
+	return p.RichColumnDTO != nil
 }
 
 func (p *ColumnOmnibusResponse) IsSetBaseResp() bool {
@@ -409,6 +427,14 @@ func (p *ColumnOmnibusResponse) Read(iprot thrift.TProtocol) (err error) {
 		}
 
 		switch fieldId {
+		case 1:
+			if fieldTypeId == thrift.STRUCT {
+				if err = p.ReadField1(iprot); err != nil {
+					goto ReadFieldError
+				}
+			} else if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
 		case 255:
 			if fieldTypeId == thrift.STRUCT {
 				if err = p.ReadField255(iprot); err != nil {
@@ -446,6 +472,14 @@ ReadStructEndError:
 	return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
 }
 
+func (p *ColumnOmnibusResponse) ReadField1(iprot thrift.TProtocol) error {
+	_field := NewRichColumnDTO()
+	if err := _field.Read(iprot); err != nil {
+		return err
+	}
+	p.RichColumnDTO = _field
+	return nil
+}
 func (p *ColumnOmnibusResponse) ReadField255(iprot thrift.TProtocol) error {
 	_field := sc_misc_base.NewBaseResp()
 	if err := _field.Read(iprot); err != nil {
@@ -461,6 +495,10 @@ func (p *ColumnOmnibusResponse) Write(oprot thrift.TProtocol) (err error) {
 		goto WriteStructBeginError
 	}
 	if p != nil {
+		if err = p.writeField1(oprot); err != nil {
+			fieldId = 1
+			goto WriteFieldError
+		}
 		if err = p.writeField255(oprot); err != nil {
 			fieldId = 255
 			goto WriteFieldError
@@ -481,6 +519,23 @@ WriteFieldStopError:
 	return thrift.PrependError(fmt.Sprintf("%T write field stop error: ", p), err)
 WriteStructEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write struct end error: ", p), err)
+}
+
+func (p *ColumnOmnibusResponse) writeField1(oprot thrift.TProtocol) (err error) {
+	if err = oprot.WriteFieldBegin("richColumnDTO", thrift.STRUCT, 1); err != nil {
+		goto WriteFieldBeginError
+	}
+	if err := p.RichColumnDTO.Write(oprot); err != nil {
+		return err
+	}
+	if err = oprot.WriteFieldEnd(); err != nil {
+		goto WriteFieldEndError
+	}
+	return nil
+WriteFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 1 begin error: ", p), err)
+WriteFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 1 end error: ", p), err)
 }
 
 func (p *ColumnOmnibusResponse) writeField255(oprot thrift.TProtocol) (err error) {
@@ -514,12 +569,22 @@ func (p *ColumnOmnibusResponse) DeepEqual(ano *ColumnOmnibusResponse) bool {
 	} else if p == nil || ano == nil {
 		return false
 	}
+	if !p.Field1DeepEqual(ano.RichColumnDTO) {
+		return false
+	}
 	if !p.Field255DeepEqual(ano.BaseResp) {
 		return false
 	}
 	return true
 }
 
+func (p *ColumnOmnibusResponse) Field1DeepEqual(src *RichColumnDTO) bool {
+
+	if !p.RichColumnDTO.DeepEqual(src) {
+		return false
+	}
+	return true
+}
 func (p *ColumnOmnibusResponse) Field255DeepEqual(src *sc_misc_base.BaseResp) bool {
 
 	if !p.BaseResp.DeepEqual(src) {

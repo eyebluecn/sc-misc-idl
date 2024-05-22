@@ -17,6 +17,7 @@ struct ColumnOmnibusRequest {
 //响应体
 struct ColumnOmnibusResponse {
 
+    1: column_model.RichColumnDTO richColumnDTO //返回专栏
     255: base.BaseResp baseResp //标准返回内容
 
 

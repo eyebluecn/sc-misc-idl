@@ -323,6 +323,20 @@ func (p *ColumnOmnibusResponse) FastRead(buf []byte) (int, error) {
 			break
 		}
 		switch fieldId {
+		case 1:
+			if fieldTypeId == thrift.STRUCT {
+				l, err = p.FastReadField1(buf[offset:])
+				offset += l
+				if err != nil {
+					goto ReadFieldError
+				}
+			} else {
+				l, err = bthrift.Binary.Skip(buf[offset:], fieldTypeId)
+				offset += l
+				if err != nil {
+					goto SkipFieldError
+				}
+			}
 		case 255:
 			if fieldTypeId == thrift.STRUCT {
 				l, err = p.FastReadField255(buf[offset:])
@@ -372,6 +386,19 @@ ReadStructEndError:
 	return offset, thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
 }
 
+func (p *ColumnOmnibusResponse) FastReadField1(buf []byte) (int, error) {
+	offset := 0
+
+	tmp := NewRichColumnDTO()
+	if l, err := tmp.FastRead(buf[offset:]); err != nil {
+		return offset, err
+	} else {
+		offset += l
+	}
+	p.RichColumnDTO = tmp
+	return offset, nil
+}
+
 func (p *ColumnOmnibusResponse) FastReadField255(buf []byte) (int, error) {
 	offset := 0
 
@@ -394,6 +421,7 @@ func (p *ColumnOmnibusResponse) FastWriteNocopy(buf []byte, binaryWriter bthrift
 	offset := 0
 	offset += bthrift.Binary.WriteStructBegin(buf[offset:], "ColumnOmnibusResponse")
 	if p != nil {
+		offset += p.fastWriteField1(buf[offset:], binaryWriter)
 		offset += p.fastWriteField255(buf[offset:], binaryWriter)
 	}
 	offset += bthrift.Binary.WriteFieldStop(buf[offset:])
@@ -405,11 +433,20 @@ func (p *ColumnOmnibusResponse) BLength() int {
 	l := 0
 	l += bthrift.Binary.StructBeginLength("ColumnOmnibusResponse")
 	if p != nil {
+		l += p.field1Length()
 		l += p.field255Length()
 	}
 	l += bthrift.Binary.FieldStopLength()
 	l += bthrift.Binary.StructEndLength()
 	return l
+}
+
+func (p *ColumnOmnibusResponse) fastWriteField1(buf []byte, binaryWriter bthrift.BinaryWriter) int {
+	offset := 0
+	offset += bthrift.Binary.WriteFieldBegin(buf[offset:], "richColumnDTO", thrift.STRUCT, 1)
+	offset += p.RichColumnDTO.FastWriteNocopy(buf[offset:], binaryWriter)
+	offset += bthrift.Binary.WriteFieldEnd(buf[offset:])
+	return offset
 }
 
 func (p *ColumnOmnibusResponse) fastWriteField255(buf []byte, binaryWriter bthrift.BinaryWriter) int {
@@ -418,6 +455,14 @@ func (p *ColumnOmnibusResponse) fastWriteField255(buf []byte, binaryWriter bthri
 	offset += p.BaseResp.FastWriteNocopy(buf[offset:], binaryWriter)
 	offset += bthrift.Binary.WriteFieldEnd(buf[offset:])
 	return offset
+}
+
+func (p *ColumnOmnibusResponse) field1Length() int {
+	l := 0
+	l += bthrift.Binary.FieldBeginLength("richColumnDTO", thrift.STRUCT, 1)
+	l += p.RichColumnDTO.BLength()
+	l += bthrift.Binary.FieldEndLength()
+	return l
 }
 
 func (p *ColumnOmnibusResponse) field255Length() int {

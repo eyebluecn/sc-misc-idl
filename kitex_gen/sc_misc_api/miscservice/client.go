@@ -12,7 +12,7 @@ import (
 // Client is designed to provide IDL-compatible methods with call-option parameter for kitex framework.
 type Client interface {
 	ColumnOmnibus(ctx context.Context, request *sc_misc_api.ColumnOmnibusRequest, callOptions ...callopt.Option) (r *sc_misc_api.ColumnOmnibusResponse, err error)
-	ColumnPage(ctx context.Context, request *sc_misc_api.ColumnPageRequest, callOptions ...callopt.Option) (r *sc_misc_api.ColumnPageResponse, err error)
+	RichColumnPage(ctx context.Context, request *sc_misc_api.RichColumnPageRequest, callOptions ...callopt.Option) (r *sc_misc_api.RichColumnPageResponse, err error)
 	ColumnDetail(ctx context.Context, request *sc_misc_api.ColumnDetailRequest, callOptions ...callopt.Option) (r *sc_misc_api.ColumnDetailResponse, err error)
 	EditorLogin(ctx context.Context, request *sc_misc_api.EditorLoginRequest, callOptions ...callopt.Option) (r *sc_misc_api.EditorLoginResponse, err error)
 	ReaderLogin(ctx context.Context, request *sc_misc_api.ReaderLoginRequest, callOptions ...callopt.Option) (r *sc_misc_api.ReaderLoginResponse, err error)
@@ -53,9 +53,9 @@ func (p *kMiscServiceClient) ColumnOmnibus(ctx context.Context, request *sc_misc
 	return p.kClient.ColumnOmnibus(ctx, request)
 }
 
-func (p *kMiscServiceClient) ColumnPage(ctx context.Context, request *sc_misc_api.ColumnPageRequest, callOptions ...callopt.Option) (r *sc_misc_api.ColumnPageResponse, err error) {
+func (p *kMiscServiceClient) RichColumnPage(ctx context.Context, request *sc_misc_api.RichColumnPageRequest, callOptions ...callopt.Option) (r *sc_misc_api.RichColumnPageResponse, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
-	return p.kClient.ColumnPage(ctx, request)
+	return p.kClient.RichColumnPage(ctx, request)
 }
 
 func (p *kMiscServiceClient) ColumnDetail(ctx context.Context, request *sc_misc_api.ColumnDetailRequest, callOptions ...callopt.Option) (r *sc_misc_api.ColumnDetailResponse, err error) {

@@ -13,7 +13,7 @@ service MiscService {
     column_api.ColumnOmnibusResponse ColumnOmnibus(1: column_api.ColumnOmnibusRequest request)
 
     //查看专栏列表
-    column_api.ColumnPageResponse ColumnPage(1: column_api.ColumnPageRequest request)
+    column_api.RichColumnPageResponse RichColumnPage(1: column_api.RichColumnPageRequest request)
 
     //查看专栏详情
     column_api.ColumnDetailResponse ColumnDetail(1: column_api.ColumnDetailRequest request)

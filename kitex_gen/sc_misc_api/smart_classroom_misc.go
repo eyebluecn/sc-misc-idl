@@ -11,7 +11,7 @@ import (
 type MiscService interface {
 	ColumnOmnibus(ctx context.Context, request *ColumnOmnibusRequest) (r *ColumnOmnibusResponse, err error)
 
-	ColumnPage(ctx context.Context, request *ColumnPageRequest) (r *ColumnPageResponse, err error)
+	RichColumnPage(ctx context.Context, request *RichColumnPageRequest) (r *RichColumnPageResponse, err error)
 
 	ColumnDetail(ctx context.Context, request *ColumnDetailRequest) (r *ColumnDetailResponse, err error)
 
@@ -57,11 +57,11 @@ func (p *MiscServiceClient) ColumnOmnibus(ctx context.Context, request *ColumnOm
 	}
 	return _result.GetSuccess(), nil
 }
-func (p *MiscServiceClient) ColumnPage(ctx context.Context, request *ColumnPageRequest) (r *ColumnPageResponse, err error) {
-	var _args MiscServiceColumnPageArgs
+func (p *MiscServiceClient) RichColumnPage(ctx context.Context, request *RichColumnPageRequest) (r *RichColumnPageResponse, err error) {
+	var _args MiscServiceRichColumnPageArgs
 	_args.Request = request
-	var _result MiscServiceColumnPageResult
-	if err = p.Client_().Call(ctx, "ColumnPage", &_args, &_result); err != nil {
+	var _result MiscServiceRichColumnPageResult
+	if err = p.Client_().Call(ctx, "RichColumnPage", &_args, &_result); err != nil {
 		return
 	}
 	return _result.GetSuccess(), nil
@@ -124,7 +124,7 @@ func (p *MiscServiceProcessor) ProcessorMap() map[string]thrift.TProcessorFuncti
 func NewMiscServiceProcessor(handler MiscService) *MiscServiceProcessor {
 	self := &MiscServiceProcessor{handler: handler, processorMap: make(map[string]thrift.TProcessorFunction)}
 	self.AddToProcessorMap("ColumnOmnibus", &miscServiceProcessorColumnOmnibus{handler: handler})
-	self.AddToProcessorMap("ColumnPage", &miscServiceProcessorColumnPage{handler: handler})
+	self.AddToProcessorMap("RichColumnPage", &miscServiceProcessorRichColumnPage{handler: handler})
 	self.AddToProcessorMap("ColumnDetail", &miscServiceProcessorColumnDetail{handler: handler})
 	self.AddToProcessorMap("EditorLogin", &miscServiceProcessorEditorLogin{handler: handler})
 	self.AddToProcessorMap("ReaderLogin", &miscServiceProcessorReaderLogin{handler: handler})
@@ -197,16 +197,16 @@ func (p *miscServiceProcessorColumnOmnibus) Process(ctx context.Context, seqId i
 	return true, err
 }
 
-type miscServiceProcessorColumnPage struct {
+type miscServiceProcessorRichColumnPage struct {
 	handler MiscService
 }
 
-func (p *miscServiceProcessorColumnPage) Process(ctx context.Context, seqId int32, iprot, oprot thrift.TProtocol) (success bool, err thrift.TException) {
-	args := MiscServiceColumnPageArgs{}
+func (p *miscServiceProcessorRichColumnPage) Process(ctx context.Context, seqId int32, iprot, oprot thrift.TProtocol) (success bool, err thrift.TException) {
+	args := MiscServiceRichColumnPageArgs{}
 	if err = args.Read(iprot); err != nil {
 		iprot.ReadMessageEnd()
 		x := thrift.NewTApplicationException(thrift.PROTOCOL_ERROR, err.Error())
-		oprot.WriteMessageBegin("ColumnPage", thrift.EXCEPTION, seqId)
+		oprot.WriteMessageBegin("RichColumnPage", thrift.EXCEPTION, seqId)
 		x.Write(oprot)
 		oprot.WriteMessageEnd()
 		oprot.Flush(ctx)
@@ -215,11 +215,11 @@ func (p *miscServiceProcessorColumnPage) Process(ctx context.Context, seqId int3
 
 	iprot.ReadMessageEnd()
 	var err2 error
-	result := MiscServiceColumnPageResult{}
-	var retval *ColumnPageResponse
-	if retval, err2 = p.handler.ColumnPage(ctx, args.Request); err2 != nil {
-		x := thrift.NewTApplicationException(thrift.INTERNAL_ERROR, "Internal error processing ColumnPage: "+err2.Error())
-		oprot.WriteMessageBegin("ColumnPage", thrift.EXCEPTION, seqId)
+	result := MiscServiceRichColumnPageResult{}
+	var retval *RichColumnPageResponse
+	if retval, err2 = p.handler.RichColumnPage(ctx, args.Request); err2 != nil {
+		x := thrift.NewTApplicationException(thrift.INTERNAL_ERROR, "Internal error processing RichColumnPage: "+err2.Error())
+		oprot.WriteMessageBegin("RichColumnPage", thrift.EXCEPTION, seqId)
 		x.Write(oprot)
 		oprot.WriteMessageEnd()
 		oprot.Flush(ctx)
@@ -227,7 +227,7 @@ func (p *miscServiceProcessorColumnPage) Process(ctx context.Context, seqId int3
 	} else {
 		result.Success = retval
 	}
-	if err2 = oprot.WriteMessageBegin("ColumnPage", thrift.REPLY, seqId); err2 != nil {
+	if err2 = oprot.WriteMessageBegin("RichColumnPage", thrift.REPLY, seqId); err2 != nil {
 		err = err2
 	}
 	if err2 = result.Write(oprot); err == nil && err2 != nil {
@@ -779,39 +779,39 @@ func (p *MiscServiceColumnOmnibusResult) Field0DeepEqual(src *ColumnOmnibusRespo
 	return true
 }
 
-type MiscServiceColumnPageArgs struct {
-	Request *ColumnPageRequest `thrift:"request,1" frugal:"1,default,ColumnPageRequest" json:"request"`
+type MiscServiceRichColumnPageArgs struct {
+	Request *RichColumnPageRequest `thrift:"request,1" frugal:"1,default,RichColumnPageRequest" json:"request"`
 }
 
-func NewMiscServiceColumnPageArgs() *MiscServiceColumnPageArgs {
-	return &MiscServiceColumnPageArgs{}
+func NewMiscServiceRichColumnPageArgs() *MiscServiceRichColumnPageArgs {
+	return &MiscServiceRichColumnPageArgs{}
 }
 
-func (p *MiscServiceColumnPageArgs) InitDefault() {
-	*p = MiscServiceColumnPageArgs{}
+func (p *MiscServiceRichColumnPageArgs) InitDefault() {
+	*p = MiscServiceRichColumnPageArgs{}
 }
 
-var MiscServiceColumnPageArgs_Request_DEFAULT *ColumnPageRequest
+var MiscServiceRichColumnPageArgs_Request_DEFAULT *RichColumnPageRequest
 
-func (p *MiscServiceColumnPageArgs) GetRequest() (v *ColumnPageRequest) {
+func (p *MiscServiceRichColumnPageArgs) GetRequest() (v *RichColumnPageRequest) {
 	if !p.IsSetRequest() {
-		return MiscServiceColumnPageArgs_Request_DEFAULT
+		return MiscServiceRichColumnPageArgs_Request_DEFAULT
 	}
 	return p.Request
 }
-func (p *MiscServiceColumnPageArgs) SetRequest(val *ColumnPageRequest) {
+func (p *MiscServiceRichColumnPageArgs) SetRequest(val *RichColumnPageRequest) {
 	p.Request = val
 }
 
-var fieldIDToName_MiscServiceColumnPageArgs = map[int16]string{
+var fieldIDToName_MiscServiceRichColumnPageArgs = map[int16]string{
 	1: "request",
 }
 
-func (p *MiscServiceColumnPageArgs) IsSetRequest() bool {
+func (p *MiscServiceRichColumnPageArgs) IsSetRequest() bool {
 	return p.Request != nil
 }
 
-func (p *MiscServiceColumnPageArgs) Read(iprot thrift.TProtocol) (err error) {
+func (p *MiscServiceRichColumnPageArgs) Read(iprot thrift.TProtocol) (err error) {
 
 	var fieldTypeId thrift.TType
 	var fieldId int16
@@ -857,7 +857,7 @@ ReadStructBeginError:
 ReadFieldBeginError:
 	return thrift.PrependError(fmt.Sprintf("%T read field %d begin error: ", p, fieldId), err)
 ReadFieldError:
-	return thrift.PrependError(fmt.Sprintf("%T read field %d '%s' error: ", p, fieldId, fieldIDToName_MiscServiceColumnPageArgs[fieldId]), err)
+	return thrift.PrependError(fmt.Sprintf("%T read field %d '%s' error: ", p, fieldId, fieldIDToName_MiscServiceRichColumnPageArgs[fieldId]), err)
 SkipFieldError:
 	return thrift.PrependError(fmt.Sprintf("%T field %d skip type %d error: ", p, fieldId, fieldTypeId), err)
 
@@ -867,8 +867,8 @@ ReadStructEndError:
 	return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
 }
 
-func (p *MiscServiceColumnPageArgs) ReadField1(iprot thrift.TProtocol) error {
-	_field := NewColumnPageRequest()
+func (p *MiscServiceRichColumnPageArgs) ReadField1(iprot thrift.TProtocol) error {
+	_field := NewRichColumnPageRequest()
 	if err := _field.Read(iprot); err != nil {
 		return err
 	}
@@ -876,9 +876,9 @@ func (p *MiscServiceColumnPageArgs) ReadField1(iprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *MiscServiceColumnPageArgs) Write(oprot thrift.TProtocol) (err error) {
+func (p *MiscServiceRichColumnPageArgs) Write(oprot thrift.TProtocol) (err error) {
 	var fieldId int16
-	if err = oprot.WriteStructBegin("ColumnPage_args"); err != nil {
+	if err = oprot.WriteStructBegin("RichColumnPage_args"); err != nil {
 		goto WriteStructBeginError
 	}
 	if p != nil {
@@ -904,7 +904,7 @@ WriteStructEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write struct end error: ", p), err)
 }
 
-func (p *MiscServiceColumnPageArgs) writeField1(oprot thrift.TProtocol) (err error) {
+func (p *MiscServiceRichColumnPageArgs) writeField1(oprot thrift.TProtocol) (err error) {
 	if err = oprot.WriteFieldBegin("request", thrift.STRUCT, 1); err != nil {
 		goto WriteFieldBeginError
 	}
@@ -921,15 +921,15 @@ WriteFieldEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 1 end error: ", p), err)
 }
 
-func (p *MiscServiceColumnPageArgs) String() string {
+func (p *MiscServiceRichColumnPageArgs) String() string {
 	if p == nil {
 		return "<nil>"
 	}
-	return fmt.Sprintf("MiscServiceColumnPageArgs(%+v)", *p)
+	return fmt.Sprintf("MiscServiceRichColumnPageArgs(%+v)", *p)
 
 }
 
-func (p *MiscServiceColumnPageArgs) DeepEqual(ano *MiscServiceColumnPageArgs) bool {
+func (p *MiscServiceRichColumnPageArgs) DeepEqual(ano *MiscServiceRichColumnPageArgs) bool {
 	if p == ano {
 		return true
 	} else if p == nil || ano == nil {
@@ -941,7 +941,7 @@ func (p *MiscServiceColumnPageArgs) DeepEqual(ano *MiscServiceColumnPageArgs) bo
 	return true
 }
 
-func (p *MiscServiceColumnPageArgs) Field1DeepEqual(src *ColumnPageRequest) bool {
+func (p *MiscServiceRichColumnPageArgs) Field1DeepEqual(src *RichColumnPageRequest) bool {
 
 	if !p.Request.DeepEqual(src) {
 		return false
@@ -949,39 +949,39 @@ func (p *MiscServiceColumnPageArgs) Field1DeepEqual(src *ColumnPageRequest) bool
 	return true
 }
 
-type MiscServiceColumnPageResult struct {
-	Success *ColumnPageResponse `thrift:"success,0,optional" frugal:"0,optional,ColumnPageResponse" json:"success,omitempty"`
+type MiscServiceRichColumnPageResult struct {
+	Success *RichColumnPageResponse `thrift:"success,0,optional" frugal:"0,optional,RichColumnPageResponse" json:"success,omitempty"`
 }
 
-func NewMiscServiceColumnPageResult() *MiscServiceColumnPageResult {
-	return &MiscServiceColumnPageResult{}
+func NewMiscServiceRichColumnPageResult() *MiscServiceRichColumnPageResult {
+	return &MiscServiceRichColumnPageResult{}
 }
 
-func (p *MiscServiceColumnPageResult) InitDefault() {
-	*p = MiscServiceColumnPageResult{}
+func (p *MiscServiceRichColumnPageResult) InitDefault() {
+	*p = MiscServiceRichColumnPageResult{}
 }
 
-var MiscServiceColumnPageResult_Success_DEFAULT *ColumnPageResponse
+var MiscServiceRichColumnPageResult_Success_DEFAULT *RichColumnPageResponse
 
-func (p *MiscServiceColumnPageResult) GetSuccess() (v *ColumnPageResponse) {
+func (p *MiscServiceRichColumnPageResult) GetSuccess() (v *RichColumnPageResponse) {
 	if !p.IsSetSuccess() {
-		return MiscServiceColumnPageResult_Success_DEFAULT
+		return MiscServiceRichColumnPageResult_Success_DEFAULT
 	}
 	return p.Success
 }
-func (p *MiscServiceColumnPageResult) SetSuccess(x interface{}) {
-	p.Success = x.(*ColumnPageResponse)
+func (p *MiscServiceRichColumnPageResult) SetSuccess(x interface{}) {
+	p.Success = x.(*RichColumnPageResponse)
 }
 
-var fieldIDToName_MiscServiceColumnPageResult = map[int16]string{
+var fieldIDToName_MiscServiceRichColumnPageResult = map[int16]string{
 	0: "success",
 }
 
-func (p *MiscServiceColumnPageResult) IsSetSuccess() bool {
+func (p *MiscServiceRichColumnPageResult) IsSetSuccess() bool {
 	return p.Success != nil
 }
 
-func (p *MiscServiceColumnPageResult) Read(iprot thrift.TProtocol) (err error) {
+func (p *MiscServiceRichColumnPageResult) Read(iprot thrift.TProtocol) (err error) {
 
 	var fieldTypeId thrift.TType
 	var fieldId int16
@@ -1027,7 +1027,7 @@ ReadStructBeginError:
 ReadFieldBeginError:
 	return thrift.PrependError(fmt.Sprintf("%T read field %d begin error: ", p, fieldId), err)
 ReadFieldError:
-	return thrift.PrependError(fmt.Sprintf("%T read field %d '%s' error: ", p, fieldId, fieldIDToName_MiscServiceColumnPageResult[fieldId]), err)
+	return thrift.PrependError(fmt.Sprintf("%T read field %d '%s' error: ", p, fieldId, fieldIDToName_MiscServiceRichColumnPageResult[fieldId]), err)
 SkipFieldError:
 	return thrift.PrependError(fmt.Sprintf("%T field %d skip type %d error: ", p, fieldId, fieldTypeId), err)
 
@@ -1037,8 +1037,8 @@ ReadStructEndError:
 	return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
 }
 
-func (p *MiscServiceColumnPageResult) ReadField0(iprot thrift.TProtocol) error {
-	_field := NewColumnPageResponse()
+func (p *MiscServiceRichColumnPageResult) ReadField0(iprot thrift.TProtocol) error {
+	_field := NewRichColumnPageResponse()
 	if err := _field.Read(iprot); err != nil {
 		return err
 	}
@@ -1046,9 +1046,9 @@ func (p *MiscServiceColumnPageResult) ReadField0(iprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *MiscServiceColumnPageResult) Write(oprot thrift.TProtocol) (err error) {
+func (p *MiscServiceRichColumnPageResult) Write(oprot thrift.TProtocol) (err error) {
 	var fieldId int16
-	if err = oprot.WriteStructBegin("ColumnPage_result"); err != nil {
+	if err = oprot.WriteStructBegin("RichColumnPage_result"); err != nil {
 		goto WriteStructBeginError
 	}
 	if p != nil {
@@ -1074,7 +1074,7 @@ WriteStructEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write struct end error: ", p), err)
 }
 
-func (p *MiscServiceColumnPageResult) writeField0(oprot thrift.TProtocol) (err error) {
+func (p *MiscServiceRichColumnPageResult) writeField0(oprot thrift.TProtocol) (err error) {
 	if p.IsSetSuccess() {
 		if err = oprot.WriteFieldBegin("success", thrift.STRUCT, 0); err != nil {
 			goto WriteFieldBeginError
@@ -1093,15 +1093,15 @@ WriteFieldEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 0 end error: ", p), err)
 }
 
-func (p *MiscServiceColumnPageResult) String() string {
+func (p *MiscServiceRichColumnPageResult) String() string {
 	if p == nil {
 		return "<nil>"
 	}
-	return fmt.Sprintf("MiscServiceColumnPageResult(%+v)", *p)
+	return fmt.Sprintf("MiscServiceRichColumnPageResult(%+v)", *p)
 
 }
 
-func (p *MiscServiceColumnPageResult) DeepEqual(ano *MiscServiceColumnPageResult) bool {
+func (p *MiscServiceRichColumnPageResult) DeepEqual(ano *MiscServiceRichColumnPageResult) bool {
 	if p == ano {
 		return true
 	} else if p == nil || ano == nil {
@@ -1113,7 +1113,7 @@ func (p *MiscServiceColumnPageResult) DeepEqual(ano *MiscServiceColumnPageResult
 	return true
 }
 
-func (p *MiscServiceColumnPageResult) Field0DeepEqual(src *ColumnPageResponse) bool {
+func (p *MiscServiceRichColumnPageResult) Field0DeepEqual(src *RichColumnPageResponse) bool {
 
 	if !p.Success.DeepEqual(src) {
 		return false

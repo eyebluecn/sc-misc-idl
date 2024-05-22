@@ -281,7 +281,7 @@ func (p *MiscServiceColumnOmnibusResult) field0Length() int {
 	return l
 }
 
-func (p *MiscServiceColumnPageArgs) FastRead(buf []byte) (int, error) {
+func (p *MiscServiceRichColumnPageArgs) FastRead(buf []byte) (int, error) {
 	var err error
 	var offset int
 	var l int
@@ -343,7 +343,7 @@ ReadStructBeginError:
 ReadFieldBeginError:
 	return offset, thrift.PrependError(fmt.Sprintf("%T read field %d begin error: ", p, fieldId), err)
 ReadFieldError:
-	return offset, thrift.PrependError(fmt.Sprintf("%T read field %d '%s' error: ", p, fieldId, fieldIDToName_MiscServiceColumnPageArgs[fieldId]), err)
+	return offset, thrift.PrependError(fmt.Sprintf("%T read field %d '%s' error: ", p, fieldId, fieldIDToName_MiscServiceRichColumnPageArgs[fieldId]), err)
 SkipFieldError:
 	return offset, thrift.PrependError(fmt.Sprintf("%T field %d skip type %d error: ", p, fieldId, fieldTypeId), err)
 ReadFieldEndError:
@@ -352,10 +352,10 @@ ReadStructEndError:
 	return offset, thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
 }
 
-func (p *MiscServiceColumnPageArgs) FastReadField1(buf []byte) (int, error) {
+func (p *MiscServiceRichColumnPageArgs) FastReadField1(buf []byte) (int, error) {
 	offset := 0
 
-	tmp := NewColumnPageRequest()
+	tmp := NewRichColumnPageRequest()
 	if l, err := tmp.FastRead(buf[offset:]); err != nil {
 		return offset, err
 	} else {
@@ -366,13 +366,13 @@ func (p *MiscServiceColumnPageArgs) FastReadField1(buf []byte) (int, error) {
 }
 
 // for compatibility
-func (p *MiscServiceColumnPageArgs) FastWrite(buf []byte) int {
+func (p *MiscServiceRichColumnPageArgs) FastWrite(buf []byte) int {
 	return 0
 }
 
-func (p *MiscServiceColumnPageArgs) FastWriteNocopy(buf []byte, binaryWriter bthrift.BinaryWriter) int {
+func (p *MiscServiceRichColumnPageArgs) FastWriteNocopy(buf []byte, binaryWriter bthrift.BinaryWriter) int {
 	offset := 0
-	offset += bthrift.Binary.WriteStructBegin(buf[offset:], "ColumnPage_args")
+	offset += bthrift.Binary.WriteStructBegin(buf[offset:], "RichColumnPage_args")
 	if p != nil {
 		offset += p.fastWriteField1(buf[offset:], binaryWriter)
 	}
@@ -381,9 +381,9 @@ func (p *MiscServiceColumnPageArgs) FastWriteNocopy(buf []byte, binaryWriter bth
 	return offset
 }
 
-func (p *MiscServiceColumnPageArgs) BLength() int {
+func (p *MiscServiceRichColumnPageArgs) BLength() int {
 	l := 0
-	l += bthrift.Binary.StructBeginLength("ColumnPage_args")
+	l += bthrift.Binary.StructBeginLength("RichColumnPage_args")
 	if p != nil {
 		l += p.field1Length()
 	}
@@ -392,7 +392,7 @@ func (p *MiscServiceColumnPageArgs) BLength() int {
 	return l
 }
 
-func (p *MiscServiceColumnPageArgs) fastWriteField1(buf []byte, binaryWriter bthrift.BinaryWriter) int {
+func (p *MiscServiceRichColumnPageArgs) fastWriteField1(buf []byte, binaryWriter bthrift.BinaryWriter) int {
 	offset := 0
 	offset += bthrift.Binary.WriteFieldBegin(buf[offset:], "request", thrift.STRUCT, 1)
 	offset += p.Request.FastWriteNocopy(buf[offset:], binaryWriter)
@@ -400,7 +400,7 @@ func (p *MiscServiceColumnPageArgs) fastWriteField1(buf []byte, binaryWriter bth
 	return offset
 }
 
-func (p *MiscServiceColumnPageArgs) field1Length() int {
+func (p *MiscServiceRichColumnPageArgs) field1Length() int {
 	l := 0
 	l += bthrift.Binary.FieldBeginLength("request", thrift.STRUCT, 1)
 	l += p.Request.BLength()
@@ -408,7 +408,7 @@ func (p *MiscServiceColumnPageArgs) field1Length() int {
 	return l
 }
 
-func (p *MiscServiceColumnPageResult) FastRead(buf []byte) (int, error) {
+func (p *MiscServiceRichColumnPageResult) FastRead(buf []byte) (int, error) {
 	var err error
 	var offset int
 	var l int
@@ -470,7 +470,7 @@ ReadStructBeginError:
 ReadFieldBeginError:
 	return offset, thrift.PrependError(fmt.Sprintf("%T read field %d begin error: ", p, fieldId), err)
 ReadFieldError:
-	return offset, thrift.PrependError(fmt.Sprintf("%T read field %d '%s' error: ", p, fieldId, fieldIDToName_MiscServiceColumnPageResult[fieldId]), err)
+	return offset, thrift.PrependError(fmt.Sprintf("%T read field %d '%s' error: ", p, fieldId, fieldIDToName_MiscServiceRichColumnPageResult[fieldId]), err)
 SkipFieldError:
 	return offset, thrift.PrependError(fmt.Sprintf("%T field %d skip type %d error: ", p, fieldId, fieldTypeId), err)
 ReadFieldEndError:
@@ -479,10 +479,10 @@ ReadStructEndError:
 	return offset, thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
 }
 
-func (p *MiscServiceColumnPageResult) FastReadField0(buf []byte) (int, error) {
+func (p *MiscServiceRichColumnPageResult) FastReadField0(buf []byte) (int, error) {
 	offset := 0
 
-	tmp := NewColumnPageResponse()
+	tmp := NewRichColumnPageResponse()
 	if l, err := tmp.FastRead(buf[offset:]); err != nil {
 		return offset, err
 	} else {
@@ -493,13 +493,13 @@ func (p *MiscServiceColumnPageResult) FastReadField0(buf []byte) (int, error) {
 }
 
 // for compatibility
-func (p *MiscServiceColumnPageResult) FastWrite(buf []byte) int {
+func (p *MiscServiceRichColumnPageResult) FastWrite(buf []byte) int {
 	return 0
 }
 
-func (p *MiscServiceColumnPageResult) FastWriteNocopy(buf []byte, binaryWriter bthrift.BinaryWriter) int {
+func (p *MiscServiceRichColumnPageResult) FastWriteNocopy(buf []byte, binaryWriter bthrift.BinaryWriter) int {
 	offset := 0
-	offset += bthrift.Binary.WriteStructBegin(buf[offset:], "ColumnPage_result")
+	offset += bthrift.Binary.WriteStructBegin(buf[offset:], "RichColumnPage_result")
 	if p != nil {
 		offset += p.fastWriteField0(buf[offset:], binaryWriter)
 	}
@@ -508,9 +508,9 @@ func (p *MiscServiceColumnPageResult) FastWriteNocopy(buf []byte, binaryWriter b
 	return offset
 }
 
-func (p *MiscServiceColumnPageResult) BLength() int {
+func (p *MiscServiceRichColumnPageResult) BLength() int {
 	l := 0
-	l += bthrift.Binary.StructBeginLength("ColumnPage_result")
+	l += bthrift.Binary.StructBeginLength("RichColumnPage_result")
 	if p != nil {
 		l += p.field0Length()
 	}
@@ -519,7 +519,7 @@ func (p *MiscServiceColumnPageResult) BLength() int {
 	return l
 }
 
-func (p *MiscServiceColumnPageResult) fastWriteField0(buf []byte, binaryWriter bthrift.BinaryWriter) int {
+func (p *MiscServiceRichColumnPageResult) fastWriteField0(buf []byte, binaryWriter bthrift.BinaryWriter) int {
 	offset := 0
 	if p.IsSetSuccess() {
 		offset += bthrift.Binary.WriteFieldBegin(buf[offset:], "success", thrift.STRUCT, 0)
@@ -529,7 +529,7 @@ func (p *MiscServiceColumnPageResult) fastWriteField0(buf []byte, binaryWriter b
 	return offset
 }
 
-func (p *MiscServiceColumnPageResult) field0Length() int {
+func (p *MiscServiceRichColumnPageResult) field0Length() int {
 	l := 0
 	if p.IsSetSuccess() {
 		l += bthrift.Binary.FieldBeginLength("success", thrift.STRUCT, 0)
@@ -1579,11 +1579,11 @@ func (p *MiscServiceColumnOmnibusResult) GetResult() interface{} {
 	return p.Success
 }
 
-func (p *MiscServiceColumnPageArgs) GetFirstArgument() interface{} {
+func (p *MiscServiceRichColumnPageArgs) GetFirstArgument() interface{} {
 	return p.Request
 }
 
-func (p *MiscServiceColumnPageResult) GetResult() interface{} {
+func (p *MiscServiceRichColumnPageResult) GetResult() interface{} {
 	return p.Success
 }
 

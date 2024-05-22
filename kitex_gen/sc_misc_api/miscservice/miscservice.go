@@ -20,10 +20,10 @@ var serviceMethods = map[string]kitex.MethodInfo{
 		false,
 		kitex.WithStreamingMode(kitex.StreamingNone),
 	),
-	"ColumnPage": kitex.NewMethodInfo(
-		columnPageHandler,
-		newMiscServiceColumnPageArgs,
-		newMiscServiceColumnPageResult,
+	"RichColumnPage": kitex.NewMethodInfo(
+		richColumnPageHandler,
+		newMiscServiceRichColumnPageArgs,
+		newMiscServiceRichColumnPageResult,
 		false,
 		kitex.WithStreamingMode(kitex.StreamingNone),
 	),
@@ -139,22 +139,22 @@ func newMiscServiceColumnOmnibusResult() interface{} {
 	return sc_misc_api.NewMiscServiceColumnOmnibusResult()
 }
 
-func columnPageHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
-	realArg := arg.(*sc_misc_api.MiscServiceColumnPageArgs)
-	realResult := result.(*sc_misc_api.MiscServiceColumnPageResult)
-	success, err := handler.(sc_misc_api.MiscService).ColumnPage(ctx, realArg.Request)
+func richColumnPageHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	realArg := arg.(*sc_misc_api.MiscServiceRichColumnPageArgs)
+	realResult := result.(*sc_misc_api.MiscServiceRichColumnPageResult)
+	success, err := handler.(sc_misc_api.MiscService).RichColumnPage(ctx, realArg.Request)
 	if err != nil {
 		return err
 	}
 	realResult.Success = success
 	return nil
 }
-func newMiscServiceColumnPageArgs() interface{} {
-	return sc_misc_api.NewMiscServiceColumnPageArgs()
+func newMiscServiceRichColumnPageArgs() interface{} {
+	return sc_misc_api.NewMiscServiceRichColumnPageArgs()
 }
 
-func newMiscServiceColumnPageResult() interface{} {
-	return sc_misc_api.NewMiscServiceColumnPageResult()
+func newMiscServiceRichColumnPageResult() interface{} {
+	return sc_misc_api.NewMiscServiceRichColumnPageResult()
 }
 
 func columnDetailHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
@@ -249,11 +249,11 @@ func (p *kClient) ColumnOmnibus(ctx context.Context, request *sc_misc_api.Column
 	return _result.GetSuccess(), nil
 }
 
-func (p *kClient) ColumnPage(ctx context.Context, request *sc_misc_api.ColumnPageRequest) (r *sc_misc_api.ColumnPageResponse, err error) {
-	var _args sc_misc_api.MiscServiceColumnPageArgs
+func (p *kClient) RichColumnPage(ctx context.Context, request *sc_misc_api.RichColumnPageRequest) (r *sc_misc_api.RichColumnPageResponse, err error) {
+	var _args sc_misc_api.MiscServiceRichColumnPageArgs
 	_args.Request = request
-	var _result sc_misc_api.MiscServiceColumnPageResult
-	if err = p.c.Call(ctx, "ColumnPage", &_args, &_result); err != nil {
+	var _result sc_misc_api.MiscServiceRichColumnPageResult
+	if err = p.c.Call(ctx, "RichColumnPage", &_args, &_result); err != nil {
 		return
 	}
 	return _result.GetSuccess(), nil

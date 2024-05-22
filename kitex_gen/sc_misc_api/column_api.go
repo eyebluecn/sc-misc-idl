@@ -528,7 +528,7 @@ func (p *ColumnOmnibusResponse) Field255DeepEqual(src *sc_misc_base.BaseResp) bo
 	return true
 }
 
-type ColumnPageRequest struct {
+type RichColumnPageRequest struct {
 	PageNum        int64                        `thrift:"pageNum,1" frugal:"1,default,i64" json:"pageNum"`
 	PageSize       int64                        `thrift:"pageSize,2" frugal:"2,default,i64" json:"pageSize"`
 	Name           *string                      `thrift:"name,4,optional" frugal:"4,optional,string" json:"name,omitempty"`
@@ -538,89 +538,89 @@ type ColumnPageRequest struct {
 	Base           *sc_misc_base.Base           `thrift:"base,255,optional" frugal:"255,optional,sc_misc_base.Base" json:"base,omitempty"`
 }
 
-func NewColumnPageRequest() *ColumnPageRequest {
-	return &ColumnPageRequest{}
+func NewRichColumnPageRequest() *RichColumnPageRequest {
+	return &RichColumnPageRequest{}
 }
 
-func (p *ColumnPageRequest) InitDefault() {
-	*p = ColumnPageRequest{}
+func (p *RichColumnPageRequest) InitDefault() {
+	*p = RichColumnPageRequest{}
 }
 
-func (p *ColumnPageRequest) GetPageNum() (v int64) {
+func (p *RichColumnPageRequest) GetPageNum() (v int64) {
 	return p.PageNum
 }
 
-func (p *ColumnPageRequest) GetPageSize() (v int64) {
+func (p *RichColumnPageRequest) GetPageSize() (v int64) {
 	return p.PageSize
 }
 
-var ColumnPageRequest_Name_DEFAULT string
+var RichColumnPageRequest_Name_DEFAULT string
 
-func (p *ColumnPageRequest) GetName() (v string) {
+func (p *RichColumnPageRequest) GetName() (v string) {
 	if !p.IsSetName() {
-		return ColumnPageRequest_Name_DEFAULT
+		return RichColumnPageRequest_Name_DEFAULT
 	}
 	return *p.Name
 }
 
-var ColumnPageRequest_AuthorId_DEFAULT int64
+var RichColumnPageRequest_AuthorId_DEFAULT int64
 
-func (p *ColumnPageRequest) GetAuthorId() (v int64) {
+func (p *RichColumnPageRequest) GetAuthorId() (v int64) {
 	if !p.IsSetAuthorId() {
-		return ColumnPageRequest_AuthorId_DEFAULT
+		return RichColumnPageRequest_AuthorId_DEFAULT
 	}
 	return *p.AuthorId
 }
 
-var ColumnPageRequest_Status_DEFAULT ColumnStatus
+var RichColumnPageRequest_Status_DEFAULT ColumnStatus
 
-func (p *ColumnPageRequest) GetStatus() (v ColumnStatus) {
+func (p *RichColumnPageRequest) GetStatus() (v ColumnStatus) {
 	if !p.IsSetStatus() {
-		return ColumnPageRequest_Status_DEFAULT
+		return RichColumnPageRequest_Status_DEFAULT
 	}
 	return *p.Status
 }
 
-var ColumnPageRequest_ReaderOperator_DEFAULT *sc_misc_base.ReaderOperator
+var RichColumnPageRequest_ReaderOperator_DEFAULT *sc_misc_base.ReaderOperator
 
-func (p *ColumnPageRequest) GetReaderOperator() (v *sc_misc_base.ReaderOperator) {
+func (p *RichColumnPageRequest) GetReaderOperator() (v *sc_misc_base.ReaderOperator) {
 	if !p.IsSetReaderOperator() {
-		return ColumnPageRequest_ReaderOperator_DEFAULT
+		return RichColumnPageRequest_ReaderOperator_DEFAULT
 	}
 	return p.ReaderOperator
 }
 
-var ColumnPageRequest_Base_DEFAULT *sc_misc_base.Base
+var RichColumnPageRequest_Base_DEFAULT *sc_misc_base.Base
 
-func (p *ColumnPageRequest) GetBase() (v *sc_misc_base.Base) {
+func (p *RichColumnPageRequest) GetBase() (v *sc_misc_base.Base) {
 	if !p.IsSetBase() {
-		return ColumnPageRequest_Base_DEFAULT
+		return RichColumnPageRequest_Base_DEFAULT
 	}
 	return p.Base
 }
-func (p *ColumnPageRequest) SetPageNum(val int64) {
+func (p *RichColumnPageRequest) SetPageNum(val int64) {
 	p.PageNum = val
 }
-func (p *ColumnPageRequest) SetPageSize(val int64) {
+func (p *RichColumnPageRequest) SetPageSize(val int64) {
 	p.PageSize = val
 }
-func (p *ColumnPageRequest) SetName(val *string) {
+func (p *RichColumnPageRequest) SetName(val *string) {
 	p.Name = val
 }
-func (p *ColumnPageRequest) SetAuthorId(val *int64) {
+func (p *RichColumnPageRequest) SetAuthorId(val *int64) {
 	p.AuthorId = val
 }
-func (p *ColumnPageRequest) SetStatus(val *ColumnStatus) {
+func (p *RichColumnPageRequest) SetStatus(val *ColumnStatus) {
 	p.Status = val
 }
-func (p *ColumnPageRequest) SetReaderOperator(val *sc_misc_base.ReaderOperator) {
+func (p *RichColumnPageRequest) SetReaderOperator(val *sc_misc_base.ReaderOperator) {
 	p.ReaderOperator = val
 }
-func (p *ColumnPageRequest) SetBase(val *sc_misc_base.Base) {
+func (p *RichColumnPageRequest) SetBase(val *sc_misc_base.Base) {
 	p.Base = val
 }
 
-var fieldIDToName_ColumnPageRequest = map[int16]string{
+var fieldIDToName_RichColumnPageRequest = map[int16]string{
 	1:   "pageNum",
 	2:   "pageSize",
 	4:   "name",
@@ -630,27 +630,27 @@ var fieldIDToName_ColumnPageRequest = map[int16]string{
 	255: "base",
 }
 
-func (p *ColumnPageRequest) IsSetName() bool {
+func (p *RichColumnPageRequest) IsSetName() bool {
 	return p.Name != nil
 }
 
-func (p *ColumnPageRequest) IsSetAuthorId() bool {
+func (p *RichColumnPageRequest) IsSetAuthorId() bool {
 	return p.AuthorId != nil
 }
 
-func (p *ColumnPageRequest) IsSetStatus() bool {
+func (p *RichColumnPageRequest) IsSetStatus() bool {
 	return p.Status != nil
 }
 
-func (p *ColumnPageRequest) IsSetReaderOperator() bool {
+func (p *RichColumnPageRequest) IsSetReaderOperator() bool {
 	return p.ReaderOperator != nil
 }
 
-func (p *ColumnPageRequest) IsSetBase() bool {
+func (p *RichColumnPageRequest) IsSetBase() bool {
 	return p.Base != nil
 }
 
-func (p *ColumnPageRequest) Read(iprot thrift.TProtocol) (err error) {
+func (p *RichColumnPageRequest) Read(iprot thrift.TProtocol) (err error) {
 
 	var fieldTypeId thrift.TType
 	var fieldId int16
@@ -744,7 +744,7 @@ ReadStructBeginError:
 ReadFieldBeginError:
 	return thrift.PrependError(fmt.Sprintf("%T read field %d begin error: ", p, fieldId), err)
 ReadFieldError:
-	return thrift.PrependError(fmt.Sprintf("%T read field %d '%s' error: ", p, fieldId, fieldIDToName_ColumnPageRequest[fieldId]), err)
+	return thrift.PrependError(fmt.Sprintf("%T read field %d '%s' error: ", p, fieldId, fieldIDToName_RichColumnPageRequest[fieldId]), err)
 SkipFieldError:
 	return thrift.PrependError(fmt.Sprintf("%T field %d skip type %d error: ", p, fieldId, fieldTypeId), err)
 
@@ -754,7 +754,7 @@ ReadStructEndError:
 	return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
 }
 
-func (p *ColumnPageRequest) ReadField1(iprot thrift.TProtocol) error {
+func (p *RichColumnPageRequest) ReadField1(iprot thrift.TProtocol) error {
 
 	var _field int64
 	if v, err := iprot.ReadI64(); err != nil {
@@ -765,7 +765,7 @@ func (p *ColumnPageRequest) ReadField1(iprot thrift.TProtocol) error {
 	p.PageNum = _field
 	return nil
 }
-func (p *ColumnPageRequest) ReadField2(iprot thrift.TProtocol) error {
+func (p *RichColumnPageRequest) ReadField2(iprot thrift.TProtocol) error {
 
 	var _field int64
 	if v, err := iprot.ReadI64(); err != nil {
@@ -776,7 +776,7 @@ func (p *ColumnPageRequest) ReadField2(iprot thrift.TProtocol) error {
 	p.PageSize = _field
 	return nil
 }
-func (p *ColumnPageRequest) ReadField4(iprot thrift.TProtocol) error {
+func (p *RichColumnPageRequest) ReadField4(iprot thrift.TProtocol) error {
 
 	var _field *string
 	if v, err := iprot.ReadString(); err != nil {
@@ -787,7 +787,7 @@ func (p *ColumnPageRequest) ReadField4(iprot thrift.TProtocol) error {
 	p.Name = _field
 	return nil
 }
-func (p *ColumnPageRequest) ReadField5(iprot thrift.TProtocol) error {
+func (p *RichColumnPageRequest) ReadField5(iprot thrift.TProtocol) error {
 
 	var _field *int64
 	if v, err := iprot.ReadI64(); err != nil {
@@ -798,7 +798,7 @@ func (p *ColumnPageRequest) ReadField5(iprot thrift.TProtocol) error {
 	p.AuthorId = _field
 	return nil
 }
-func (p *ColumnPageRequest) ReadField6(iprot thrift.TProtocol) error {
+func (p *RichColumnPageRequest) ReadField6(iprot thrift.TProtocol) error {
 
 	var _field *ColumnStatus
 	if v, err := iprot.ReadI32(); err != nil {
@@ -810,7 +810,7 @@ func (p *ColumnPageRequest) ReadField6(iprot thrift.TProtocol) error {
 	p.Status = _field
 	return nil
 }
-func (p *ColumnPageRequest) ReadField7(iprot thrift.TProtocol) error {
+func (p *RichColumnPageRequest) ReadField7(iprot thrift.TProtocol) error {
 	_field := sc_misc_base.NewReaderOperator()
 	if err := _field.Read(iprot); err != nil {
 		return err
@@ -818,7 +818,7 @@ func (p *ColumnPageRequest) ReadField7(iprot thrift.TProtocol) error {
 	p.ReaderOperator = _field
 	return nil
 }
-func (p *ColumnPageRequest) ReadField255(iprot thrift.TProtocol) error {
+func (p *RichColumnPageRequest) ReadField255(iprot thrift.TProtocol) error {
 	_field := sc_misc_base.NewBase()
 	if err := _field.Read(iprot); err != nil {
 		return err
@@ -827,9 +827,9 @@ func (p *ColumnPageRequest) ReadField255(iprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *ColumnPageRequest) Write(oprot thrift.TProtocol) (err error) {
+func (p *RichColumnPageRequest) Write(oprot thrift.TProtocol) (err error) {
 	var fieldId int16
-	if err = oprot.WriteStructBegin("ColumnPageRequest"); err != nil {
+	if err = oprot.WriteStructBegin("RichColumnPageRequest"); err != nil {
 		goto WriteStructBeginError
 	}
 	if p != nil {
@@ -879,7 +879,7 @@ WriteStructEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write struct end error: ", p), err)
 }
 
-func (p *ColumnPageRequest) writeField1(oprot thrift.TProtocol) (err error) {
+func (p *RichColumnPageRequest) writeField1(oprot thrift.TProtocol) (err error) {
 	if err = oprot.WriteFieldBegin("pageNum", thrift.I64, 1); err != nil {
 		goto WriteFieldBeginError
 	}
@@ -896,7 +896,7 @@ WriteFieldEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 1 end error: ", p), err)
 }
 
-func (p *ColumnPageRequest) writeField2(oprot thrift.TProtocol) (err error) {
+func (p *RichColumnPageRequest) writeField2(oprot thrift.TProtocol) (err error) {
 	if err = oprot.WriteFieldBegin("pageSize", thrift.I64, 2); err != nil {
 		goto WriteFieldBeginError
 	}
@@ -913,7 +913,7 @@ WriteFieldEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 2 end error: ", p), err)
 }
 
-func (p *ColumnPageRequest) writeField4(oprot thrift.TProtocol) (err error) {
+func (p *RichColumnPageRequest) writeField4(oprot thrift.TProtocol) (err error) {
 	if p.IsSetName() {
 		if err = oprot.WriteFieldBegin("name", thrift.STRING, 4); err != nil {
 			goto WriteFieldBeginError
@@ -932,7 +932,7 @@ WriteFieldEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 4 end error: ", p), err)
 }
 
-func (p *ColumnPageRequest) writeField5(oprot thrift.TProtocol) (err error) {
+func (p *RichColumnPageRequest) writeField5(oprot thrift.TProtocol) (err error) {
 	if p.IsSetAuthorId() {
 		if err = oprot.WriteFieldBegin("authorId", thrift.I64, 5); err != nil {
 			goto WriteFieldBeginError
@@ -951,7 +951,7 @@ WriteFieldEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 5 end error: ", p), err)
 }
 
-func (p *ColumnPageRequest) writeField6(oprot thrift.TProtocol) (err error) {
+func (p *RichColumnPageRequest) writeField6(oprot thrift.TProtocol) (err error) {
 	if p.IsSetStatus() {
 		if err = oprot.WriteFieldBegin("status", thrift.I32, 6); err != nil {
 			goto WriteFieldBeginError
@@ -970,7 +970,7 @@ WriteFieldEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 6 end error: ", p), err)
 }
 
-func (p *ColumnPageRequest) writeField7(oprot thrift.TProtocol) (err error) {
+func (p *RichColumnPageRequest) writeField7(oprot thrift.TProtocol) (err error) {
 	if err = oprot.WriteFieldBegin("readerOperator", thrift.STRUCT, 7); err != nil {
 		goto WriteFieldBeginError
 	}
@@ -987,7 +987,7 @@ WriteFieldEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 7 end error: ", p), err)
 }
 
-func (p *ColumnPageRequest) writeField255(oprot thrift.TProtocol) (err error) {
+func (p *RichColumnPageRequest) writeField255(oprot thrift.TProtocol) (err error) {
 	if p.IsSetBase() {
 		if err = oprot.WriteFieldBegin("base", thrift.STRUCT, 255); err != nil {
 			goto WriteFieldBeginError
@@ -1006,15 +1006,15 @@ WriteFieldEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 255 end error: ", p), err)
 }
 
-func (p *ColumnPageRequest) String() string {
+func (p *RichColumnPageRequest) String() string {
 	if p == nil {
 		return "<nil>"
 	}
-	return fmt.Sprintf("ColumnPageRequest(%+v)", *p)
+	return fmt.Sprintf("RichColumnPageRequest(%+v)", *p)
 
 }
 
-func (p *ColumnPageRequest) DeepEqual(ano *ColumnPageRequest) bool {
+func (p *RichColumnPageRequest) DeepEqual(ano *RichColumnPageRequest) bool {
 	if p == ano {
 		return true
 	} else if p == nil || ano == nil {
@@ -1044,21 +1044,21 @@ func (p *ColumnPageRequest) DeepEqual(ano *ColumnPageRequest) bool {
 	return true
 }
 
-func (p *ColumnPageRequest) Field1DeepEqual(src int64) bool {
+func (p *RichColumnPageRequest) Field1DeepEqual(src int64) bool {
 
 	if p.PageNum != src {
 		return false
 	}
 	return true
 }
-func (p *ColumnPageRequest) Field2DeepEqual(src int64) bool {
+func (p *RichColumnPageRequest) Field2DeepEqual(src int64) bool {
 
 	if p.PageSize != src {
 		return false
 	}
 	return true
 }
-func (p *ColumnPageRequest) Field4DeepEqual(src *string) bool {
+func (p *RichColumnPageRequest) Field4DeepEqual(src *string) bool {
 
 	if p.Name == src {
 		return true
@@ -1070,7 +1070,7 @@ func (p *ColumnPageRequest) Field4DeepEqual(src *string) bool {
 	}
 	return true
 }
-func (p *ColumnPageRequest) Field5DeepEqual(src *int64) bool {
+func (p *RichColumnPageRequest) Field5DeepEqual(src *int64) bool {
 
 	if p.AuthorId == src {
 		return true
@@ -1082,7 +1082,7 @@ func (p *ColumnPageRequest) Field5DeepEqual(src *int64) bool {
 	}
 	return true
 }
-func (p *ColumnPageRequest) Field6DeepEqual(src *ColumnStatus) bool {
+func (p *RichColumnPageRequest) Field6DeepEqual(src *ColumnStatus) bool {
 
 	if p.Status == src {
 		return true
@@ -1094,14 +1094,14 @@ func (p *ColumnPageRequest) Field6DeepEqual(src *ColumnStatus) bool {
 	}
 	return true
 }
-func (p *ColumnPageRequest) Field7DeepEqual(src *sc_misc_base.ReaderOperator) bool {
+func (p *RichColumnPageRequest) Field7DeepEqual(src *sc_misc_base.ReaderOperator) bool {
 
 	if !p.ReaderOperator.DeepEqual(src) {
 		return false
 	}
 	return true
 }
-func (p *ColumnPageRequest) Field255DeepEqual(src *sc_misc_base.Base) bool {
+func (p *RichColumnPageRequest) Field255DeepEqual(src *sc_misc_base.Base) bool {
 
 	if !p.Base.DeepEqual(src) {
 		return false
@@ -1109,66 +1109,66 @@ func (p *ColumnPageRequest) Field255DeepEqual(src *sc_misc_base.Base) bool {
 	return true
 }
 
-type ColumnPageResponse struct {
+type RichColumnPageResponse struct {
 	Data       []*RichColumnDTO         `thrift:"data,1" frugal:"1,default,list<RichColumnDTO>" json:"data"`
 	Pagination *sc_misc_base.Pagination `thrift:"pagination,2" frugal:"2,default,sc_misc_base.Pagination" json:"pagination"`
 	BaseResp   *sc_misc_base.BaseResp   `thrift:"baseResp,255" frugal:"255,default,sc_misc_base.BaseResp" json:"baseResp"`
 }
 
-func NewColumnPageResponse() *ColumnPageResponse {
-	return &ColumnPageResponse{}
+func NewRichColumnPageResponse() *RichColumnPageResponse {
+	return &RichColumnPageResponse{}
 }
 
-func (p *ColumnPageResponse) InitDefault() {
-	*p = ColumnPageResponse{}
+func (p *RichColumnPageResponse) InitDefault() {
+	*p = RichColumnPageResponse{}
 }
 
-func (p *ColumnPageResponse) GetData() (v []*RichColumnDTO) {
+func (p *RichColumnPageResponse) GetData() (v []*RichColumnDTO) {
 	return p.Data
 }
 
-var ColumnPageResponse_Pagination_DEFAULT *sc_misc_base.Pagination
+var RichColumnPageResponse_Pagination_DEFAULT *sc_misc_base.Pagination
 
-func (p *ColumnPageResponse) GetPagination() (v *sc_misc_base.Pagination) {
+func (p *RichColumnPageResponse) GetPagination() (v *sc_misc_base.Pagination) {
 	if !p.IsSetPagination() {
-		return ColumnPageResponse_Pagination_DEFAULT
+		return RichColumnPageResponse_Pagination_DEFAULT
 	}
 	return p.Pagination
 }
 
-var ColumnPageResponse_BaseResp_DEFAULT *sc_misc_base.BaseResp
+var RichColumnPageResponse_BaseResp_DEFAULT *sc_misc_base.BaseResp
 
-func (p *ColumnPageResponse) GetBaseResp() (v *sc_misc_base.BaseResp) {
+func (p *RichColumnPageResponse) GetBaseResp() (v *sc_misc_base.BaseResp) {
 	if !p.IsSetBaseResp() {
-		return ColumnPageResponse_BaseResp_DEFAULT
+		return RichColumnPageResponse_BaseResp_DEFAULT
 	}
 	return p.BaseResp
 }
-func (p *ColumnPageResponse) SetData(val []*RichColumnDTO) {
+func (p *RichColumnPageResponse) SetData(val []*RichColumnDTO) {
 	p.Data = val
 }
-func (p *ColumnPageResponse) SetPagination(val *sc_misc_base.Pagination) {
+func (p *RichColumnPageResponse) SetPagination(val *sc_misc_base.Pagination) {
 	p.Pagination = val
 }
-func (p *ColumnPageResponse) SetBaseResp(val *sc_misc_base.BaseResp) {
+func (p *RichColumnPageResponse) SetBaseResp(val *sc_misc_base.BaseResp) {
 	p.BaseResp = val
 }
 
-var fieldIDToName_ColumnPageResponse = map[int16]string{
+var fieldIDToName_RichColumnPageResponse = map[int16]string{
 	1:   "data",
 	2:   "pagination",
 	255: "baseResp",
 }
 
-func (p *ColumnPageResponse) IsSetPagination() bool {
+func (p *RichColumnPageResponse) IsSetPagination() bool {
 	return p.Pagination != nil
 }
 
-func (p *ColumnPageResponse) IsSetBaseResp() bool {
+func (p *RichColumnPageResponse) IsSetBaseResp() bool {
 	return p.BaseResp != nil
 }
 
-func (p *ColumnPageResponse) Read(iprot thrift.TProtocol) (err error) {
+func (p *RichColumnPageResponse) Read(iprot thrift.TProtocol) (err error) {
 
 	var fieldTypeId thrift.TType
 	var fieldId int16
@@ -1230,7 +1230,7 @@ ReadStructBeginError:
 ReadFieldBeginError:
 	return thrift.PrependError(fmt.Sprintf("%T read field %d begin error: ", p, fieldId), err)
 ReadFieldError:
-	return thrift.PrependError(fmt.Sprintf("%T read field %d '%s' error: ", p, fieldId, fieldIDToName_ColumnPageResponse[fieldId]), err)
+	return thrift.PrependError(fmt.Sprintf("%T read field %d '%s' error: ", p, fieldId, fieldIDToName_RichColumnPageResponse[fieldId]), err)
 SkipFieldError:
 	return thrift.PrependError(fmt.Sprintf("%T field %d skip type %d error: ", p, fieldId, fieldTypeId), err)
 
@@ -1240,7 +1240,7 @@ ReadStructEndError:
 	return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
 }
 
-func (p *ColumnPageResponse) ReadField1(iprot thrift.TProtocol) error {
+func (p *RichColumnPageResponse) ReadField1(iprot thrift.TProtocol) error {
 	_, size, err := iprot.ReadListBegin()
 	if err != nil {
 		return err
@@ -1262,7 +1262,7 @@ func (p *ColumnPageResponse) ReadField1(iprot thrift.TProtocol) error {
 	p.Data = _field
 	return nil
 }
-func (p *ColumnPageResponse) ReadField2(iprot thrift.TProtocol) error {
+func (p *RichColumnPageResponse) ReadField2(iprot thrift.TProtocol) error {
 	_field := sc_misc_base.NewPagination()
 	if err := _field.Read(iprot); err != nil {
 		return err
@@ -1270,7 +1270,7 @@ func (p *ColumnPageResponse) ReadField2(iprot thrift.TProtocol) error {
 	p.Pagination = _field
 	return nil
 }
-func (p *ColumnPageResponse) ReadField255(iprot thrift.TProtocol) error {
+func (p *RichColumnPageResponse) ReadField255(iprot thrift.TProtocol) error {
 	_field := sc_misc_base.NewBaseResp()
 	if err := _field.Read(iprot); err != nil {
 		return err
@@ -1279,9 +1279,9 @@ func (p *ColumnPageResponse) ReadField255(iprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *ColumnPageResponse) Write(oprot thrift.TProtocol) (err error) {
+func (p *RichColumnPageResponse) Write(oprot thrift.TProtocol) (err error) {
 	var fieldId int16
-	if err = oprot.WriteStructBegin("ColumnPageResponse"); err != nil {
+	if err = oprot.WriteStructBegin("RichColumnPageResponse"); err != nil {
 		goto WriteStructBeginError
 	}
 	if p != nil {
@@ -1315,7 +1315,7 @@ WriteStructEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write struct end error: ", p), err)
 }
 
-func (p *ColumnPageResponse) writeField1(oprot thrift.TProtocol) (err error) {
+func (p *RichColumnPageResponse) writeField1(oprot thrift.TProtocol) (err error) {
 	if err = oprot.WriteFieldBegin("data", thrift.LIST, 1); err != nil {
 		goto WriteFieldBeginError
 	}
@@ -1340,7 +1340,7 @@ WriteFieldEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 1 end error: ", p), err)
 }
 
-func (p *ColumnPageResponse) writeField2(oprot thrift.TProtocol) (err error) {
+func (p *RichColumnPageResponse) writeField2(oprot thrift.TProtocol) (err error) {
 	if err = oprot.WriteFieldBegin("pagination", thrift.STRUCT, 2); err != nil {
 		goto WriteFieldBeginError
 	}
@@ -1357,7 +1357,7 @@ WriteFieldEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 2 end error: ", p), err)
 }
 
-func (p *ColumnPageResponse) writeField255(oprot thrift.TProtocol) (err error) {
+func (p *RichColumnPageResponse) writeField255(oprot thrift.TProtocol) (err error) {
 	if err = oprot.WriteFieldBegin("baseResp", thrift.STRUCT, 255); err != nil {
 		goto WriteFieldBeginError
 	}
@@ -1374,15 +1374,15 @@ WriteFieldEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 255 end error: ", p), err)
 }
 
-func (p *ColumnPageResponse) String() string {
+func (p *RichColumnPageResponse) String() string {
 	if p == nil {
 		return "<nil>"
 	}
-	return fmt.Sprintf("ColumnPageResponse(%+v)", *p)
+	return fmt.Sprintf("RichColumnPageResponse(%+v)", *p)
 
 }
 
-func (p *ColumnPageResponse) DeepEqual(ano *ColumnPageResponse) bool {
+func (p *RichColumnPageResponse) DeepEqual(ano *RichColumnPageResponse) bool {
 	if p == ano {
 		return true
 	} else if p == nil || ano == nil {
@@ -1400,7 +1400,7 @@ func (p *ColumnPageResponse) DeepEqual(ano *ColumnPageResponse) bool {
 	return true
 }
 
-func (p *ColumnPageResponse) Field1DeepEqual(src []*RichColumnDTO) bool {
+func (p *RichColumnPageResponse) Field1DeepEqual(src []*RichColumnDTO) bool {
 
 	if len(p.Data) != len(src) {
 		return false
@@ -1413,14 +1413,14 @@ func (p *ColumnPageResponse) Field1DeepEqual(src []*RichColumnDTO) bool {
 	}
 	return true
 }
-func (p *ColumnPageResponse) Field2DeepEqual(src *sc_misc_base.Pagination) bool {
+func (p *RichColumnPageResponse) Field2DeepEqual(src *sc_misc_base.Pagination) bool {
 
 	if !p.Pagination.DeepEqual(src) {
 		return false
 	}
 	return true
 }
-func (p *ColumnPageResponse) Field255DeepEqual(src *sc_misc_base.BaseResp) bool {
+func (p *RichColumnPageResponse) Field255DeepEqual(src *sc_misc_base.BaseResp) bool {
 
 	if !p.BaseResp.DeepEqual(src) {
 		return false

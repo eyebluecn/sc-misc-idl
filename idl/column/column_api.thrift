@@ -23,7 +23,7 @@ struct ColumnOmnibusResponse {
 }
 
 //专栏列表 请求体
-struct ColumnPageRequest {
+struct RichColumnPageRequest {
 	1: i64 pageNum //当前页码 1基
 	2: i64 pageSize //每页大小
 	4: optional string name //名称
@@ -35,7 +35,7 @@ struct ColumnPageRequest {
 }
 
 //专栏列表 响应体
-struct ColumnPageResponse {
+struct RichColumnPageResponse {
 	1: list<column_model.RichColumnDTO> data //数据信息
     2: pagination.Pagination pagination //分页指示器
 

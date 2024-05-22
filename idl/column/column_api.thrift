@@ -11,6 +11,7 @@ struct ColumnOmnibusRequest {
 	2: string columnName //专栏名
 	3: i64 columnPrice //专栏价格
 
+	4: operator.Operator operator //操作人
     255: optional base.Base base //标准请求内容
 }
 
@@ -30,7 +31,7 @@ struct RichColumnPageRequest {
 	4: optional string name //名称
 	5: optional i64 authorId //作者id
 	6: optional column_enums.ColumnStatus status //状态
-	7: operator.Operator operator //读者操作者
+	7: operator.Operator operator //操作人
 
     255: optional base.Base base //标准请求内容
 }

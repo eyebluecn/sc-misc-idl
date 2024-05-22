@@ -10,10 +10,11 @@ import (
 )
 
 type ColumnOmnibusRequest struct {
-	AuthorName  string             `thrift:"authorName,1" frugal:"1,default,string" json:"authorName"`
-	ColumnName  string             `thrift:"columnName,2" frugal:"2,default,string" json:"columnName"`
-	ColumnPrice int64              `thrift:"columnPrice,3" frugal:"3,default,i64" json:"columnPrice"`
-	Base        *sc_misc_base.Base `thrift:"base,255,optional" frugal:"255,optional,sc_misc_base.Base" json:"base,omitempty"`
+	AuthorName  string                 `thrift:"authorName,1" frugal:"1,default,string" json:"authorName"`
+	ColumnName  string                 `thrift:"columnName,2" frugal:"2,default,string" json:"columnName"`
+	ColumnPrice int64                  `thrift:"columnPrice,3" frugal:"3,default,i64" json:"columnPrice"`
+	Operator    *sc_misc_base.Operator `thrift:"operator,4" frugal:"4,default,sc_misc_base.Operator" json:"operator"`
+	Base        *sc_misc_base.Base     `thrift:"base,255,optional" frugal:"255,optional,sc_misc_base.Base" json:"base,omitempty"`
 }
 
 func NewColumnOmnibusRequest() *ColumnOmnibusRequest {
@@ -36,6 +37,15 @@ func (p *ColumnOmnibusRequest) GetColumnPrice() (v int64) {
 	return p.ColumnPrice
 }
 
+var ColumnOmnibusRequest_Operator_DEFAULT *sc_misc_base.Operator
+
+func (p *ColumnOmnibusRequest) GetOperator() (v *sc_misc_base.Operator) {
+	if !p.IsSetOperator() {
+		return ColumnOmnibusRequest_Operator_DEFAULT
+	}
+	return p.Operator
+}
+
 var ColumnOmnibusRequest_Base_DEFAULT *sc_misc_base.Base
 
 func (p *ColumnOmnibusRequest) GetBase() (v *sc_misc_base.Base) {
@@ -53,6 +63,9 @@ func (p *ColumnOmnibusRequest) SetColumnName(val string) {
 func (p *ColumnOmnibusRequest) SetColumnPrice(val int64) {
 	p.ColumnPrice = val
 }
+func (p *ColumnOmnibusRequest) SetOperator(val *sc_misc_base.Operator) {
+	p.Operator = val
+}
 func (p *ColumnOmnibusRequest) SetBase(val *sc_misc_base.Base) {
 	p.Base = val
 }
@@ -61,7 +74,12 @@ var fieldIDToName_ColumnOmnibusRequest = map[int16]string{
 	1:   "authorName",
 	2:   "columnName",
 	3:   "columnPrice",
+	4:   "operator",
 	255: "base",
+}
+
+func (p *ColumnOmnibusRequest) IsSetOperator() bool {
+	return p.Operator != nil
 }
 
 func (p *ColumnOmnibusRequest) IsSetBase() bool {
@@ -106,6 +124,14 @@ func (p *ColumnOmnibusRequest) Read(iprot thrift.TProtocol) (err error) {
 		case 3:
 			if fieldTypeId == thrift.I64 {
 				if err = p.ReadField3(iprot); err != nil {
+					goto ReadFieldError
+				}
+			} else if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		case 4:
+			if fieldTypeId == thrift.STRUCT {
+				if err = p.ReadField4(iprot); err != nil {
 					goto ReadFieldError
 				}
 			} else if err = iprot.Skip(fieldTypeId); err != nil {
@@ -181,6 +207,14 @@ func (p *ColumnOmnibusRequest) ReadField3(iprot thrift.TProtocol) error {
 	p.ColumnPrice = _field
 	return nil
 }
+func (p *ColumnOmnibusRequest) ReadField4(iprot thrift.TProtocol) error {
+	_field := sc_misc_base.NewOperator()
+	if err := _field.Read(iprot); err != nil {
+		return err
+	}
+	p.Operator = _field
+	return nil
+}
 func (p *ColumnOmnibusRequest) ReadField255(iprot thrift.TProtocol) error {
 	_field := sc_misc_base.NewBase()
 	if err := _field.Read(iprot); err != nil {
@@ -206,6 +240,10 @@ func (p *ColumnOmnibusRequest) Write(oprot thrift.TProtocol) (err error) {
 		}
 		if err = p.writeField3(oprot); err != nil {
 			fieldId = 3
+			goto WriteFieldError
+		}
+		if err = p.writeField4(oprot); err != nil {
+			fieldId = 4
 			goto WriteFieldError
 		}
 		if err = p.writeField255(oprot); err != nil {
@@ -281,6 +319,23 @@ WriteFieldEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 3 end error: ", p), err)
 }
 
+func (p *ColumnOmnibusRequest) writeField4(oprot thrift.TProtocol) (err error) {
+	if err = oprot.WriteFieldBegin("operator", thrift.STRUCT, 4); err != nil {
+		goto WriteFieldBeginError
+	}
+	if err := p.Operator.Write(oprot); err != nil {
+		return err
+	}
+	if err = oprot.WriteFieldEnd(); err != nil {
+		goto WriteFieldEndError
+	}
+	return nil
+WriteFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 4 begin error: ", p), err)
+WriteFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 4 end error: ", p), err)
+}
+
 func (p *ColumnOmnibusRequest) writeField255(oprot thrift.TProtocol) (err error) {
 	if p.IsSetBase() {
 		if err = oprot.WriteFieldBegin("base", thrift.STRUCT, 255); err != nil {
@@ -323,6 +378,9 @@ func (p *ColumnOmnibusRequest) DeepEqual(ano *ColumnOmnibusRequest) bool {
 	if !p.Field3DeepEqual(ano.ColumnPrice) {
 		return false
 	}
+	if !p.Field4DeepEqual(ano.Operator) {
+		return false
+	}
 	if !p.Field255DeepEqual(ano.Base) {
 		return false
 	}
@@ -346,6 +404,13 @@ func (p *ColumnOmnibusRequest) Field2DeepEqual(src string) bool {
 func (p *ColumnOmnibusRequest) Field3DeepEqual(src int64) bool {
 
 	if p.ColumnPrice != src {
+		return false
+	}
+	return true
+}
+func (p *ColumnOmnibusRequest) Field4DeepEqual(src *sc_misc_base.Operator) bool {
+
+	if !p.Operator.DeepEqual(src) {
 		return false
 	}
 	return true

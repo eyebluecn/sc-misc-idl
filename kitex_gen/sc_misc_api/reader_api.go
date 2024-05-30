@@ -535,7 +535,7 @@ func (p *ReaderLoginResponse) Field255DeepEqual(src *sc_misc_base.BaseResp) bool
 }
 
 type ReaderQueryByIdRequest struct {
-	ReaderId string             `thrift:"readerId,1" frugal:"1,default,string" json:"readerId"`
+	ReaderId int64              `thrift:"readerId,1" frugal:"1,default,i64" json:"readerId"`
 	Base     *sc_misc_base.Base `thrift:"base,255,optional" frugal:"255,optional,sc_misc_base.Base" json:"base,omitempty"`
 }
 
@@ -547,7 +547,7 @@ func (p *ReaderQueryByIdRequest) InitDefault() {
 	*p = ReaderQueryByIdRequest{}
 }
 
-func (p *ReaderQueryByIdRequest) GetReaderId() (v string) {
+func (p *ReaderQueryByIdRequest) GetReaderId() (v int64) {
 	return p.ReaderId
 }
 
@@ -559,7 +559,7 @@ func (p *ReaderQueryByIdRequest) GetBase() (v *sc_misc_base.Base) {
 	}
 	return p.Base
 }
-func (p *ReaderQueryByIdRequest) SetReaderId(val string) {
+func (p *ReaderQueryByIdRequest) SetReaderId(val int64) {
 	p.ReaderId = val
 }
 func (p *ReaderQueryByIdRequest) SetBase(val *sc_misc_base.Base) {
@@ -595,7 +595,7 @@ func (p *ReaderQueryByIdRequest) Read(iprot thrift.TProtocol) (err error) {
 
 		switch fieldId {
 		case 1:
-			if fieldTypeId == thrift.STRING {
+			if fieldTypeId == thrift.I64 {
 				if err = p.ReadField1(iprot); err != nil {
 					goto ReadFieldError
 				}
@@ -641,8 +641,8 @@ ReadStructEndError:
 
 func (p *ReaderQueryByIdRequest) ReadField1(iprot thrift.TProtocol) error {
 
-	var _field string
-	if v, err := iprot.ReadString(); err != nil {
+	var _field int64
+	if v, err := iprot.ReadI64(); err != nil {
 		return err
 	} else {
 		_field = v
@@ -692,10 +692,10 @@ WriteStructEndError:
 }
 
 func (p *ReaderQueryByIdRequest) writeField1(oprot thrift.TProtocol) (err error) {
-	if err = oprot.WriteFieldBegin("readerId", thrift.STRING, 1); err != nil {
+	if err = oprot.WriteFieldBegin("readerId", thrift.I64, 1); err != nil {
 		goto WriteFieldBeginError
 	}
-	if err := oprot.WriteString(p.ReaderId); err != nil {
+	if err := oprot.WriteI64(p.ReaderId); err != nil {
 		return err
 	}
 	if err = oprot.WriteFieldEnd(); err != nil {
@@ -750,9 +750,9 @@ func (p *ReaderQueryByIdRequest) DeepEqual(ano *ReaderQueryByIdRequest) bool {
 	return true
 }
 
-func (p *ReaderQueryByIdRequest) Field1DeepEqual(src string) bool {
+func (p *ReaderQueryByIdRequest) Field1DeepEqual(src int64) bool {
 
-	if strings.Compare(p.ReaderId, src) != 0 {
+	if p.ReaderId != src {
 		return false
 	}
 	return true

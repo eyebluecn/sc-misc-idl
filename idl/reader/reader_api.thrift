@@ -21,7 +21,7 @@ struct ReaderLoginResponse {
 
 //读者查询 请求体
 struct ReaderQueryByIdRequest {
-	1: string readerId //id
+	1: i64 readerId //id
 
 	255: optional base.Base base //标准请求内容
 }

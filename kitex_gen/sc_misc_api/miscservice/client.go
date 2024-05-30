@@ -13,9 +13,10 @@ import (
 type Client interface {
 	ColumnOmnibus(ctx context.Context, request *sc_misc_api.ColumnOmnibusRequest, callOptions ...callopt.Option) (r *sc_misc_api.ColumnOmnibusResponse, err error)
 	RichColumnPage(ctx context.Context, request *sc_misc_api.RichColumnPageRequest, callOptions ...callopt.Option) (r *sc_misc_api.RichColumnPageResponse, err error)
-	ColumnDetail(ctx context.Context, request *sc_misc_api.ColumnDetailRequest, callOptions ...callopt.Option) (r *sc_misc_api.ColumnDetailResponse, err error)
+	ColumnQueryById(ctx context.Context, request *sc_misc_api.ColumnQueryByIdRequest, callOptions ...callopt.Option) (r *sc_misc_api.ColumnQueryByIdResponse, err error)
 	EditorLogin(ctx context.Context, request *sc_misc_api.EditorLoginRequest, callOptions ...callopt.Option) (r *sc_misc_api.EditorLoginResponse, err error)
 	ReaderLogin(ctx context.Context, request *sc_misc_api.ReaderLoginRequest, callOptions ...callopt.Option) (r *sc_misc_api.ReaderLoginResponse, err error)
+	ReaderQueryById(ctx context.Context, request *sc_misc_api.ReaderQueryByIdRequest, callOptions ...callopt.Option) (r *sc_misc_api.ReaderQueryByIdResponse, err error)
 	PaymentPaidCallback(ctx context.Context, request *sc_misc_api.PaymentPaidCallbackRequest, callOptions ...callopt.Option) (r *sc_misc_api.PaymentPaidCallbackResponse, err error)
 }
 
@@ -58,9 +59,9 @@ func (p *kMiscServiceClient) RichColumnPage(ctx context.Context, request *sc_mis
 	return p.kClient.RichColumnPage(ctx, request)
 }
 
-func (p *kMiscServiceClient) ColumnDetail(ctx context.Context, request *sc_misc_api.ColumnDetailRequest, callOptions ...callopt.Option) (r *sc_misc_api.ColumnDetailResponse, err error) {
+func (p *kMiscServiceClient) ColumnQueryById(ctx context.Context, request *sc_misc_api.ColumnQueryByIdRequest, callOptions ...callopt.Option) (r *sc_misc_api.ColumnQueryByIdResponse, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
-	return p.kClient.ColumnDetail(ctx, request)
+	return p.kClient.ColumnQueryById(ctx, request)
 }
 
 func (p *kMiscServiceClient) EditorLogin(ctx context.Context, request *sc_misc_api.EditorLoginRequest, callOptions ...callopt.Option) (r *sc_misc_api.EditorLoginResponse, err error) {
@@ -71,6 +72,11 @@ func (p *kMiscServiceClient) EditorLogin(ctx context.Context, request *sc_misc_a
 func (p *kMiscServiceClient) ReaderLogin(ctx context.Context, request *sc_misc_api.ReaderLoginRequest, callOptions ...callopt.Option) (r *sc_misc_api.ReaderLoginResponse, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
 	return p.kClient.ReaderLogin(ctx, request)
+}
+
+func (p *kMiscServiceClient) ReaderQueryById(ctx context.Context, request *sc_misc_api.ReaderQueryByIdRequest, callOptions ...callopt.Option) (r *sc_misc_api.ReaderQueryByIdResponse, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.ReaderQueryById(ctx, request)
 }
 
 func (p *kMiscServiceClient) PaymentPaidCallback(ctx context.Context, request *sc_misc_api.PaymentPaidCallbackRequest, callOptions ...callopt.Option) (r *sc_misc_api.PaymentPaidCallbackResponse, err error) {

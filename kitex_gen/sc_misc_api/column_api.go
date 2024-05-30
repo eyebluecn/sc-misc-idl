@@ -1558,48 +1558,48 @@ func (p *RichColumnPageResponse) Field255DeepEqual(src *sc_misc_base.BaseResp) b
 	return true
 }
 
-type ColumnDetailRequest struct {
-	Id   int64              `thrift:"id,1" frugal:"1,default,i64" json:"id"`
-	Base *sc_misc_base.Base `thrift:"base,255,optional" frugal:"255,optional,sc_misc_base.Base" json:"base,omitempty"`
+type ColumnQueryByIdRequest struct {
+	ColumnId int64              `thrift:"columnId,1" frugal:"1,default,i64" json:"columnId"`
+	Base     *sc_misc_base.Base `thrift:"base,255,optional" frugal:"255,optional,sc_misc_base.Base" json:"base,omitempty"`
 }
 
-func NewColumnDetailRequest() *ColumnDetailRequest {
-	return &ColumnDetailRequest{}
+func NewColumnQueryByIdRequest() *ColumnQueryByIdRequest {
+	return &ColumnQueryByIdRequest{}
 }
 
-func (p *ColumnDetailRequest) InitDefault() {
-	*p = ColumnDetailRequest{}
+func (p *ColumnQueryByIdRequest) InitDefault() {
+	*p = ColumnQueryByIdRequest{}
 }
 
-func (p *ColumnDetailRequest) GetId() (v int64) {
-	return p.Id
+func (p *ColumnQueryByIdRequest) GetColumnId() (v int64) {
+	return p.ColumnId
 }
 
-var ColumnDetailRequest_Base_DEFAULT *sc_misc_base.Base
+var ColumnQueryByIdRequest_Base_DEFAULT *sc_misc_base.Base
 
-func (p *ColumnDetailRequest) GetBase() (v *sc_misc_base.Base) {
+func (p *ColumnQueryByIdRequest) GetBase() (v *sc_misc_base.Base) {
 	if !p.IsSetBase() {
-		return ColumnDetailRequest_Base_DEFAULT
+		return ColumnQueryByIdRequest_Base_DEFAULT
 	}
 	return p.Base
 }
-func (p *ColumnDetailRequest) SetId(val int64) {
-	p.Id = val
+func (p *ColumnQueryByIdRequest) SetColumnId(val int64) {
+	p.ColumnId = val
 }
-func (p *ColumnDetailRequest) SetBase(val *sc_misc_base.Base) {
+func (p *ColumnQueryByIdRequest) SetBase(val *sc_misc_base.Base) {
 	p.Base = val
 }
 
-var fieldIDToName_ColumnDetailRequest = map[int16]string{
-	1:   "id",
+var fieldIDToName_ColumnQueryByIdRequest = map[int16]string{
+	1:   "columnId",
 	255: "base",
 }
 
-func (p *ColumnDetailRequest) IsSetBase() bool {
+func (p *ColumnQueryByIdRequest) IsSetBase() bool {
 	return p.Base != nil
 }
 
-func (p *ColumnDetailRequest) Read(iprot thrift.TProtocol) (err error) {
+func (p *ColumnQueryByIdRequest) Read(iprot thrift.TProtocol) (err error) {
 
 	var fieldTypeId thrift.TType
 	var fieldId int16
@@ -1653,7 +1653,7 @@ ReadStructBeginError:
 ReadFieldBeginError:
 	return thrift.PrependError(fmt.Sprintf("%T read field %d begin error: ", p, fieldId), err)
 ReadFieldError:
-	return thrift.PrependError(fmt.Sprintf("%T read field %d '%s' error: ", p, fieldId, fieldIDToName_ColumnDetailRequest[fieldId]), err)
+	return thrift.PrependError(fmt.Sprintf("%T read field %d '%s' error: ", p, fieldId, fieldIDToName_ColumnQueryByIdRequest[fieldId]), err)
 SkipFieldError:
 	return thrift.PrependError(fmt.Sprintf("%T field %d skip type %d error: ", p, fieldId, fieldTypeId), err)
 
@@ -1663,7 +1663,7 @@ ReadStructEndError:
 	return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
 }
 
-func (p *ColumnDetailRequest) ReadField1(iprot thrift.TProtocol) error {
+func (p *ColumnQueryByIdRequest) ReadField1(iprot thrift.TProtocol) error {
 
 	var _field int64
 	if v, err := iprot.ReadI64(); err != nil {
@@ -1671,10 +1671,10 @@ func (p *ColumnDetailRequest) ReadField1(iprot thrift.TProtocol) error {
 	} else {
 		_field = v
 	}
-	p.Id = _field
+	p.ColumnId = _field
 	return nil
 }
-func (p *ColumnDetailRequest) ReadField255(iprot thrift.TProtocol) error {
+func (p *ColumnQueryByIdRequest) ReadField255(iprot thrift.TProtocol) error {
 	_field := sc_misc_base.NewBase()
 	if err := _field.Read(iprot); err != nil {
 		return err
@@ -1683,9 +1683,9 @@ func (p *ColumnDetailRequest) ReadField255(iprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *ColumnDetailRequest) Write(oprot thrift.TProtocol) (err error) {
+func (p *ColumnQueryByIdRequest) Write(oprot thrift.TProtocol) (err error) {
 	var fieldId int16
-	if err = oprot.WriteStructBegin("ColumnDetailRequest"); err != nil {
+	if err = oprot.WriteStructBegin("ColumnQueryByIdRequest"); err != nil {
 		goto WriteStructBeginError
 	}
 	if p != nil {
@@ -1715,11 +1715,11 @@ WriteStructEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write struct end error: ", p), err)
 }
 
-func (p *ColumnDetailRequest) writeField1(oprot thrift.TProtocol) (err error) {
-	if err = oprot.WriteFieldBegin("id", thrift.I64, 1); err != nil {
+func (p *ColumnQueryByIdRequest) writeField1(oprot thrift.TProtocol) (err error) {
+	if err = oprot.WriteFieldBegin("columnId", thrift.I64, 1); err != nil {
 		goto WriteFieldBeginError
 	}
-	if err := oprot.WriteI64(p.Id); err != nil {
+	if err := oprot.WriteI64(p.ColumnId); err != nil {
 		return err
 	}
 	if err = oprot.WriteFieldEnd(); err != nil {
@@ -1732,7 +1732,7 @@ WriteFieldEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 1 end error: ", p), err)
 }
 
-func (p *ColumnDetailRequest) writeField255(oprot thrift.TProtocol) (err error) {
+func (p *ColumnQueryByIdRequest) writeField255(oprot thrift.TProtocol) (err error) {
 	if p.IsSetBase() {
 		if err = oprot.WriteFieldBegin("base", thrift.STRUCT, 255); err != nil {
 			goto WriteFieldBeginError
@@ -1751,21 +1751,21 @@ WriteFieldEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 255 end error: ", p), err)
 }
 
-func (p *ColumnDetailRequest) String() string {
+func (p *ColumnQueryByIdRequest) String() string {
 	if p == nil {
 		return "<nil>"
 	}
-	return fmt.Sprintf("ColumnDetailRequest(%+v)", *p)
+	return fmt.Sprintf("ColumnQueryByIdRequest(%+v)", *p)
 
 }
 
-func (p *ColumnDetailRequest) DeepEqual(ano *ColumnDetailRequest) bool {
+func (p *ColumnQueryByIdRequest) DeepEqual(ano *ColumnQueryByIdRequest) bool {
 	if p == ano {
 		return true
 	} else if p == nil || ano == nil {
 		return false
 	}
-	if !p.Field1DeepEqual(ano.Id) {
+	if !p.Field1DeepEqual(ano.ColumnId) {
 		return false
 	}
 	if !p.Field255DeepEqual(ano.Base) {
@@ -1774,14 +1774,14 @@ func (p *ColumnDetailRequest) DeepEqual(ano *ColumnDetailRequest) bool {
 	return true
 }
 
-func (p *ColumnDetailRequest) Field1DeepEqual(src int64) bool {
+func (p *ColumnQueryByIdRequest) Field1DeepEqual(src int64) bool {
 
-	if p.Id != src {
+	if p.ColumnId != src {
 		return false
 	}
 	return true
 }
-func (p *ColumnDetailRequest) Field255DeepEqual(src *sc_misc_base.Base) bool {
+func (p *ColumnQueryByIdRequest) Field255DeepEqual(src *sc_misc_base.Base) bool {
 
 	if !p.Base.DeepEqual(src) {
 		return false
@@ -1789,57 +1789,57 @@ func (p *ColumnDetailRequest) Field255DeepEqual(src *sc_misc_base.Base) bool {
 	return true
 }
 
-type ColumnDetailResponse struct {
+type ColumnQueryByIdResponse struct {
 	Data     *ColumnDTO             `thrift:"data,1" frugal:"1,default,ColumnDTO" json:"data"`
 	BaseResp *sc_misc_base.BaseResp `thrift:"baseResp,255" frugal:"255,default,sc_misc_base.BaseResp" json:"baseResp"`
 }
 
-func NewColumnDetailResponse() *ColumnDetailResponse {
-	return &ColumnDetailResponse{}
+func NewColumnQueryByIdResponse() *ColumnQueryByIdResponse {
+	return &ColumnQueryByIdResponse{}
 }
 
-func (p *ColumnDetailResponse) InitDefault() {
-	*p = ColumnDetailResponse{}
+func (p *ColumnQueryByIdResponse) InitDefault() {
+	*p = ColumnQueryByIdResponse{}
 }
 
-var ColumnDetailResponse_Data_DEFAULT *ColumnDTO
+var ColumnQueryByIdResponse_Data_DEFAULT *ColumnDTO
 
-func (p *ColumnDetailResponse) GetData() (v *ColumnDTO) {
+func (p *ColumnQueryByIdResponse) GetData() (v *ColumnDTO) {
 	if !p.IsSetData() {
-		return ColumnDetailResponse_Data_DEFAULT
+		return ColumnQueryByIdResponse_Data_DEFAULT
 	}
 	return p.Data
 }
 
-var ColumnDetailResponse_BaseResp_DEFAULT *sc_misc_base.BaseResp
+var ColumnQueryByIdResponse_BaseResp_DEFAULT *sc_misc_base.BaseResp
 
-func (p *ColumnDetailResponse) GetBaseResp() (v *sc_misc_base.BaseResp) {
+func (p *ColumnQueryByIdResponse) GetBaseResp() (v *sc_misc_base.BaseResp) {
 	if !p.IsSetBaseResp() {
-		return ColumnDetailResponse_BaseResp_DEFAULT
+		return ColumnQueryByIdResponse_BaseResp_DEFAULT
 	}
 	return p.BaseResp
 }
-func (p *ColumnDetailResponse) SetData(val *ColumnDTO) {
+func (p *ColumnQueryByIdResponse) SetData(val *ColumnDTO) {
 	p.Data = val
 }
-func (p *ColumnDetailResponse) SetBaseResp(val *sc_misc_base.BaseResp) {
+func (p *ColumnQueryByIdResponse) SetBaseResp(val *sc_misc_base.BaseResp) {
 	p.BaseResp = val
 }
 
-var fieldIDToName_ColumnDetailResponse = map[int16]string{
+var fieldIDToName_ColumnQueryByIdResponse = map[int16]string{
 	1:   "data",
 	255: "baseResp",
 }
 
-func (p *ColumnDetailResponse) IsSetData() bool {
+func (p *ColumnQueryByIdResponse) IsSetData() bool {
 	return p.Data != nil
 }
 
-func (p *ColumnDetailResponse) IsSetBaseResp() bool {
+func (p *ColumnQueryByIdResponse) IsSetBaseResp() bool {
 	return p.BaseResp != nil
 }
 
-func (p *ColumnDetailResponse) Read(iprot thrift.TProtocol) (err error) {
+func (p *ColumnQueryByIdResponse) Read(iprot thrift.TProtocol) (err error) {
 
 	var fieldTypeId thrift.TType
 	var fieldId int16
@@ -1893,7 +1893,7 @@ ReadStructBeginError:
 ReadFieldBeginError:
 	return thrift.PrependError(fmt.Sprintf("%T read field %d begin error: ", p, fieldId), err)
 ReadFieldError:
-	return thrift.PrependError(fmt.Sprintf("%T read field %d '%s' error: ", p, fieldId, fieldIDToName_ColumnDetailResponse[fieldId]), err)
+	return thrift.PrependError(fmt.Sprintf("%T read field %d '%s' error: ", p, fieldId, fieldIDToName_ColumnQueryByIdResponse[fieldId]), err)
 SkipFieldError:
 	return thrift.PrependError(fmt.Sprintf("%T field %d skip type %d error: ", p, fieldId, fieldTypeId), err)
 
@@ -1903,7 +1903,7 @@ ReadStructEndError:
 	return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
 }
 
-func (p *ColumnDetailResponse) ReadField1(iprot thrift.TProtocol) error {
+func (p *ColumnQueryByIdResponse) ReadField1(iprot thrift.TProtocol) error {
 	_field := NewColumnDTO()
 	if err := _field.Read(iprot); err != nil {
 		return err
@@ -1911,7 +1911,7 @@ func (p *ColumnDetailResponse) ReadField1(iprot thrift.TProtocol) error {
 	p.Data = _field
 	return nil
 }
-func (p *ColumnDetailResponse) ReadField255(iprot thrift.TProtocol) error {
+func (p *ColumnQueryByIdResponse) ReadField255(iprot thrift.TProtocol) error {
 	_field := sc_misc_base.NewBaseResp()
 	if err := _field.Read(iprot); err != nil {
 		return err
@@ -1920,9 +1920,9 @@ func (p *ColumnDetailResponse) ReadField255(iprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *ColumnDetailResponse) Write(oprot thrift.TProtocol) (err error) {
+func (p *ColumnQueryByIdResponse) Write(oprot thrift.TProtocol) (err error) {
 	var fieldId int16
-	if err = oprot.WriteStructBegin("ColumnDetailResponse"); err != nil {
+	if err = oprot.WriteStructBegin("ColumnQueryByIdResponse"); err != nil {
 		goto WriteStructBeginError
 	}
 	if p != nil {
@@ -1952,7 +1952,7 @@ WriteStructEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write struct end error: ", p), err)
 }
 
-func (p *ColumnDetailResponse) writeField1(oprot thrift.TProtocol) (err error) {
+func (p *ColumnQueryByIdResponse) writeField1(oprot thrift.TProtocol) (err error) {
 	if err = oprot.WriteFieldBegin("data", thrift.STRUCT, 1); err != nil {
 		goto WriteFieldBeginError
 	}
@@ -1969,7 +1969,7 @@ WriteFieldEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 1 end error: ", p), err)
 }
 
-func (p *ColumnDetailResponse) writeField255(oprot thrift.TProtocol) (err error) {
+func (p *ColumnQueryByIdResponse) writeField255(oprot thrift.TProtocol) (err error) {
 	if err = oprot.WriteFieldBegin("baseResp", thrift.STRUCT, 255); err != nil {
 		goto WriteFieldBeginError
 	}
@@ -1986,15 +1986,15 @@ WriteFieldEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 255 end error: ", p), err)
 }
 
-func (p *ColumnDetailResponse) String() string {
+func (p *ColumnQueryByIdResponse) String() string {
 	if p == nil {
 		return "<nil>"
 	}
-	return fmt.Sprintf("ColumnDetailResponse(%+v)", *p)
+	return fmt.Sprintf("ColumnQueryByIdResponse(%+v)", *p)
 
 }
 
-func (p *ColumnDetailResponse) DeepEqual(ano *ColumnDetailResponse) bool {
+func (p *ColumnQueryByIdResponse) DeepEqual(ano *ColumnQueryByIdResponse) bool {
 	if p == ano {
 		return true
 	} else if p == nil || ano == nil {
@@ -2009,14 +2009,14 @@ func (p *ColumnDetailResponse) DeepEqual(ano *ColumnDetailResponse) bool {
 	return true
 }
 
-func (p *ColumnDetailResponse) Field1DeepEqual(src *ColumnDTO) bool {
+func (p *ColumnQueryByIdResponse) Field1DeepEqual(src *ColumnDTO) bool {
 
 	if !p.Data.DeepEqual(src) {
 		return false
 	}
 	return true
 }
-func (p *ColumnDetailResponse) Field255DeepEqual(src *sc_misc_base.BaseResp) bool {
+func (p *ColumnQueryByIdResponse) Field255DeepEqual(src *sc_misc_base.BaseResp) bool {
 
 	if !p.BaseResp.DeepEqual(src) {
 		return false

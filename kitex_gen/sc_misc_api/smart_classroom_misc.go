@@ -13,11 +13,13 @@ type MiscService interface {
 
 	RichColumnPage(ctx context.Context, request *RichColumnPageRequest) (r *RichColumnPageResponse, err error)
 
-	ColumnDetail(ctx context.Context, request *ColumnDetailRequest) (r *ColumnDetailResponse, err error)
+	ColumnQueryById(ctx context.Context, request *ColumnQueryByIdRequest) (r *ColumnQueryByIdResponse, err error)
 
 	EditorLogin(ctx context.Context, request *EditorLoginRequest) (r *EditorLoginResponse, err error)
 
 	ReaderLogin(ctx context.Context, request *ReaderLoginRequest) (r *ReaderLoginResponse, err error)
+
+	ReaderQueryById(ctx context.Context, request *ReaderQueryByIdRequest) (r *ReaderQueryByIdResponse, err error)
 
 	PaymentPaidCallback(ctx context.Context, request *PaymentPaidCallbackRequest) (r *PaymentPaidCallbackResponse, err error)
 }
@@ -66,11 +68,11 @@ func (p *MiscServiceClient) RichColumnPage(ctx context.Context, request *RichCol
 	}
 	return _result.GetSuccess(), nil
 }
-func (p *MiscServiceClient) ColumnDetail(ctx context.Context, request *ColumnDetailRequest) (r *ColumnDetailResponse, err error) {
-	var _args MiscServiceColumnDetailArgs
+func (p *MiscServiceClient) ColumnQueryById(ctx context.Context, request *ColumnQueryByIdRequest) (r *ColumnQueryByIdResponse, err error) {
+	var _args MiscServiceColumnQueryByIdArgs
 	_args.Request = request
-	var _result MiscServiceColumnDetailResult
-	if err = p.Client_().Call(ctx, "ColumnDetail", &_args, &_result); err != nil {
+	var _result MiscServiceColumnQueryByIdResult
+	if err = p.Client_().Call(ctx, "ColumnQueryById", &_args, &_result); err != nil {
 		return
 	}
 	return _result.GetSuccess(), nil
@@ -89,6 +91,15 @@ func (p *MiscServiceClient) ReaderLogin(ctx context.Context, request *ReaderLogi
 	_args.Request = request
 	var _result MiscServiceReaderLoginResult
 	if err = p.Client_().Call(ctx, "ReaderLogin", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+func (p *MiscServiceClient) ReaderQueryById(ctx context.Context, request *ReaderQueryByIdRequest) (r *ReaderQueryByIdResponse, err error) {
+	var _args MiscServiceReaderQueryByIdArgs
+	_args.Request = request
+	var _result MiscServiceReaderQueryByIdResult
+	if err = p.Client_().Call(ctx, "ReaderQueryById", &_args, &_result); err != nil {
 		return
 	}
 	return _result.GetSuccess(), nil
@@ -125,9 +136,10 @@ func NewMiscServiceProcessor(handler MiscService) *MiscServiceProcessor {
 	self := &MiscServiceProcessor{handler: handler, processorMap: make(map[string]thrift.TProcessorFunction)}
 	self.AddToProcessorMap("ColumnOmnibus", &miscServiceProcessorColumnOmnibus{handler: handler})
 	self.AddToProcessorMap("RichColumnPage", &miscServiceProcessorRichColumnPage{handler: handler})
-	self.AddToProcessorMap("ColumnDetail", &miscServiceProcessorColumnDetail{handler: handler})
+	self.AddToProcessorMap("ColumnQueryById", &miscServiceProcessorColumnQueryById{handler: handler})
 	self.AddToProcessorMap("EditorLogin", &miscServiceProcessorEditorLogin{handler: handler})
 	self.AddToProcessorMap("ReaderLogin", &miscServiceProcessorReaderLogin{handler: handler})
+	self.AddToProcessorMap("ReaderQueryById", &miscServiceProcessorReaderQueryById{handler: handler})
 	self.AddToProcessorMap("PaymentPaidCallback", &miscServiceProcessorPaymentPaidCallback{handler: handler})
 	return self
 }
@@ -245,16 +257,16 @@ func (p *miscServiceProcessorRichColumnPage) Process(ctx context.Context, seqId 
 	return true, err
 }
 
-type miscServiceProcessorColumnDetail struct {
+type miscServiceProcessorColumnQueryById struct {
 	handler MiscService
 }
 
-func (p *miscServiceProcessorColumnDetail) Process(ctx context.Context, seqId int32, iprot, oprot thrift.TProtocol) (success bool, err thrift.TException) {
-	args := MiscServiceColumnDetailArgs{}
+func (p *miscServiceProcessorColumnQueryById) Process(ctx context.Context, seqId int32, iprot, oprot thrift.TProtocol) (success bool, err thrift.TException) {
+	args := MiscServiceColumnQueryByIdArgs{}
 	if err = args.Read(iprot); err != nil {
 		iprot.ReadMessageEnd()
 		x := thrift.NewTApplicationException(thrift.PROTOCOL_ERROR, err.Error())
-		oprot.WriteMessageBegin("ColumnDetail", thrift.EXCEPTION, seqId)
+		oprot.WriteMessageBegin("ColumnQueryById", thrift.EXCEPTION, seqId)
 		x.Write(oprot)
 		oprot.WriteMessageEnd()
 		oprot.Flush(ctx)
@@ -263,11 +275,11 @@ func (p *miscServiceProcessorColumnDetail) Process(ctx context.Context, seqId in
 
 	iprot.ReadMessageEnd()
 	var err2 error
-	result := MiscServiceColumnDetailResult{}
-	var retval *ColumnDetailResponse
-	if retval, err2 = p.handler.ColumnDetail(ctx, args.Request); err2 != nil {
-		x := thrift.NewTApplicationException(thrift.INTERNAL_ERROR, "Internal error processing ColumnDetail: "+err2.Error())
-		oprot.WriteMessageBegin("ColumnDetail", thrift.EXCEPTION, seqId)
+	result := MiscServiceColumnQueryByIdResult{}
+	var retval *ColumnQueryByIdResponse
+	if retval, err2 = p.handler.ColumnQueryById(ctx, args.Request); err2 != nil {
+		x := thrift.NewTApplicationException(thrift.INTERNAL_ERROR, "Internal error processing ColumnQueryById: "+err2.Error())
+		oprot.WriteMessageBegin("ColumnQueryById", thrift.EXCEPTION, seqId)
 		x.Write(oprot)
 		oprot.WriteMessageEnd()
 		oprot.Flush(ctx)
@@ -275,7 +287,7 @@ func (p *miscServiceProcessorColumnDetail) Process(ctx context.Context, seqId in
 	} else {
 		result.Success = retval
 	}
-	if err2 = oprot.WriteMessageBegin("ColumnDetail", thrift.REPLY, seqId); err2 != nil {
+	if err2 = oprot.WriteMessageBegin("ColumnQueryById", thrift.REPLY, seqId); err2 != nil {
 		err = err2
 	}
 	if err2 = result.Write(oprot); err == nil && err2 != nil {
@@ -372,6 +384,54 @@ func (p *miscServiceProcessorReaderLogin) Process(ctx context.Context, seqId int
 		result.Success = retval
 	}
 	if err2 = oprot.WriteMessageBegin("ReaderLogin", thrift.REPLY, seqId); err2 != nil {
+		err = err2
+	}
+	if err2 = result.Write(oprot); err == nil && err2 != nil {
+		err = err2
+	}
+	if err2 = oprot.WriteMessageEnd(); err == nil && err2 != nil {
+		err = err2
+	}
+	if err2 = oprot.Flush(ctx); err == nil && err2 != nil {
+		err = err2
+	}
+	if err != nil {
+		return
+	}
+	return true, err
+}
+
+type miscServiceProcessorReaderQueryById struct {
+	handler MiscService
+}
+
+func (p *miscServiceProcessorReaderQueryById) Process(ctx context.Context, seqId int32, iprot, oprot thrift.TProtocol) (success bool, err thrift.TException) {
+	args := MiscServiceReaderQueryByIdArgs{}
+	if err = args.Read(iprot); err != nil {
+		iprot.ReadMessageEnd()
+		x := thrift.NewTApplicationException(thrift.PROTOCOL_ERROR, err.Error())
+		oprot.WriteMessageBegin("ReaderQueryById", thrift.EXCEPTION, seqId)
+		x.Write(oprot)
+		oprot.WriteMessageEnd()
+		oprot.Flush(ctx)
+		return false, err
+	}
+
+	iprot.ReadMessageEnd()
+	var err2 error
+	result := MiscServiceReaderQueryByIdResult{}
+	var retval *ReaderQueryByIdResponse
+	if retval, err2 = p.handler.ReaderQueryById(ctx, args.Request); err2 != nil {
+		x := thrift.NewTApplicationException(thrift.INTERNAL_ERROR, "Internal error processing ReaderQueryById: "+err2.Error())
+		oprot.WriteMessageBegin("ReaderQueryById", thrift.EXCEPTION, seqId)
+		x.Write(oprot)
+		oprot.WriteMessageEnd()
+		oprot.Flush(ctx)
+		return true, err2
+	} else {
+		result.Success = retval
+	}
+	if err2 = oprot.WriteMessageBegin("ReaderQueryById", thrift.REPLY, seqId); err2 != nil {
 		err = err2
 	}
 	if err2 = result.Write(oprot); err == nil && err2 != nil {
@@ -1121,39 +1181,39 @@ func (p *MiscServiceRichColumnPageResult) Field0DeepEqual(src *RichColumnPageRes
 	return true
 }
 
-type MiscServiceColumnDetailArgs struct {
-	Request *ColumnDetailRequest `thrift:"request,1" frugal:"1,default,ColumnDetailRequest" json:"request"`
+type MiscServiceColumnQueryByIdArgs struct {
+	Request *ColumnQueryByIdRequest `thrift:"request,1" frugal:"1,default,ColumnQueryByIdRequest" json:"request"`
 }
 
-func NewMiscServiceColumnDetailArgs() *MiscServiceColumnDetailArgs {
-	return &MiscServiceColumnDetailArgs{}
+func NewMiscServiceColumnQueryByIdArgs() *MiscServiceColumnQueryByIdArgs {
+	return &MiscServiceColumnQueryByIdArgs{}
 }
 
-func (p *MiscServiceColumnDetailArgs) InitDefault() {
-	*p = MiscServiceColumnDetailArgs{}
+func (p *MiscServiceColumnQueryByIdArgs) InitDefault() {
+	*p = MiscServiceColumnQueryByIdArgs{}
 }
 
-var MiscServiceColumnDetailArgs_Request_DEFAULT *ColumnDetailRequest
+var MiscServiceColumnQueryByIdArgs_Request_DEFAULT *ColumnQueryByIdRequest
 
-func (p *MiscServiceColumnDetailArgs) GetRequest() (v *ColumnDetailRequest) {
+func (p *MiscServiceColumnQueryByIdArgs) GetRequest() (v *ColumnQueryByIdRequest) {
 	if !p.IsSetRequest() {
-		return MiscServiceColumnDetailArgs_Request_DEFAULT
+		return MiscServiceColumnQueryByIdArgs_Request_DEFAULT
 	}
 	return p.Request
 }
-func (p *MiscServiceColumnDetailArgs) SetRequest(val *ColumnDetailRequest) {
+func (p *MiscServiceColumnQueryByIdArgs) SetRequest(val *ColumnQueryByIdRequest) {
 	p.Request = val
 }
 
-var fieldIDToName_MiscServiceColumnDetailArgs = map[int16]string{
+var fieldIDToName_MiscServiceColumnQueryByIdArgs = map[int16]string{
 	1: "request",
 }
 
-func (p *MiscServiceColumnDetailArgs) IsSetRequest() bool {
+func (p *MiscServiceColumnQueryByIdArgs) IsSetRequest() bool {
 	return p.Request != nil
 }
 
-func (p *MiscServiceColumnDetailArgs) Read(iprot thrift.TProtocol) (err error) {
+func (p *MiscServiceColumnQueryByIdArgs) Read(iprot thrift.TProtocol) (err error) {
 
 	var fieldTypeId thrift.TType
 	var fieldId int16
@@ -1199,7 +1259,7 @@ ReadStructBeginError:
 ReadFieldBeginError:
 	return thrift.PrependError(fmt.Sprintf("%T read field %d begin error: ", p, fieldId), err)
 ReadFieldError:
-	return thrift.PrependError(fmt.Sprintf("%T read field %d '%s' error: ", p, fieldId, fieldIDToName_MiscServiceColumnDetailArgs[fieldId]), err)
+	return thrift.PrependError(fmt.Sprintf("%T read field %d '%s' error: ", p, fieldId, fieldIDToName_MiscServiceColumnQueryByIdArgs[fieldId]), err)
 SkipFieldError:
 	return thrift.PrependError(fmt.Sprintf("%T field %d skip type %d error: ", p, fieldId, fieldTypeId), err)
 
@@ -1209,8 +1269,8 @@ ReadStructEndError:
 	return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
 }
 
-func (p *MiscServiceColumnDetailArgs) ReadField1(iprot thrift.TProtocol) error {
-	_field := NewColumnDetailRequest()
+func (p *MiscServiceColumnQueryByIdArgs) ReadField1(iprot thrift.TProtocol) error {
+	_field := NewColumnQueryByIdRequest()
 	if err := _field.Read(iprot); err != nil {
 		return err
 	}
@@ -1218,9 +1278,9 @@ func (p *MiscServiceColumnDetailArgs) ReadField1(iprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *MiscServiceColumnDetailArgs) Write(oprot thrift.TProtocol) (err error) {
+func (p *MiscServiceColumnQueryByIdArgs) Write(oprot thrift.TProtocol) (err error) {
 	var fieldId int16
-	if err = oprot.WriteStructBegin("ColumnDetail_args"); err != nil {
+	if err = oprot.WriteStructBegin("ColumnQueryById_args"); err != nil {
 		goto WriteStructBeginError
 	}
 	if p != nil {
@@ -1246,7 +1306,7 @@ WriteStructEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write struct end error: ", p), err)
 }
 
-func (p *MiscServiceColumnDetailArgs) writeField1(oprot thrift.TProtocol) (err error) {
+func (p *MiscServiceColumnQueryByIdArgs) writeField1(oprot thrift.TProtocol) (err error) {
 	if err = oprot.WriteFieldBegin("request", thrift.STRUCT, 1); err != nil {
 		goto WriteFieldBeginError
 	}
@@ -1263,15 +1323,15 @@ WriteFieldEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 1 end error: ", p), err)
 }
 
-func (p *MiscServiceColumnDetailArgs) String() string {
+func (p *MiscServiceColumnQueryByIdArgs) String() string {
 	if p == nil {
 		return "<nil>"
 	}
-	return fmt.Sprintf("MiscServiceColumnDetailArgs(%+v)", *p)
+	return fmt.Sprintf("MiscServiceColumnQueryByIdArgs(%+v)", *p)
 
 }
 
-func (p *MiscServiceColumnDetailArgs) DeepEqual(ano *MiscServiceColumnDetailArgs) bool {
+func (p *MiscServiceColumnQueryByIdArgs) DeepEqual(ano *MiscServiceColumnQueryByIdArgs) bool {
 	if p == ano {
 		return true
 	} else if p == nil || ano == nil {
@@ -1283,7 +1343,7 @@ func (p *MiscServiceColumnDetailArgs) DeepEqual(ano *MiscServiceColumnDetailArgs
 	return true
 }
 
-func (p *MiscServiceColumnDetailArgs) Field1DeepEqual(src *ColumnDetailRequest) bool {
+func (p *MiscServiceColumnQueryByIdArgs) Field1DeepEqual(src *ColumnQueryByIdRequest) bool {
 
 	if !p.Request.DeepEqual(src) {
 		return false
@@ -1291,39 +1351,39 @@ func (p *MiscServiceColumnDetailArgs) Field1DeepEqual(src *ColumnDetailRequest) 
 	return true
 }
 
-type MiscServiceColumnDetailResult struct {
-	Success *ColumnDetailResponse `thrift:"success,0,optional" frugal:"0,optional,ColumnDetailResponse" json:"success,omitempty"`
+type MiscServiceColumnQueryByIdResult struct {
+	Success *ColumnQueryByIdResponse `thrift:"success,0,optional" frugal:"0,optional,ColumnQueryByIdResponse" json:"success,omitempty"`
 }
 
-func NewMiscServiceColumnDetailResult() *MiscServiceColumnDetailResult {
-	return &MiscServiceColumnDetailResult{}
+func NewMiscServiceColumnQueryByIdResult() *MiscServiceColumnQueryByIdResult {
+	return &MiscServiceColumnQueryByIdResult{}
 }
 
-func (p *MiscServiceColumnDetailResult) InitDefault() {
-	*p = MiscServiceColumnDetailResult{}
+func (p *MiscServiceColumnQueryByIdResult) InitDefault() {
+	*p = MiscServiceColumnQueryByIdResult{}
 }
 
-var MiscServiceColumnDetailResult_Success_DEFAULT *ColumnDetailResponse
+var MiscServiceColumnQueryByIdResult_Success_DEFAULT *ColumnQueryByIdResponse
 
-func (p *MiscServiceColumnDetailResult) GetSuccess() (v *ColumnDetailResponse) {
+func (p *MiscServiceColumnQueryByIdResult) GetSuccess() (v *ColumnQueryByIdResponse) {
 	if !p.IsSetSuccess() {
-		return MiscServiceColumnDetailResult_Success_DEFAULT
+		return MiscServiceColumnQueryByIdResult_Success_DEFAULT
 	}
 	return p.Success
 }
-func (p *MiscServiceColumnDetailResult) SetSuccess(x interface{}) {
-	p.Success = x.(*ColumnDetailResponse)
+func (p *MiscServiceColumnQueryByIdResult) SetSuccess(x interface{}) {
+	p.Success = x.(*ColumnQueryByIdResponse)
 }
 
-var fieldIDToName_MiscServiceColumnDetailResult = map[int16]string{
+var fieldIDToName_MiscServiceColumnQueryByIdResult = map[int16]string{
 	0: "success",
 }
 
-func (p *MiscServiceColumnDetailResult) IsSetSuccess() bool {
+func (p *MiscServiceColumnQueryByIdResult) IsSetSuccess() bool {
 	return p.Success != nil
 }
 
-func (p *MiscServiceColumnDetailResult) Read(iprot thrift.TProtocol) (err error) {
+func (p *MiscServiceColumnQueryByIdResult) Read(iprot thrift.TProtocol) (err error) {
 
 	var fieldTypeId thrift.TType
 	var fieldId int16
@@ -1369,7 +1429,7 @@ ReadStructBeginError:
 ReadFieldBeginError:
 	return thrift.PrependError(fmt.Sprintf("%T read field %d begin error: ", p, fieldId), err)
 ReadFieldError:
-	return thrift.PrependError(fmt.Sprintf("%T read field %d '%s' error: ", p, fieldId, fieldIDToName_MiscServiceColumnDetailResult[fieldId]), err)
+	return thrift.PrependError(fmt.Sprintf("%T read field %d '%s' error: ", p, fieldId, fieldIDToName_MiscServiceColumnQueryByIdResult[fieldId]), err)
 SkipFieldError:
 	return thrift.PrependError(fmt.Sprintf("%T field %d skip type %d error: ", p, fieldId, fieldTypeId), err)
 
@@ -1379,8 +1439,8 @@ ReadStructEndError:
 	return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
 }
 
-func (p *MiscServiceColumnDetailResult) ReadField0(iprot thrift.TProtocol) error {
-	_field := NewColumnDetailResponse()
+func (p *MiscServiceColumnQueryByIdResult) ReadField0(iprot thrift.TProtocol) error {
+	_field := NewColumnQueryByIdResponse()
 	if err := _field.Read(iprot); err != nil {
 		return err
 	}
@@ -1388,9 +1448,9 @@ func (p *MiscServiceColumnDetailResult) ReadField0(iprot thrift.TProtocol) error
 	return nil
 }
 
-func (p *MiscServiceColumnDetailResult) Write(oprot thrift.TProtocol) (err error) {
+func (p *MiscServiceColumnQueryByIdResult) Write(oprot thrift.TProtocol) (err error) {
 	var fieldId int16
-	if err = oprot.WriteStructBegin("ColumnDetail_result"); err != nil {
+	if err = oprot.WriteStructBegin("ColumnQueryById_result"); err != nil {
 		goto WriteStructBeginError
 	}
 	if p != nil {
@@ -1416,7 +1476,7 @@ WriteStructEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write struct end error: ", p), err)
 }
 
-func (p *MiscServiceColumnDetailResult) writeField0(oprot thrift.TProtocol) (err error) {
+func (p *MiscServiceColumnQueryByIdResult) writeField0(oprot thrift.TProtocol) (err error) {
 	if p.IsSetSuccess() {
 		if err = oprot.WriteFieldBegin("success", thrift.STRUCT, 0); err != nil {
 			goto WriteFieldBeginError
@@ -1435,15 +1495,15 @@ WriteFieldEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 0 end error: ", p), err)
 }
 
-func (p *MiscServiceColumnDetailResult) String() string {
+func (p *MiscServiceColumnQueryByIdResult) String() string {
 	if p == nil {
 		return "<nil>"
 	}
-	return fmt.Sprintf("MiscServiceColumnDetailResult(%+v)", *p)
+	return fmt.Sprintf("MiscServiceColumnQueryByIdResult(%+v)", *p)
 
 }
 
-func (p *MiscServiceColumnDetailResult) DeepEqual(ano *MiscServiceColumnDetailResult) bool {
+func (p *MiscServiceColumnQueryByIdResult) DeepEqual(ano *MiscServiceColumnQueryByIdResult) bool {
 	if p == ano {
 		return true
 	} else if p == nil || ano == nil {
@@ -1455,7 +1515,7 @@ func (p *MiscServiceColumnDetailResult) DeepEqual(ano *MiscServiceColumnDetailRe
 	return true
 }
 
-func (p *MiscServiceColumnDetailResult) Field0DeepEqual(src *ColumnDetailResponse) bool {
+func (p *MiscServiceColumnQueryByIdResult) Field0DeepEqual(src *ColumnQueryByIdResponse) bool {
 
 	if !p.Success.DeepEqual(src) {
 		return false
@@ -2140,6 +2200,348 @@ func (p *MiscServiceReaderLoginResult) DeepEqual(ano *MiscServiceReaderLoginResu
 }
 
 func (p *MiscServiceReaderLoginResult) Field0DeepEqual(src *ReaderLoginResponse) bool {
+
+	if !p.Success.DeepEqual(src) {
+		return false
+	}
+	return true
+}
+
+type MiscServiceReaderQueryByIdArgs struct {
+	Request *ReaderQueryByIdRequest `thrift:"request,1" frugal:"1,default,ReaderQueryByIdRequest" json:"request"`
+}
+
+func NewMiscServiceReaderQueryByIdArgs() *MiscServiceReaderQueryByIdArgs {
+	return &MiscServiceReaderQueryByIdArgs{}
+}
+
+func (p *MiscServiceReaderQueryByIdArgs) InitDefault() {
+	*p = MiscServiceReaderQueryByIdArgs{}
+}
+
+var MiscServiceReaderQueryByIdArgs_Request_DEFAULT *ReaderQueryByIdRequest
+
+func (p *MiscServiceReaderQueryByIdArgs) GetRequest() (v *ReaderQueryByIdRequest) {
+	if !p.IsSetRequest() {
+		return MiscServiceReaderQueryByIdArgs_Request_DEFAULT
+	}
+	return p.Request
+}
+func (p *MiscServiceReaderQueryByIdArgs) SetRequest(val *ReaderQueryByIdRequest) {
+	p.Request = val
+}
+
+var fieldIDToName_MiscServiceReaderQueryByIdArgs = map[int16]string{
+	1: "request",
+}
+
+func (p *MiscServiceReaderQueryByIdArgs) IsSetRequest() bool {
+	return p.Request != nil
+}
+
+func (p *MiscServiceReaderQueryByIdArgs) Read(iprot thrift.TProtocol) (err error) {
+
+	var fieldTypeId thrift.TType
+	var fieldId int16
+
+	if _, err = iprot.ReadStructBegin(); err != nil {
+		goto ReadStructBeginError
+	}
+
+	for {
+		_, fieldTypeId, fieldId, err = iprot.ReadFieldBegin()
+		if err != nil {
+			goto ReadFieldBeginError
+		}
+		if fieldTypeId == thrift.STOP {
+			break
+		}
+
+		switch fieldId {
+		case 1:
+			if fieldTypeId == thrift.STRUCT {
+				if err = p.ReadField1(iprot); err != nil {
+					goto ReadFieldError
+				}
+			} else if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		default:
+			if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		}
+		if err = iprot.ReadFieldEnd(); err != nil {
+			goto ReadFieldEndError
+		}
+	}
+	if err = iprot.ReadStructEnd(); err != nil {
+		goto ReadStructEndError
+	}
+
+	return nil
+ReadStructBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T read struct begin error: ", p), err)
+ReadFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T read field %d begin error: ", p, fieldId), err)
+ReadFieldError:
+	return thrift.PrependError(fmt.Sprintf("%T read field %d '%s' error: ", p, fieldId, fieldIDToName_MiscServiceReaderQueryByIdArgs[fieldId]), err)
+SkipFieldError:
+	return thrift.PrependError(fmt.Sprintf("%T field %d skip type %d error: ", p, fieldId, fieldTypeId), err)
+
+ReadFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T read field end error", p), err)
+ReadStructEndError:
+	return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
+}
+
+func (p *MiscServiceReaderQueryByIdArgs) ReadField1(iprot thrift.TProtocol) error {
+	_field := NewReaderQueryByIdRequest()
+	if err := _field.Read(iprot); err != nil {
+		return err
+	}
+	p.Request = _field
+	return nil
+}
+
+func (p *MiscServiceReaderQueryByIdArgs) Write(oprot thrift.TProtocol) (err error) {
+	var fieldId int16
+	if err = oprot.WriteStructBegin("ReaderQueryById_args"); err != nil {
+		goto WriteStructBeginError
+	}
+	if p != nil {
+		if err = p.writeField1(oprot); err != nil {
+			fieldId = 1
+			goto WriteFieldError
+		}
+	}
+	if err = oprot.WriteFieldStop(); err != nil {
+		goto WriteFieldStopError
+	}
+	if err = oprot.WriteStructEnd(); err != nil {
+		goto WriteStructEndError
+	}
+	return nil
+WriteStructBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
+WriteFieldError:
+	return thrift.PrependError(fmt.Sprintf("%T write field %d error: ", p, fieldId), err)
+WriteFieldStopError:
+	return thrift.PrependError(fmt.Sprintf("%T write field stop error: ", p), err)
+WriteStructEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write struct end error: ", p), err)
+}
+
+func (p *MiscServiceReaderQueryByIdArgs) writeField1(oprot thrift.TProtocol) (err error) {
+	if err = oprot.WriteFieldBegin("request", thrift.STRUCT, 1); err != nil {
+		goto WriteFieldBeginError
+	}
+	if err := p.Request.Write(oprot); err != nil {
+		return err
+	}
+	if err = oprot.WriteFieldEnd(); err != nil {
+		goto WriteFieldEndError
+	}
+	return nil
+WriteFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 1 begin error: ", p), err)
+WriteFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 1 end error: ", p), err)
+}
+
+func (p *MiscServiceReaderQueryByIdArgs) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("MiscServiceReaderQueryByIdArgs(%+v)", *p)
+
+}
+
+func (p *MiscServiceReaderQueryByIdArgs) DeepEqual(ano *MiscServiceReaderQueryByIdArgs) bool {
+	if p == ano {
+		return true
+	} else if p == nil || ano == nil {
+		return false
+	}
+	if !p.Field1DeepEqual(ano.Request) {
+		return false
+	}
+	return true
+}
+
+func (p *MiscServiceReaderQueryByIdArgs) Field1DeepEqual(src *ReaderQueryByIdRequest) bool {
+
+	if !p.Request.DeepEqual(src) {
+		return false
+	}
+	return true
+}
+
+type MiscServiceReaderQueryByIdResult struct {
+	Success *ReaderQueryByIdResponse `thrift:"success,0,optional" frugal:"0,optional,ReaderQueryByIdResponse" json:"success,omitempty"`
+}
+
+func NewMiscServiceReaderQueryByIdResult() *MiscServiceReaderQueryByIdResult {
+	return &MiscServiceReaderQueryByIdResult{}
+}
+
+func (p *MiscServiceReaderQueryByIdResult) InitDefault() {
+	*p = MiscServiceReaderQueryByIdResult{}
+}
+
+var MiscServiceReaderQueryByIdResult_Success_DEFAULT *ReaderQueryByIdResponse
+
+func (p *MiscServiceReaderQueryByIdResult) GetSuccess() (v *ReaderQueryByIdResponse) {
+	if !p.IsSetSuccess() {
+		return MiscServiceReaderQueryByIdResult_Success_DEFAULT
+	}
+	return p.Success
+}
+func (p *MiscServiceReaderQueryByIdResult) SetSuccess(x interface{}) {
+	p.Success = x.(*ReaderQueryByIdResponse)
+}
+
+var fieldIDToName_MiscServiceReaderQueryByIdResult = map[int16]string{
+	0: "success",
+}
+
+func (p *MiscServiceReaderQueryByIdResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *MiscServiceReaderQueryByIdResult) Read(iprot thrift.TProtocol) (err error) {
+
+	var fieldTypeId thrift.TType
+	var fieldId int16
+
+	if _, err = iprot.ReadStructBegin(); err != nil {
+		goto ReadStructBeginError
+	}
+
+	for {
+		_, fieldTypeId, fieldId, err = iprot.ReadFieldBegin()
+		if err != nil {
+			goto ReadFieldBeginError
+		}
+		if fieldTypeId == thrift.STOP {
+			break
+		}
+
+		switch fieldId {
+		case 0:
+			if fieldTypeId == thrift.STRUCT {
+				if err = p.ReadField0(iprot); err != nil {
+					goto ReadFieldError
+				}
+			} else if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		default:
+			if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		}
+		if err = iprot.ReadFieldEnd(); err != nil {
+			goto ReadFieldEndError
+		}
+	}
+	if err = iprot.ReadStructEnd(); err != nil {
+		goto ReadStructEndError
+	}
+
+	return nil
+ReadStructBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T read struct begin error: ", p), err)
+ReadFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T read field %d begin error: ", p, fieldId), err)
+ReadFieldError:
+	return thrift.PrependError(fmt.Sprintf("%T read field %d '%s' error: ", p, fieldId, fieldIDToName_MiscServiceReaderQueryByIdResult[fieldId]), err)
+SkipFieldError:
+	return thrift.PrependError(fmt.Sprintf("%T field %d skip type %d error: ", p, fieldId, fieldTypeId), err)
+
+ReadFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T read field end error", p), err)
+ReadStructEndError:
+	return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
+}
+
+func (p *MiscServiceReaderQueryByIdResult) ReadField0(iprot thrift.TProtocol) error {
+	_field := NewReaderQueryByIdResponse()
+	if err := _field.Read(iprot); err != nil {
+		return err
+	}
+	p.Success = _field
+	return nil
+}
+
+func (p *MiscServiceReaderQueryByIdResult) Write(oprot thrift.TProtocol) (err error) {
+	var fieldId int16
+	if err = oprot.WriteStructBegin("ReaderQueryById_result"); err != nil {
+		goto WriteStructBeginError
+	}
+	if p != nil {
+		if err = p.writeField0(oprot); err != nil {
+			fieldId = 0
+			goto WriteFieldError
+		}
+	}
+	if err = oprot.WriteFieldStop(); err != nil {
+		goto WriteFieldStopError
+	}
+	if err = oprot.WriteStructEnd(); err != nil {
+		goto WriteStructEndError
+	}
+	return nil
+WriteStructBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
+WriteFieldError:
+	return thrift.PrependError(fmt.Sprintf("%T write field %d error: ", p, fieldId), err)
+WriteFieldStopError:
+	return thrift.PrependError(fmt.Sprintf("%T write field stop error: ", p), err)
+WriteStructEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write struct end error: ", p), err)
+}
+
+func (p *MiscServiceReaderQueryByIdResult) writeField0(oprot thrift.TProtocol) (err error) {
+	if p.IsSetSuccess() {
+		if err = oprot.WriteFieldBegin("success", thrift.STRUCT, 0); err != nil {
+			goto WriteFieldBeginError
+		}
+		if err := p.Success.Write(oprot); err != nil {
+			return err
+		}
+		if err = oprot.WriteFieldEnd(); err != nil {
+			goto WriteFieldEndError
+		}
+	}
+	return nil
+WriteFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 0 begin error: ", p), err)
+WriteFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 0 end error: ", p), err)
+}
+
+func (p *MiscServiceReaderQueryByIdResult) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("MiscServiceReaderQueryByIdResult(%+v)", *p)
+
+}
+
+func (p *MiscServiceReaderQueryByIdResult) DeepEqual(ano *MiscServiceReaderQueryByIdResult) bool {
+	if p == ano {
+		return true
+	} else if p == nil || ano == nil {
+		return false
+	}
+	if !p.Field0DeepEqual(ano.Success) {
+		return false
+	}
+	return true
+}
+
+func (p *MiscServiceReaderQueryByIdResult) Field0DeepEqual(src *ReaderQueryByIdResponse) bool {
 
 	if !p.Success.DeepEqual(src) {
 		return false

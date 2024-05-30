@@ -16,7 +16,7 @@ service MiscService {
     column_api.RichColumnPageResponse RichColumnPage(1: column_api.RichColumnPageRequest request)
 
     //查看专栏详情
-    column_api.ColumnDetailResponse ColumnDetail(1: column_api.ColumnDetailRequest request)
+    column_api.ColumnQueryByIdResponse ColumnQueryById(1: column_api.ColumnQueryByIdRequest request)
 
 
     //**************** 专栏END ****************//
@@ -37,6 +37,10 @@ service MiscService {
 
     //读者登录
     reader_api.ReaderLoginResponse ReaderLogin(1: reader_api.ReaderLoginRequest request)
+
+    //查询读者
+    reader_api.ReaderQueryByIdResponse ReaderQueryById(1: reader_api.ReaderQueryByIdRequest request)
+
 
     //**************** 读者END ****************//
 

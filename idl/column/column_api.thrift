@@ -45,14 +45,14 @@ struct RichColumnPageResponse {
 }
 
 //专栏详情 请求体
-struct ColumnDetailRequest {
-	1: i64 id //专栏Id
+struct ColumnQueryByIdRequest {
+	1: i64 columnId //专栏Id
 
     255: optional base.Base base //标准请求内容
 }
 
 //专栏详情 响应体
-struct ColumnDetailResponse {
+struct ColumnQueryByIdResponse {
 	1: column_model.ColumnDTO data //数据信息
 
     255: base.BaseResp baseResp //标准返回内容

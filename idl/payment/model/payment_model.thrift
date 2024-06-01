@@ -1,3 +1,4 @@
+include "../enum/payment_enums.thrift"
 namespace go sc_misc_api
 
 
@@ -11,5 +12,5 @@ struct PaymentDTO {
     5: string method //支付方式 ALIPAY/WEIXIN 支付宝/微信
     6: string thirdTransactionNo //支付平台订单号
     7: i64 amount //金额(单位：分)
-    8: i32 status //支付状态 0/1/2  未支付/已支付/已关闭
+    8: payment_enums.PaymentStatus status //支付状态 0/1/2  未支付/已支付/已关闭
 }

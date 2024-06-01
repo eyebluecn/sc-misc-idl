@@ -47,6 +47,15 @@ service MiscService {
 
     //**************** 支付单START ****************//
 
+    //根据id查询支付单
+    payment_api.PaymentQueryByIdResponse PaymentQueryById(1: payment_api.PaymentQueryByIdRequest request)
+
+    //获取一个支付单对应的支付准备物料等信息
+    payment_api.PaymentPrepareResponse PaymentPrepare(1: payment_api.PaymentPrepareRequest request)
+
+    //创建一个支付单同时返回支付准备物料等信息
+    payment_api.PaymentCreateResponse PaymentCreate(1: payment_api.PaymentCreateRequest request)
+
     //第三方支付平台，支付成功后的回调接口。
     payment_api.PaymentPaidCallbackResponse PaymentPaidCallback(1: payment_api.PaymentPaidCallbackRequest request)
 

@@ -14,6 +14,7 @@ type Client interface {
 	ColumnOmnibus(ctx context.Context, request *sc_misc_api.ColumnOmnibusRequest, callOptions ...callopt.Option) (r *sc_misc_api.ColumnOmnibusResponse, err error)
 	RichColumnPage(ctx context.Context, request *sc_misc_api.RichColumnPageRequest, callOptions ...callopt.Option) (r *sc_misc_api.RichColumnPageResponse, err error)
 	ColumnQueryById(ctx context.Context, request *sc_misc_api.ColumnQueryByIdRequest, callOptions ...callopt.Option) (r *sc_misc_api.ColumnQueryByIdResponse, err error)
+	ColumnQuoteQueryByColumnId(ctx context.Context, request *sc_misc_api.ColumnQuoteQueryByColumnIdRequest, callOptions ...callopt.Option) (r *sc_misc_api.ColumnQuoteQueryByColumnIdResponse, err error)
 	EditorLogin(ctx context.Context, request *sc_misc_api.EditorLoginRequest, callOptions ...callopt.Option) (r *sc_misc_api.EditorLoginResponse, err error)
 	ReaderLogin(ctx context.Context, request *sc_misc_api.ReaderLoginRequest, callOptions ...callopt.Option) (r *sc_misc_api.ReaderLoginResponse, err error)
 	ReaderQueryById(ctx context.Context, request *sc_misc_api.ReaderQueryByIdRequest, callOptions ...callopt.Option) (r *sc_misc_api.ReaderQueryByIdResponse, err error)
@@ -65,6 +66,11 @@ func (p *kMiscServiceClient) RichColumnPage(ctx context.Context, request *sc_mis
 func (p *kMiscServiceClient) ColumnQueryById(ctx context.Context, request *sc_misc_api.ColumnQueryByIdRequest, callOptions ...callopt.Option) (r *sc_misc_api.ColumnQueryByIdResponse, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
 	return p.kClient.ColumnQueryById(ctx, request)
+}
+
+func (p *kMiscServiceClient) ColumnQuoteQueryByColumnId(ctx context.Context, request *sc_misc_api.ColumnQuoteQueryByColumnIdRequest, callOptions ...callopt.Option) (r *sc_misc_api.ColumnQuoteQueryByColumnIdResponse, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.ColumnQuoteQueryByColumnId(ctx, request)
 }
 
 func (p *kMiscServiceClient) EditorLogin(ctx context.Context, request *sc_misc_api.EditorLoginRequest, callOptions ...callopt.Option) (r *sc_misc_api.EditorLoginResponse, err error) {

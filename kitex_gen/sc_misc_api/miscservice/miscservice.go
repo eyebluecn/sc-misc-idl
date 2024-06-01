@@ -34,6 +34,13 @@ var serviceMethods = map[string]kitex.MethodInfo{
 		false,
 		kitex.WithStreamingMode(kitex.StreamingNone),
 	),
+	"ColumnQuoteQueryByColumnId": kitex.NewMethodInfo(
+		columnQuoteQueryByColumnIdHandler,
+		newMiscServiceColumnQuoteQueryByColumnIdArgs,
+		newMiscServiceColumnQuoteQueryByColumnIdResult,
+		false,
+		kitex.WithStreamingMode(kitex.StreamingNone),
+	),
 	"EditorLogin": kitex.NewMethodInfo(
 		editorLoginHandler,
 		newMiscServiceEditorLoginArgs,
@@ -203,6 +210,24 @@ func newMiscServiceColumnQueryByIdResult() interface{} {
 	return sc_misc_api.NewMiscServiceColumnQueryByIdResult()
 }
 
+func columnQuoteQueryByColumnIdHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	realArg := arg.(*sc_misc_api.MiscServiceColumnQuoteQueryByColumnIdArgs)
+	realResult := result.(*sc_misc_api.MiscServiceColumnQuoteQueryByColumnIdResult)
+	success, err := handler.(sc_misc_api.MiscService).ColumnQuoteQueryByColumnId(ctx, realArg.Request)
+	if err != nil {
+		return err
+	}
+	realResult.Success = success
+	return nil
+}
+func newMiscServiceColumnQuoteQueryByColumnIdArgs() interface{} {
+	return sc_misc_api.NewMiscServiceColumnQuoteQueryByColumnIdArgs()
+}
+
+func newMiscServiceColumnQuoteQueryByColumnIdResult() interface{} {
+	return sc_misc_api.NewMiscServiceColumnQuoteQueryByColumnIdResult()
+}
+
 func editorLoginHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
 	realArg := arg.(*sc_misc_api.MiscServiceEditorLoginArgs)
 	realResult := result.(*sc_misc_api.MiscServiceEditorLoginResult)
@@ -364,6 +389,16 @@ func (p *kClient) ColumnQueryById(ctx context.Context, request *sc_misc_api.Colu
 	_args.Request = request
 	var _result sc_misc_api.MiscServiceColumnQueryByIdResult
 	if err = p.c.Call(ctx, "ColumnQueryById", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) ColumnQuoteQueryByColumnId(ctx context.Context, request *sc_misc_api.ColumnQuoteQueryByColumnIdRequest) (r *sc_misc_api.ColumnQuoteQueryByColumnIdResponse, err error) {
+	var _args sc_misc_api.MiscServiceColumnQuoteQueryByColumnIdArgs
+	_args.Request = request
+	var _result sc_misc_api.MiscServiceColumnQuoteQueryByColumnIdResult
+	if err = p.c.Call(ctx, "ColumnQuoteQueryByColumnId", &_args, &_result); err != nil {
 		return
 	}
 	return _result.GetSuccess(), nil

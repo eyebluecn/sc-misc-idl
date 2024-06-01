@@ -1,6 +1,7 @@
 include "./reader/reader_api.thrift"
 include "./editor/editor_api.thrift"
 include "./column/column_api.thrift"
+include "./column_quote/column_quote_api.thrift"
 include "./payment/payment_api.thrift"
 namespace go sc_misc_api
 
@@ -20,6 +21,11 @@ service MiscService {
 
 
     //**************** 专栏END ****************//
+
+    //**************** 专栏报价 START ****************//
+    column_quote_api.ColumnQuoteQueryByColumnIdResponse ColumnQuoteQueryByColumnId(1: column_quote_api.ColumnQuoteQueryByColumnIdRequest request)
+
+    //**************** 专栏报价 END ****************//
 
 
     //**************** 小编START ****************//

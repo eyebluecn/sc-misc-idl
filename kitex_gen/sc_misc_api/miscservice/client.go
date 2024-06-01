@@ -17,6 +17,9 @@ type Client interface {
 	EditorLogin(ctx context.Context, request *sc_misc_api.EditorLoginRequest, callOptions ...callopt.Option) (r *sc_misc_api.EditorLoginResponse, err error)
 	ReaderLogin(ctx context.Context, request *sc_misc_api.ReaderLoginRequest, callOptions ...callopt.Option) (r *sc_misc_api.ReaderLoginResponse, err error)
 	ReaderQueryById(ctx context.Context, request *sc_misc_api.ReaderQueryByIdRequest, callOptions ...callopt.Option) (r *sc_misc_api.ReaderQueryByIdResponse, err error)
+	PaymentQueryById(ctx context.Context, request *sc_misc_api.PaymentQueryByIdRequest, callOptions ...callopt.Option) (r *sc_misc_api.PaymentQueryByIdResponse, err error)
+	PaymentPrepare(ctx context.Context, request *sc_misc_api.PaymentPrepareRequest, callOptions ...callopt.Option) (r *sc_misc_api.PaymentPrepareResponse, err error)
+	PaymentCreate(ctx context.Context, request *sc_misc_api.PaymentCreateRequest, callOptions ...callopt.Option) (r *sc_misc_api.PaymentCreateResponse, err error)
 	PaymentPaidCallback(ctx context.Context, request *sc_misc_api.PaymentPaidCallbackRequest, callOptions ...callopt.Option) (r *sc_misc_api.PaymentPaidCallbackResponse, err error)
 }
 
@@ -77,6 +80,21 @@ func (p *kMiscServiceClient) ReaderLogin(ctx context.Context, request *sc_misc_a
 func (p *kMiscServiceClient) ReaderQueryById(ctx context.Context, request *sc_misc_api.ReaderQueryByIdRequest, callOptions ...callopt.Option) (r *sc_misc_api.ReaderQueryByIdResponse, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
 	return p.kClient.ReaderQueryById(ctx, request)
+}
+
+func (p *kMiscServiceClient) PaymentQueryById(ctx context.Context, request *sc_misc_api.PaymentQueryByIdRequest, callOptions ...callopt.Option) (r *sc_misc_api.PaymentQueryByIdResponse, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.PaymentQueryById(ctx, request)
+}
+
+func (p *kMiscServiceClient) PaymentPrepare(ctx context.Context, request *sc_misc_api.PaymentPrepareRequest, callOptions ...callopt.Option) (r *sc_misc_api.PaymentPrepareResponse, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.PaymentPrepare(ctx, request)
+}
+
+func (p *kMiscServiceClient) PaymentCreate(ctx context.Context, request *sc_misc_api.PaymentCreateRequest, callOptions ...callopt.Option) (r *sc_misc_api.PaymentCreateResponse, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.PaymentCreate(ctx, request)
 }
 
 func (p *kMiscServiceClient) PaymentPaidCallback(ctx context.Context, request *sc_misc_api.PaymentPaidCallbackRequest, callOptions ...callopt.Option) (r *sc_misc_api.PaymentPaidCallbackResponse, err error) {

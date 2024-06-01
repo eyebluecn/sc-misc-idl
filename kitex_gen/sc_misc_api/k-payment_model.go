@@ -298,7 +298,7 @@ func (p *PaymentDTO) FastReadField8(buf []byte) (int, error) {
 	} else {
 		offset += l
 
-		p.Status = v
+		p.Status = PaymentStatus(v)
 
 	}
 	return offset, nil
@@ -317,10 +317,10 @@ func (p *PaymentDTO) FastWriteNocopy(buf []byte, binaryWriter bthrift.BinaryWrit
 		offset += p.fastWriteField2(buf[offset:], binaryWriter)
 		offset += p.fastWriteField3(buf[offset:], binaryWriter)
 		offset += p.fastWriteField7(buf[offset:], binaryWriter)
-		offset += p.fastWriteField8(buf[offset:], binaryWriter)
 		offset += p.fastWriteField4(buf[offset:], binaryWriter)
 		offset += p.fastWriteField5(buf[offset:], binaryWriter)
 		offset += p.fastWriteField6(buf[offset:], binaryWriter)
+		offset += p.fastWriteField8(buf[offset:], binaryWriter)
 	}
 	offset += bthrift.Binary.WriteFieldStop(buf[offset:])
 	offset += bthrift.Binary.WriteStructEnd(buf[offset:])
@@ -411,7 +411,7 @@ func (p *PaymentDTO) fastWriteField7(buf []byte, binaryWriter bthrift.BinaryWrit
 func (p *PaymentDTO) fastWriteField8(buf []byte, binaryWriter bthrift.BinaryWriter) int {
 	offset := 0
 	offset += bthrift.Binary.WriteFieldBegin(buf[offset:], "status", thrift.I32, 8)
-	offset += bthrift.Binary.WriteI32(buf[offset:], p.Status)
+	offset += bthrift.Binary.WriteI32(buf[offset:], int32(p.Status))
 
 	offset += bthrift.Binary.WriteFieldEnd(buf[offset:])
 	return offset
@@ -483,7 +483,7 @@ func (p *PaymentDTO) field7Length() int {
 func (p *PaymentDTO) field8Length() int {
 	l := 0
 	l += bthrift.Binary.FieldBeginLength("status", thrift.I32, 8)
-	l += bthrift.Binary.I32Length(p.Status)
+	l += bthrift.Binary.I32Length(int32(p.Status))
 
 	l += bthrift.Binary.FieldEndLength()
 	return l

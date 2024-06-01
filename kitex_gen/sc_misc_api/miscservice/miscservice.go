@@ -55,6 +55,27 @@ var serviceMethods = map[string]kitex.MethodInfo{
 		false,
 		kitex.WithStreamingMode(kitex.StreamingNone),
 	),
+	"PaymentQueryById": kitex.NewMethodInfo(
+		paymentQueryByIdHandler,
+		newMiscServicePaymentQueryByIdArgs,
+		newMiscServicePaymentQueryByIdResult,
+		false,
+		kitex.WithStreamingMode(kitex.StreamingNone),
+	),
+	"PaymentPrepare": kitex.NewMethodInfo(
+		paymentPrepareHandler,
+		newMiscServicePaymentPrepareArgs,
+		newMiscServicePaymentPrepareResult,
+		false,
+		kitex.WithStreamingMode(kitex.StreamingNone),
+	),
+	"PaymentCreate": kitex.NewMethodInfo(
+		paymentCreateHandler,
+		newMiscServicePaymentCreateArgs,
+		newMiscServicePaymentCreateResult,
+		false,
+		kitex.WithStreamingMode(kitex.StreamingNone),
+	),
 	"PaymentPaidCallback": kitex.NewMethodInfo(
 		paymentPaidCallbackHandler,
 		newMiscServicePaymentPaidCallbackArgs,
@@ -236,6 +257,60 @@ func newMiscServiceReaderQueryByIdResult() interface{} {
 	return sc_misc_api.NewMiscServiceReaderQueryByIdResult()
 }
 
+func paymentQueryByIdHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	realArg := arg.(*sc_misc_api.MiscServicePaymentQueryByIdArgs)
+	realResult := result.(*sc_misc_api.MiscServicePaymentQueryByIdResult)
+	success, err := handler.(sc_misc_api.MiscService).PaymentQueryById(ctx, realArg.Request)
+	if err != nil {
+		return err
+	}
+	realResult.Success = success
+	return nil
+}
+func newMiscServicePaymentQueryByIdArgs() interface{} {
+	return sc_misc_api.NewMiscServicePaymentQueryByIdArgs()
+}
+
+func newMiscServicePaymentQueryByIdResult() interface{} {
+	return sc_misc_api.NewMiscServicePaymentQueryByIdResult()
+}
+
+func paymentPrepareHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	realArg := arg.(*sc_misc_api.MiscServicePaymentPrepareArgs)
+	realResult := result.(*sc_misc_api.MiscServicePaymentPrepareResult)
+	success, err := handler.(sc_misc_api.MiscService).PaymentPrepare(ctx, realArg.Request)
+	if err != nil {
+		return err
+	}
+	realResult.Success = success
+	return nil
+}
+func newMiscServicePaymentPrepareArgs() interface{} {
+	return sc_misc_api.NewMiscServicePaymentPrepareArgs()
+}
+
+func newMiscServicePaymentPrepareResult() interface{} {
+	return sc_misc_api.NewMiscServicePaymentPrepareResult()
+}
+
+func paymentCreateHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	realArg := arg.(*sc_misc_api.MiscServicePaymentCreateArgs)
+	realResult := result.(*sc_misc_api.MiscServicePaymentCreateResult)
+	success, err := handler.(sc_misc_api.MiscService).PaymentCreate(ctx, realArg.Request)
+	if err != nil {
+		return err
+	}
+	realResult.Success = success
+	return nil
+}
+func newMiscServicePaymentCreateArgs() interface{} {
+	return sc_misc_api.NewMiscServicePaymentCreateArgs()
+}
+
+func newMiscServicePaymentCreateResult() interface{} {
+	return sc_misc_api.NewMiscServicePaymentCreateResult()
+}
+
 func paymentPaidCallbackHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
 	realArg := arg.(*sc_misc_api.MiscServicePaymentPaidCallbackArgs)
 	realResult := result.(*sc_misc_api.MiscServicePaymentPaidCallbackResult)
@@ -319,6 +394,36 @@ func (p *kClient) ReaderQueryById(ctx context.Context, request *sc_misc_api.Read
 	_args.Request = request
 	var _result sc_misc_api.MiscServiceReaderQueryByIdResult
 	if err = p.c.Call(ctx, "ReaderQueryById", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) PaymentQueryById(ctx context.Context, request *sc_misc_api.PaymentQueryByIdRequest) (r *sc_misc_api.PaymentQueryByIdResponse, err error) {
+	var _args sc_misc_api.MiscServicePaymentQueryByIdArgs
+	_args.Request = request
+	var _result sc_misc_api.MiscServicePaymentQueryByIdResult
+	if err = p.c.Call(ctx, "PaymentQueryById", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) PaymentPrepare(ctx context.Context, request *sc_misc_api.PaymentPrepareRequest) (r *sc_misc_api.PaymentPrepareResponse, err error) {
+	var _args sc_misc_api.MiscServicePaymentPrepareArgs
+	_args.Request = request
+	var _result sc_misc_api.MiscServicePaymentPrepareResult
+	if err = p.c.Call(ctx, "PaymentPrepare", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) PaymentCreate(ctx context.Context, request *sc_misc_api.PaymentCreateRequest) (r *sc_misc_api.PaymentCreateResponse, err error) {
+	var _args sc_misc_api.MiscServicePaymentCreateArgs
+	_args.Request = request
+	var _result sc_misc_api.MiscServicePaymentCreateResult
+	if err = p.c.Call(ctx, "PaymentCreate", &_args, &_result); err != nil {
 		return
 	}
 	return _result.GetSuccess(), nil

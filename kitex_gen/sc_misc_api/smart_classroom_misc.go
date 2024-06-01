@@ -21,6 +21,12 @@ type MiscService interface {
 
 	ReaderQueryById(ctx context.Context, request *ReaderQueryByIdRequest) (r *ReaderQueryByIdResponse, err error)
 
+	PaymentQueryById(ctx context.Context, request *PaymentQueryByIdRequest) (r *PaymentQueryByIdResponse, err error)
+
+	PaymentPrepare(ctx context.Context, request *PaymentPrepareRequest) (r *PaymentPrepareResponse, err error)
+
+	PaymentCreate(ctx context.Context, request *PaymentCreateRequest) (r *PaymentCreateResponse, err error)
+
 	PaymentPaidCallback(ctx context.Context, request *PaymentPaidCallbackRequest) (r *PaymentPaidCallbackResponse, err error)
 }
 
@@ -104,6 +110,33 @@ func (p *MiscServiceClient) ReaderQueryById(ctx context.Context, request *Reader
 	}
 	return _result.GetSuccess(), nil
 }
+func (p *MiscServiceClient) PaymentQueryById(ctx context.Context, request *PaymentQueryByIdRequest) (r *PaymentQueryByIdResponse, err error) {
+	var _args MiscServicePaymentQueryByIdArgs
+	_args.Request = request
+	var _result MiscServicePaymentQueryByIdResult
+	if err = p.Client_().Call(ctx, "PaymentQueryById", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+func (p *MiscServiceClient) PaymentPrepare(ctx context.Context, request *PaymentPrepareRequest) (r *PaymentPrepareResponse, err error) {
+	var _args MiscServicePaymentPrepareArgs
+	_args.Request = request
+	var _result MiscServicePaymentPrepareResult
+	if err = p.Client_().Call(ctx, "PaymentPrepare", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+func (p *MiscServiceClient) PaymentCreate(ctx context.Context, request *PaymentCreateRequest) (r *PaymentCreateResponse, err error) {
+	var _args MiscServicePaymentCreateArgs
+	_args.Request = request
+	var _result MiscServicePaymentCreateResult
+	if err = p.Client_().Call(ctx, "PaymentCreate", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
 func (p *MiscServiceClient) PaymentPaidCallback(ctx context.Context, request *PaymentPaidCallbackRequest) (r *PaymentPaidCallbackResponse, err error) {
 	var _args MiscServicePaymentPaidCallbackArgs
 	_args.Request = request
@@ -140,6 +173,9 @@ func NewMiscServiceProcessor(handler MiscService) *MiscServiceProcessor {
 	self.AddToProcessorMap("EditorLogin", &miscServiceProcessorEditorLogin{handler: handler})
 	self.AddToProcessorMap("ReaderLogin", &miscServiceProcessorReaderLogin{handler: handler})
 	self.AddToProcessorMap("ReaderQueryById", &miscServiceProcessorReaderQueryById{handler: handler})
+	self.AddToProcessorMap("PaymentQueryById", &miscServiceProcessorPaymentQueryById{handler: handler})
+	self.AddToProcessorMap("PaymentPrepare", &miscServiceProcessorPaymentPrepare{handler: handler})
+	self.AddToProcessorMap("PaymentCreate", &miscServiceProcessorPaymentCreate{handler: handler})
 	self.AddToProcessorMap("PaymentPaidCallback", &miscServiceProcessorPaymentPaidCallback{handler: handler})
 	return self
 }
@@ -432,6 +468,150 @@ func (p *miscServiceProcessorReaderQueryById) Process(ctx context.Context, seqId
 		result.Success = retval
 	}
 	if err2 = oprot.WriteMessageBegin("ReaderQueryById", thrift.REPLY, seqId); err2 != nil {
+		err = err2
+	}
+	if err2 = result.Write(oprot); err == nil && err2 != nil {
+		err = err2
+	}
+	if err2 = oprot.WriteMessageEnd(); err == nil && err2 != nil {
+		err = err2
+	}
+	if err2 = oprot.Flush(ctx); err == nil && err2 != nil {
+		err = err2
+	}
+	if err != nil {
+		return
+	}
+	return true, err
+}
+
+type miscServiceProcessorPaymentQueryById struct {
+	handler MiscService
+}
+
+func (p *miscServiceProcessorPaymentQueryById) Process(ctx context.Context, seqId int32, iprot, oprot thrift.TProtocol) (success bool, err thrift.TException) {
+	args := MiscServicePaymentQueryByIdArgs{}
+	if err = args.Read(iprot); err != nil {
+		iprot.ReadMessageEnd()
+		x := thrift.NewTApplicationException(thrift.PROTOCOL_ERROR, err.Error())
+		oprot.WriteMessageBegin("PaymentQueryById", thrift.EXCEPTION, seqId)
+		x.Write(oprot)
+		oprot.WriteMessageEnd()
+		oprot.Flush(ctx)
+		return false, err
+	}
+
+	iprot.ReadMessageEnd()
+	var err2 error
+	result := MiscServicePaymentQueryByIdResult{}
+	var retval *PaymentQueryByIdResponse
+	if retval, err2 = p.handler.PaymentQueryById(ctx, args.Request); err2 != nil {
+		x := thrift.NewTApplicationException(thrift.INTERNAL_ERROR, "Internal error processing PaymentQueryById: "+err2.Error())
+		oprot.WriteMessageBegin("PaymentQueryById", thrift.EXCEPTION, seqId)
+		x.Write(oprot)
+		oprot.WriteMessageEnd()
+		oprot.Flush(ctx)
+		return true, err2
+	} else {
+		result.Success = retval
+	}
+	if err2 = oprot.WriteMessageBegin("PaymentQueryById", thrift.REPLY, seqId); err2 != nil {
+		err = err2
+	}
+	if err2 = result.Write(oprot); err == nil && err2 != nil {
+		err = err2
+	}
+	if err2 = oprot.WriteMessageEnd(); err == nil && err2 != nil {
+		err = err2
+	}
+	if err2 = oprot.Flush(ctx); err == nil && err2 != nil {
+		err = err2
+	}
+	if err != nil {
+		return
+	}
+	return true, err
+}
+
+type miscServiceProcessorPaymentPrepare struct {
+	handler MiscService
+}
+
+func (p *miscServiceProcessorPaymentPrepare) Process(ctx context.Context, seqId int32, iprot, oprot thrift.TProtocol) (success bool, err thrift.TException) {
+	args := MiscServicePaymentPrepareArgs{}
+	if err = args.Read(iprot); err != nil {
+		iprot.ReadMessageEnd()
+		x := thrift.NewTApplicationException(thrift.PROTOCOL_ERROR, err.Error())
+		oprot.WriteMessageBegin("PaymentPrepare", thrift.EXCEPTION, seqId)
+		x.Write(oprot)
+		oprot.WriteMessageEnd()
+		oprot.Flush(ctx)
+		return false, err
+	}
+
+	iprot.ReadMessageEnd()
+	var err2 error
+	result := MiscServicePaymentPrepareResult{}
+	var retval *PaymentPrepareResponse
+	if retval, err2 = p.handler.PaymentPrepare(ctx, args.Request); err2 != nil {
+		x := thrift.NewTApplicationException(thrift.INTERNAL_ERROR, "Internal error processing PaymentPrepare: "+err2.Error())
+		oprot.WriteMessageBegin("PaymentPrepare", thrift.EXCEPTION, seqId)
+		x.Write(oprot)
+		oprot.WriteMessageEnd()
+		oprot.Flush(ctx)
+		return true, err2
+	} else {
+		result.Success = retval
+	}
+	if err2 = oprot.WriteMessageBegin("PaymentPrepare", thrift.REPLY, seqId); err2 != nil {
+		err = err2
+	}
+	if err2 = result.Write(oprot); err == nil && err2 != nil {
+		err = err2
+	}
+	if err2 = oprot.WriteMessageEnd(); err == nil && err2 != nil {
+		err = err2
+	}
+	if err2 = oprot.Flush(ctx); err == nil && err2 != nil {
+		err = err2
+	}
+	if err != nil {
+		return
+	}
+	return true, err
+}
+
+type miscServiceProcessorPaymentCreate struct {
+	handler MiscService
+}
+
+func (p *miscServiceProcessorPaymentCreate) Process(ctx context.Context, seqId int32, iprot, oprot thrift.TProtocol) (success bool, err thrift.TException) {
+	args := MiscServicePaymentCreateArgs{}
+	if err = args.Read(iprot); err != nil {
+		iprot.ReadMessageEnd()
+		x := thrift.NewTApplicationException(thrift.PROTOCOL_ERROR, err.Error())
+		oprot.WriteMessageBegin("PaymentCreate", thrift.EXCEPTION, seqId)
+		x.Write(oprot)
+		oprot.WriteMessageEnd()
+		oprot.Flush(ctx)
+		return false, err
+	}
+
+	iprot.ReadMessageEnd()
+	var err2 error
+	result := MiscServicePaymentCreateResult{}
+	var retval *PaymentCreateResponse
+	if retval, err2 = p.handler.PaymentCreate(ctx, args.Request); err2 != nil {
+		x := thrift.NewTApplicationException(thrift.INTERNAL_ERROR, "Internal error processing PaymentCreate: "+err2.Error())
+		oprot.WriteMessageBegin("PaymentCreate", thrift.EXCEPTION, seqId)
+		x.Write(oprot)
+		oprot.WriteMessageEnd()
+		oprot.Flush(ctx)
+		return true, err2
+	} else {
+		result.Success = retval
+	}
+	if err2 = oprot.WriteMessageBegin("PaymentCreate", thrift.REPLY, seqId); err2 != nil {
 		err = err2
 	}
 	if err2 = result.Write(oprot); err == nil && err2 != nil {
@@ -2542,6 +2722,1032 @@ func (p *MiscServiceReaderQueryByIdResult) DeepEqual(ano *MiscServiceReaderQuery
 }
 
 func (p *MiscServiceReaderQueryByIdResult) Field0DeepEqual(src *ReaderQueryByIdResponse) bool {
+
+	if !p.Success.DeepEqual(src) {
+		return false
+	}
+	return true
+}
+
+type MiscServicePaymentQueryByIdArgs struct {
+	Request *PaymentQueryByIdRequest `thrift:"request,1" frugal:"1,default,PaymentQueryByIdRequest" json:"request"`
+}
+
+func NewMiscServicePaymentQueryByIdArgs() *MiscServicePaymentQueryByIdArgs {
+	return &MiscServicePaymentQueryByIdArgs{}
+}
+
+func (p *MiscServicePaymentQueryByIdArgs) InitDefault() {
+	*p = MiscServicePaymentQueryByIdArgs{}
+}
+
+var MiscServicePaymentQueryByIdArgs_Request_DEFAULT *PaymentQueryByIdRequest
+
+func (p *MiscServicePaymentQueryByIdArgs) GetRequest() (v *PaymentQueryByIdRequest) {
+	if !p.IsSetRequest() {
+		return MiscServicePaymentQueryByIdArgs_Request_DEFAULT
+	}
+	return p.Request
+}
+func (p *MiscServicePaymentQueryByIdArgs) SetRequest(val *PaymentQueryByIdRequest) {
+	p.Request = val
+}
+
+var fieldIDToName_MiscServicePaymentQueryByIdArgs = map[int16]string{
+	1: "request",
+}
+
+func (p *MiscServicePaymentQueryByIdArgs) IsSetRequest() bool {
+	return p.Request != nil
+}
+
+func (p *MiscServicePaymentQueryByIdArgs) Read(iprot thrift.TProtocol) (err error) {
+
+	var fieldTypeId thrift.TType
+	var fieldId int16
+
+	if _, err = iprot.ReadStructBegin(); err != nil {
+		goto ReadStructBeginError
+	}
+
+	for {
+		_, fieldTypeId, fieldId, err = iprot.ReadFieldBegin()
+		if err != nil {
+			goto ReadFieldBeginError
+		}
+		if fieldTypeId == thrift.STOP {
+			break
+		}
+
+		switch fieldId {
+		case 1:
+			if fieldTypeId == thrift.STRUCT {
+				if err = p.ReadField1(iprot); err != nil {
+					goto ReadFieldError
+				}
+			} else if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		default:
+			if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		}
+		if err = iprot.ReadFieldEnd(); err != nil {
+			goto ReadFieldEndError
+		}
+	}
+	if err = iprot.ReadStructEnd(); err != nil {
+		goto ReadStructEndError
+	}
+
+	return nil
+ReadStructBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T read struct begin error: ", p), err)
+ReadFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T read field %d begin error: ", p, fieldId), err)
+ReadFieldError:
+	return thrift.PrependError(fmt.Sprintf("%T read field %d '%s' error: ", p, fieldId, fieldIDToName_MiscServicePaymentQueryByIdArgs[fieldId]), err)
+SkipFieldError:
+	return thrift.PrependError(fmt.Sprintf("%T field %d skip type %d error: ", p, fieldId, fieldTypeId), err)
+
+ReadFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T read field end error", p), err)
+ReadStructEndError:
+	return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
+}
+
+func (p *MiscServicePaymentQueryByIdArgs) ReadField1(iprot thrift.TProtocol) error {
+	_field := NewPaymentQueryByIdRequest()
+	if err := _field.Read(iprot); err != nil {
+		return err
+	}
+	p.Request = _field
+	return nil
+}
+
+func (p *MiscServicePaymentQueryByIdArgs) Write(oprot thrift.TProtocol) (err error) {
+	var fieldId int16
+	if err = oprot.WriteStructBegin("PaymentQueryById_args"); err != nil {
+		goto WriteStructBeginError
+	}
+	if p != nil {
+		if err = p.writeField1(oprot); err != nil {
+			fieldId = 1
+			goto WriteFieldError
+		}
+	}
+	if err = oprot.WriteFieldStop(); err != nil {
+		goto WriteFieldStopError
+	}
+	if err = oprot.WriteStructEnd(); err != nil {
+		goto WriteStructEndError
+	}
+	return nil
+WriteStructBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
+WriteFieldError:
+	return thrift.PrependError(fmt.Sprintf("%T write field %d error: ", p, fieldId), err)
+WriteFieldStopError:
+	return thrift.PrependError(fmt.Sprintf("%T write field stop error: ", p), err)
+WriteStructEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write struct end error: ", p), err)
+}
+
+func (p *MiscServicePaymentQueryByIdArgs) writeField1(oprot thrift.TProtocol) (err error) {
+	if err = oprot.WriteFieldBegin("request", thrift.STRUCT, 1); err != nil {
+		goto WriteFieldBeginError
+	}
+	if err := p.Request.Write(oprot); err != nil {
+		return err
+	}
+	if err = oprot.WriteFieldEnd(); err != nil {
+		goto WriteFieldEndError
+	}
+	return nil
+WriteFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 1 begin error: ", p), err)
+WriteFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 1 end error: ", p), err)
+}
+
+func (p *MiscServicePaymentQueryByIdArgs) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("MiscServicePaymentQueryByIdArgs(%+v)", *p)
+
+}
+
+func (p *MiscServicePaymentQueryByIdArgs) DeepEqual(ano *MiscServicePaymentQueryByIdArgs) bool {
+	if p == ano {
+		return true
+	} else if p == nil || ano == nil {
+		return false
+	}
+	if !p.Field1DeepEqual(ano.Request) {
+		return false
+	}
+	return true
+}
+
+func (p *MiscServicePaymentQueryByIdArgs) Field1DeepEqual(src *PaymentQueryByIdRequest) bool {
+
+	if !p.Request.DeepEqual(src) {
+		return false
+	}
+	return true
+}
+
+type MiscServicePaymentQueryByIdResult struct {
+	Success *PaymentQueryByIdResponse `thrift:"success,0,optional" frugal:"0,optional,PaymentQueryByIdResponse" json:"success,omitempty"`
+}
+
+func NewMiscServicePaymentQueryByIdResult() *MiscServicePaymentQueryByIdResult {
+	return &MiscServicePaymentQueryByIdResult{}
+}
+
+func (p *MiscServicePaymentQueryByIdResult) InitDefault() {
+	*p = MiscServicePaymentQueryByIdResult{}
+}
+
+var MiscServicePaymentQueryByIdResult_Success_DEFAULT *PaymentQueryByIdResponse
+
+func (p *MiscServicePaymentQueryByIdResult) GetSuccess() (v *PaymentQueryByIdResponse) {
+	if !p.IsSetSuccess() {
+		return MiscServicePaymentQueryByIdResult_Success_DEFAULT
+	}
+	return p.Success
+}
+func (p *MiscServicePaymentQueryByIdResult) SetSuccess(x interface{}) {
+	p.Success = x.(*PaymentQueryByIdResponse)
+}
+
+var fieldIDToName_MiscServicePaymentQueryByIdResult = map[int16]string{
+	0: "success",
+}
+
+func (p *MiscServicePaymentQueryByIdResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *MiscServicePaymentQueryByIdResult) Read(iprot thrift.TProtocol) (err error) {
+
+	var fieldTypeId thrift.TType
+	var fieldId int16
+
+	if _, err = iprot.ReadStructBegin(); err != nil {
+		goto ReadStructBeginError
+	}
+
+	for {
+		_, fieldTypeId, fieldId, err = iprot.ReadFieldBegin()
+		if err != nil {
+			goto ReadFieldBeginError
+		}
+		if fieldTypeId == thrift.STOP {
+			break
+		}
+
+		switch fieldId {
+		case 0:
+			if fieldTypeId == thrift.STRUCT {
+				if err = p.ReadField0(iprot); err != nil {
+					goto ReadFieldError
+				}
+			} else if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		default:
+			if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		}
+		if err = iprot.ReadFieldEnd(); err != nil {
+			goto ReadFieldEndError
+		}
+	}
+	if err = iprot.ReadStructEnd(); err != nil {
+		goto ReadStructEndError
+	}
+
+	return nil
+ReadStructBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T read struct begin error: ", p), err)
+ReadFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T read field %d begin error: ", p, fieldId), err)
+ReadFieldError:
+	return thrift.PrependError(fmt.Sprintf("%T read field %d '%s' error: ", p, fieldId, fieldIDToName_MiscServicePaymentQueryByIdResult[fieldId]), err)
+SkipFieldError:
+	return thrift.PrependError(fmt.Sprintf("%T field %d skip type %d error: ", p, fieldId, fieldTypeId), err)
+
+ReadFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T read field end error", p), err)
+ReadStructEndError:
+	return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
+}
+
+func (p *MiscServicePaymentQueryByIdResult) ReadField0(iprot thrift.TProtocol) error {
+	_field := NewPaymentQueryByIdResponse()
+	if err := _field.Read(iprot); err != nil {
+		return err
+	}
+	p.Success = _field
+	return nil
+}
+
+func (p *MiscServicePaymentQueryByIdResult) Write(oprot thrift.TProtocol) (err error) {
+	var fieldId int16
+	if err = oprot.WriteStructBegin("PaymentQueryById_result"); err != nil {
+		goto WriteStructBeginError
+	}
+	if p != nil {
+		if err = p.writeField0(oprot); err != nil {
+			fieldId = 0
+			goto WriteFieldError
+		}
+	}
+	if err = oprot.WriteFieldStop(); err != nil {
+		goto WriteFieldStopError
+	}
+	if err = oprot.WriteStructEnd(); err != nil {
+		goto WriteStructEndError
+	}
+	return nil
+WriteStructBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
+WriteFieldError:
+	return thrift.PrependError(fmt.Sprintf("%T write field %d error: ", p, fieldId), err)
+WriteFieldStopError:
+	return thrift.PrependError(fmt.Sprintf("%T write field stop error: ", p), err)
+WriteStructEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write struct end error: ", p), err)
+}
+
+func (p *MiscServicePaymentQueryByIdResult) writeField0(oprot thrift.TProtocol) (err error) {
+	if p.IsSetSuccess() {
+		if err = oprot.WriteFieldBegin("success", thrift.STRUCT, 0); err != nil {
+			goto WriteFieldBeginError
+		}
+		if err := p.Success.Write(oprot); err != nil {
+			return err
+		}
+		if err = oprot.WriteFieldEnd(); err != nil {
+			goto WriteFieldEndError
+		}
+	}
+	return nil
+WriteFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 0 begin error: ", p), err)
+WriteFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 0 end error: ", p), err)
+}
+
+func (p *MiscServicePaymentQueryByIdResult) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("MiscServicePaymentQueryByIdResult(%+v)", *p)
+
+}
+
+func (p *MiscServicePaymentQueryByIdResult) DeepEqual(ano *MiscServicePaymentQueryByIdResult) bool {
+	if p == ano {
+		return true
+	} else if p == nil || ano == nil {
+		return false
+	}
+	if !p.Field0DeepEqual(ano.Success) {
+		return false
+	}
+	return true
+}
+
+func (p *MiscServicePaymentQueryByIdResult) Field0DeepEqual(src *PaymentQueryByIdResponse) bool {
+
+	if !p.Success.DeepEqual(src) {
+		return false
+	}
+	return true
+}
+
+type MiscServicePaymentPrepareArgs struct {
+	Request *PaymentPrepareRequest `thrift:"request,1" frugal:"1,default,PaymentPrepareRequest" json:"request"`
+}
+
+func NewMiscServicePaymentPrepareArgs() *MiscServicePaymentPrepareArgs {
+	return &MiscServicePaymentPrepareArgs{}
+}
+
+func (p *MiscServicePaymentPrepareArgs) InitDefault() {
+	*p = MiscServicePaymentPrepareArgs{}
+}
+
+var MiscServicePaymentPrepareArgs_Request_DEFAULT *PaymentPrepareRequest
+
+func (p *MiscServicePaymentPrepareArgs) GetRequest() (v *PaymentPrepareRequest) {
+	if !p.IsSetRequest() {
+		return MiscServicePaymentPrepareArgs_Request_DEFAULT
+	}
+	return p.Request
+}
+func (p *MiscServicePaymentPrepareArgs) SetRequest(val *PaymentPrepareRequest) {
+	p.Request = val
+}
+
+var fieldIDToName_MiscServicePaymentPrepareArgs = map[int16]string{
+	1: "request",
+}
+
+func (p *MiscServicePaymentPrepareArgs) IsSetRequest() bool {
+	return p.Request != nil
+}
+
+func (p *MiscServicePaymentPrepareArgs) Read(iprot thrift.TProtocol) (err error) {
+
+	var fieldTypeId thrift.TType
+	var fieldId int16
+
+	if _, err = iprot.ReadStructBegin(); err != nil {
+		goto ReadStructBeginError
+	}
+
+	for {
+		_, fieldTypeId, fieldId, err = iprot.ReadFieldBegin()
+		if err != nil {
+			goto ReadFieldBeginError
+		}
+		if fieldTypeId == thrift.STOP {
+			break
+		}
+
+		switch fieldId {
+		case 1:
+			if fieldTypeId == thrift.STRUCT {
+				if err = p.ReadField1(iprot); err != nil {
+					goto ReadFieldError
+				}
+			} else if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		default:
+			if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		}
+		if err = iprot.ReadFieldEnd(); err != nil {
+			goto ReadFieldEndError
+		}
+	}
+	if err = iprot.ReadStructEnd(); err != nil {
+		goto ReadStructEndError
+	}
+
+	return nil
+ReadStructBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T read struct begin error: ", p), err)
+ReadFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T read field %d begin error: ", p, fieldId), err)
+ReadFieldError:
+	return thrift.PrependError(fmt.Sprintf("%T read field %d '%s' error: ", p, fieldId, fieldIDToName_MiscServicePaymentPrepareArgs[fieldId]), err)
+SkipFieldError:
+	return thrift.PrependError(fmt.Sprintf("%T field %d skip type %d error: ", p, fieldId, fieldTypeId), err)
+
+ReadFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T read field end error", p), err)
+ReadStructEndError:
+	return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
+}
+
+func (p *MiscServicePaymentPrepareArgs) ReadField1(iprot thrift.TProtocol) error {
+	_field := NewPaymentPrepareRequest()
+	if err := _field.Read(iprot); err != nil {
+		return err
+	}
+	p.Request = _field
+	return nil
+}
+
+func (p *MiscServicePaymentPrepareArgs) Write(oprot thrift.TProtocol) (err error) {
+	var fieldId int16
+	if err = oprot.WriteStructBegin("PaymentPrepare_args"); err != nil {
+		goto WriteStructBeginError
+	}
+	if p != nil {
+		if err = p.writeField1(oprot); err != nil {
+			fieldId = 1
+			goto WriteFieldError
+		}
+	}
+	if err = oprot.WriteFieldStop(); err != nil {
+		goto WriteFieldStopError
+	}
+	if err = oprot.WriteStructEnd(); err != nil {
+		goto WriteStructEndError
+	}
+	return nil
+WriteStructBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
+WriteFieldError:
+	return thrift.PrependError(fmt.Sprintf("%T write field %d error: ", p, fieldId), err)
+WriteFieldStopError:
+	return thrift.PrependError(fmt.Sprintf("%T write field stop error: ", p), err)
+WriteStructEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write struct end error: ", p), err)
+}
+
+func (p *MiscServicePaymentPrepareArgs) writeField1(oprot thrift.TProtocol) (err error) {
+	if err = oprot.WriteFieldBegin("request", thrift.STRUCT, 1); err != nil {
+		goto WriteFieldBeginError
+	}
+	if err := p.Request.Write(oprot); err != nil {
+		return err
+	}
+	if err = oprot.WriteFieldEnd(); err != nil {
+		goto WriteFieldEndError
+	}
+	return nil
+WriteFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 1 begin error: ", p), err)
+WriteFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 1 end error: ", p), err)
+}
+
+func (p *MiscServicePaymentPrepareArgs) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("MiscServicePaymentPrepareArgs(%+v)", *p)
+
+}
+
+func (p *MiscServicePaymentPrepareArgs) DeepEqual(ano *MiscServicePaymentPrepareArgs) bool {
+	if p == ano {
+		return true
+	} else if p == nil || ano == nil {
+		return false
+	}
+	if !p.Field1DeepEqual(ano.Request) {
+		return false
+	}
+	return true
+}
+
+func (p *MiscServicePaymentPrepareArgs) Field1DeepEqual(src *PaymentPrepareRequest) bool {
+
+	if !p.Request.DeepEqual(src) {
+		return false
+	}
+	return true
+}
+
+type MiscServicePaymentPrepareResult struct {
+	Success *PaymentPrepareResponse `thrift:"success,0,optional" frugal:"0,optional,PaymentPrepareResponse" json:"success,omitempty"`
+}
+
+func NewMiscServicePaymentPrepareResult() *MiscServicePaymentPrepareResult {
+	return &MiscServicePaymentPrepareResult{}
+}
+
+func (p *MiscServicePaymentPrepareResult) InitDefault() {
+	*p = MiscServicePaymentPrepareResult{}
+}
+
+var MiscServicePaymentPrepareResult_Success_DEFAULT *PaymentPrepareResponse
+
+func (p *MiscServicePaymentPrepareResult) GetSuccess() (v *PaymentPrepareResponse) {
+	if !p.IsSetSuccess() {
+		return MiscServicePaymentPrepareResult_Success_DEFAULT
+	}
+	return p.Success
+}
+func (p *MiscServicePaymentPrepareResult) SetSuccess(x interface{}) {
+	p.Success = x.(*PaymentPrepareResponse)
+}
+
+var fieldIDToName_MiscServicePaymentPrepareResult = map[int16]string{
+	0: "success",
+}
+
+func (p *MiscServicePaymentPrepareResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *MiscServicePaymentPrepareResult) Read(iprot thrift.TProtocol) (err error) {
+
+	var fieldTypeId thrift.TType
+	var fieldId int16
+
+	if _, err = iprot.ReadStructBegin(); err != nil {
+		goto ReadStructBeginError
+	}
+
+	for {
+		_, fieldTypeId, fieldId, err = iprot.ReadFieldBegin()
+		if err != nil {
+			goto ReadFieldBeginError
+		}
+		if fieldTypeId == thrift.STOP {
+			break
+		}
+
+		switch fieldId {
+		case 0:
+			if fieldTypeId == thrift.STRUCT {
+				if err = p.ReadField0(iprot); err != nil {
+					goto ReadFieldError
+				}
+			} else if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		default:
+			if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		}
+		if err = iprot.ReadFieldEnd(); err != nil {
+			goto ReadFieldEndError
+		}
+	}
+	if err = iprot.ReadStructEnd(); err != nil {
+		goto ReadStructEndError
+	}
+
+	return nil
+ReadStructBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T read struct begin error: ", p), err)
+ReadFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T read field %d begin error: ", p, fieldId), err)
+ReadFieldError:
+	return thrift.PrependError(fmt.Sprintf("%T read field %d '%s' error: ", p, fieldId, fieldIDToName_MiscServicePaymentPrepareResult[fieldId]), err)
+SkipFieldError:
+	return thrift.PrependError(fmt.Sprintf("%T field %d skip type %d error: ", p, fieldId, fieldTypeId), err)
+
+ReadFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T read field end error", p), err)
+ReadStructEndError:
+	return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
+}
+
+func (p *MiscServicePaymentPrepareResult) ReadField0(iprot thrift.TProtocol) error {
+	_field := NewPaymentPrepareResponse()
+	if err := _field.Read(iprot); err != nil {
+		return err
+	}
+	p.Success = _field
+	return nil
+}
+
+func (p *MiscServicePaymentPrepareResult) Write(oprot thrift.TProtocol) (err error) {
+	var fieldId int16
+	if err = oprot.WriteStructBegin("PaymentPrepare_result"); err != nil {
+		goto WriteStructBeginError
+	}
+	if p != nil {
+		if err = p.writeField0(oprot); err != nil {
+			fieldId = 0
+			goto WriteFieldError
+		}
+	}
+	if err = oprot.WriteFieldStop(); err != nil {
+		goto WriteFieldStopError
+	}
+	if err = oprot.WriteStructEnd(); err != nil {
+		goto WriteStructEndError
+	}
+	return nil
+WriteStructBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
+WriteFieldError:
+	return thrift.PrependError(fmt.Sprintf("%T write field %d error: ", p, fieldId), err)
+WriteFieldStopError:
+	return thrift.PrependError(fmt.Sprintf("%T write field stop error: ", p), err)
+WriteStructEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write struct end error: ", p), err)
+}
+
+func (p *MiscServicePaymentPrepareResult) writeField0(oprot thrift.TProtocol) (err error) {
+	if p.IsSetSuccess() {
+		if err = oprot.WriteFieldBegin("success", thrift.STRUCT, 0); err != nil {
+			goto WriteFieldBeginError
+		}
+		if err := p.Success.Write(oprot); err != nil {
+			return err
+		}
+		if err = oprot.WriteFieldEnd(); err != nil {
+			goto WriteFieldEndError
+		}
+	}
+	return nil
+WriteFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 0 begin error: ", p), err)
+WriteFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 0 end error: ", p), err)
+}
+
+func (p *MiscServicePaymentPrepareResult) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("MiscServicePaymentPrepareResult(%+v)", *p)
+
+}
+
+func (p *MiscServicePaymentPrepareResult) DeepEqual(ano *MiscServicePaymentPrepareResult) bool {
+	if p == ano {
+		return true
+	} else if p == nil || ano == nil {
+		return false
+	}
+	if !p.Field0DeepEqual(ano.Success) {
+		return false
+	}
+	return true
+}
+
+func (p *MiscServicePaymentPrepareResult) Field0DeepEqual(src *PaymentPrepareResponse) bool {
+
+	if !p.Success.DeepEqual(src) {
+		return false
+	}
+	return true
+}
+
+type MiscServicePaymentCreateArgs struct {
+	Request *PaymentCreateRequest `thrift:"request,1" frugal:"1,default,PaymentCreateRequest" json:"request"`
+}
+
+func NewMiscServicePaymentCreateArgs() *MiscServicePaymentCreateArgs {
+	return &MiscServicePaymentCreateArgs{}
+}
+
+func (p *MiscServicePaymentCreateArgs) InitDefault() {
+	*p = MiscServicePaymentCreateArgs{}
+}
+
+var MiscServicePaymentCreateArgs_Request_DEFAULT *PaymentCreateRequest
+
+func (p *MiscServicePaymentCreateArgs) GetRequest() (v *PaymentCreateRequest) {
+	if !p.IsSetRequest() {
+		return MiscServicePaymentCreateArgs_Request_DEFAULT
+	}
+	return p.Request
+}
+func (p *MiscServicePaymentCreateArgs) SetRequest(val *PaymentCreateRequest) {
+	p.Request = val
+}
+
+var fieldIDToName_MiscServicePaymentCreateArgs = map[int16]string{
+	1: "request",
+}
+
+func (p *MiscServicePaymentCreateArgs) IsSetRequest() bool {
+	return p.Request != nil
+}
+
+func (p *MiscServicePaymentCreateArgs) Read(iprot thrift.TProtocol) (err error) {
+
+	var fieldTypeId thrift.TType
+	var fieldId int16
+
+	if _, err = iprot.ReadStructBegin(); err != nil {
+		goto ReadStructBeginError
+	}
+
+	for {
+		_, fieldTypeId, fieldId, err = iprot.ReadFieldBegin()
+		if err != nil {
+			goto ReadFieldBeginError
+		}
+		if fieldTypeId == thrift.STOP {
+			break
+		}
+
+		switch fieldId {
+		case 1:
+			if fieldTypeId == thrift.STRUCT {
+				if err = p.ReadField1(iprot); err != nil {
+					goto ReadFieldError
+				}
+			} else if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		default:
+			if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		}
+		if err = iprot.ReadFieldEnd(); err != nil {
+			goto ReadFieldEndError
+		}
+	}
+	if err = iprot.ReadStructEnd(); err != nil {
+		goto ReadStructEndError
+	}
+
+	return nil
+ReadStructBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T read struct begin error: ", p), err)
+ReadFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T read field %d begin error: ", p, fieldId), err)
+ReadFieldError:
+	return thrift.PrependError(fmt.Sprintf("%T read field %d '%s' error: ", p, fieldId, fieldIDToName_MiscServicePaymentCreateArgs[fieldId]), err)
+SkipFieldError:
+	return thrift.PrependError(fmt.Sprintf("%T field %d skip type %d error: ", p, fieldId, fieldTypeId), err)
+
+ReadFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T read field end error", p), err)
+ReadStructEndError:
+	return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
+}
+
+func (p *MiscServicePaymentCreateArgs) ReadField1(iprot thrift.TProtocol) error {
+	_field := NewPaymentCreateRequest()
+	if err := _field.Read(iprot); err != nil {
+		return err
+	}
+	p.Request = _field
+	return nil
+}
+
+func (p *MiscServicePaymentCreateArgs) Write(oprot thrift.TProtocol) (err error) {
+	var fieldId int16
+	if err = oprot.WriteStructBegin("PaymentCreate_args"); err != nil {
+		goto WriteStructBeginError
+	}
+	if p != nil {
+		if err = p.writeField1(oprot); err != nil {
+			fieldId = 1
+			goto WriteFieldError
+		}
+	}
+	if err = oprot.WriteFieldStop(); err != nil {
+		goto WriteFieldStopError
+	}
+	if err = oprot.WriteStructEnd(); err != nil {
+		goto WriteStructEndError
+	}
+	return nil
+WriteStructBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
+WriteFieldError:
+	return thrift.PrependError(fmt.Sprintf("%T write field %d error: ", p, fieldId), err)
+WriteFieldStopError:
+	return thrift.PrependError(fmt.Sprintf("%T write field stop error: ", p), err)
+WriteStructEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write struct end error: ", p), err)
+}
+
+func (p *MiscServicePaymentCreateArgs) writeField1(oprot thrift.TProtocol) (err error) {
+	if err = oprot.WriteFieldBegin("request", thrift.STRUCT, 1); err != nil {
+		goto WriteFieldBeginError
+	}
+	if err := p.Request.Write(oprot); err != nil {
+		return err
+	}
+	if err = oprot.WriteFieldEnd(); err != nil {
+		goto WriteFieldEndError
+	}
+	return nil
+WriteFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 1 begin error: ", p), err)
+WriteFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 1 end error: ", p), err)
+}
+
+func (p *MiscServicePaymentCreateArgs) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("MiscServicePaymentCreateArgs(%+v)", *p)
+
+}
+
+func (p *MiscServicePaymentCreateArgs) DeepEqual(ano *MiscServicePaymentCreateArgs) bool {
+	if p == ano {
+		return true
+	} else if p == nil || ano == nil {
+		return false
+	}
+	if !p.Field1DeepEqual(ano.Request) {
+		return false
+	}
+	return true
+}
+
+func (p *MiscServicePaymentCreateArgs) Field1DeepEqual(src *PaymentCreateRequest) bool {
+
+	if !p.Request.DeepEqual(src) {
+		return false
+	}
+	return true
+}
+
+type MiscServicePaymentCreateResult struct {
+	Success *PaymentCreateResponse `thrift:"success,0,optional" frugal:"0,optional,PaymentCreateResponse" json:"success,omitempty"`
+}
+
+func NewMiscServicePaymentCreateResult() *MiscServicePaymentCreateResult {
+	return &MiscServicePaymentCreateResult{}
+}
+
+func (p *MiscServicePaymentCreateResult) InitDefault() {
+	*p = MiscServicePaymentCreateResult{}
+}
+
+var MiscServicePaymentCreateResult_Success_DEFAULT *PaymentCreateResponse
+
+func (p *MiscServicePaymentCreateResult) GetSuccess() (v *PaymentCreateResponse) {
+	if !p.IsSetSuccess() {
+		return MiscServicePaymentCreateResult_Success_DEFAULT
+	}
+	return p.Success
+}
+func (p *MiscServicePaymentCreateResult) SetSuccess(x interface{}) {
+	p.Success = x.(*PaymentCreateResponse)
+}
+
+var fieldIDToName_MiscServicePaymentCreateResult = map[int16]string{
+	0: "success",
+}
+
+func (p *MiscServicePaymentCreateResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *MiscServicePaymentCreateResult) Read(iprot thrift.TProtocol) (err error) {
+
+	var fieldTypeId thrift.TType
+	var fieldId int16
+
+	if _, err = iprot.ReadStructBegin(); err != nil {
+		goto ReadStructBeginError
+	}
+
+	for {
+		_, fieldTypeId, fieldId, err = iprot.ReadFieldBegin()
+		if err != nil {
+			goto ReadFieldBeginError
+		}
+		if fieldTypeId == thrift.STOP {
+			break
+		}
+
+		switch fieldId {
+		case 0:
+			if fieldTypeId == thrift.STRUCT {
+				if err = p.ReadField0(iprot); err != nil {
+					goto ReadFieldError
+				}
+			} else if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		default:
+			if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		}
+		if err = iprot.ReadFieldEnd(); err != nil {
+			goto ReadFieldEndError
+		}
+	}
+	if err = iprot.ReadStructEnd(); err != nil {
+		goto ReadStructEndError
+	}
+
+	return nil
+ReadStructBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T read struct begin error: ", p), err)
+ReadFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T read field %d begin error: ", p, fieldId), err)
+ReadFieldError:
+	return thrift.PrependError(fmt.Sprintf("%T read field %d '%s' error: ", p, fieldId, fieldIDToName_MiscServicePaymentCreateResult[fieldId]), err)
+SkipFieldError:
+	return thrift.PrependError(fmt.Sprintf("%T field %d skip type %d error: ", p, fieldId, fieldTypeId), err)
+
+ReadFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T read field end error", p), err)
+ReadStructEndError:
+	return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
+}
+
+func (p *MiscServicePaymentCreateResult) ReadField0(iprot thrift.TProtocol) error {
+	_field := NewPaymentCreateResponse()
+	if err := _field.Read(iprot); err != nil {
+		return err
+	}
+	p.Success = _field
+	return nil
+}
+
+func (p *MiscServicePaymentCreateResult) Write(oprot thrift.TProtocol) (err error) {
+	var fieldId int16
+	if err = oprot.WriteStructBegin("PaymentCreate_result"); err != nil {
+		goto WriteStructBeginError
+	}
+	if p != nil {
+		if err = p.writeField0(oprot); err != nil {
+			fieldId = 0
+			goto WriteFieldError
+		}
+	}
+	if err = oprot.WriteFieldStop(); err != nil {
+		goto WriteFieldStopError
+	}
+	if err = oprot.WriteStructEnd(); err != nil {
+		goto WriteStructEndError
+	}
+	return nil
+WriteStructBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
+WriteFieldError:
+	return thrift.PrependError(fmt.Sprintf("%T write field %d error: ", p, fieldId), err)
+WriteFieldStopError:
+	return thrift.PrependError(fmt.Sprintf("%T write field stop error: ", p), err)
+WriteStructEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write struct end error: ", p), err)
+}
+
+func (p *MiscServicePaymentCreateResult) writeField0(oprot thrift.TProtocol) (err error) {
+	if p.IsSetSuccess() {
+		if err = oprot.WriteFieldBegin("success", thrift.STRUCT, 0); err != nil {
+			goto WriteFieldBeginError
+		}
+		if err := p.Success.Write(oprot); err != nil {
+			return err
+		}
+		if err = oprot.WriteFieldEnd(); err != nil {
+			goto WriteFieldEndError
+		}
+	}
+	return nil
+WriteFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 0 begin error: ", p), err)
+WriteFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 0 end error: ", p), err)
+}
+
+func (p *MiscServicePaymentCreateResult) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("MiscServicePaymentCreateResult(%+v)", *p)
+
+}
+
+func (p *MiscServicePaymentCreateResult) DeepEqual(ano *MiscServicePaymentCreateResult) bool {
+	if p == ano {
+		return true
+	} else if p == nil || ano == nil {
+		return false
+	}
+	if !p.Field0DeepEqual(ano.Success) {
+		return false
+	}
+	return true
+}
+
+func (p *MiscServicePaymentCreateResult) Field0DeepEqual(src *PaymentCreateResponse) bool {
 
 	if !p.Success.DeepEqual(src) {
 		return false

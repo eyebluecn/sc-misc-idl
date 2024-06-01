@@ -9,14 +9,14 @@ import (
 )
 
 type PaymentDTO struct {
-	Id                 int64  `thrift:"id,1" frugal:"1,default,i64" json:"id"`
-	CreateTime         int64  `thrift:"createTime,2" frugal:"2,default,i64" json:"createTime"`
-	UpdateTime         int64  `thrift:"updateTime,3" frugal:"3,default,i64" json:"updateTime"`
-	OrderNo            string `thrift:"orderNo,4" frugal:"4,default,string" json:"orderNo"`
-	Method             string `thrift:"method,5" frugal:"5,default,string" json:"method"`
-	ThirdTransactionNo string `thrift:"thirdTransactionNo,6" frugal:"6,default,string" json:"thirdTransactionNo"`
-	Amount             int64  `thrift:"amount,7" frugal:"7,default,i64" json:"amount"`
-	Status             int32  `thrift:"status,8" frugal:"8,default,i32" json:"status"`
+	Id                 int64         `thrift:"id,1" frugal:"1,default,i64" json:"id"`
+	CreateTime         int64         `thrift:"createTime,2" frugal:"2,default,i64" json:"createTime"`
+	UpdateTime         int64         `thrift:"updateTime,3" frugal:"3,default,i64" json:"updateTime"`
+	OrderNo            string        `thrift:"orderNo,4" frugal:"4,default,string" json:"orderNo"`
+	Method             string        `thrift:"method,5" frugal:"5,default,string" json:"method"`
+	ThirdTransactionNo string        `thrift:"thirdTransactionNo,6" frugal:"6,default,string" json:"thirdTransactionNo"`
+	Amount             int64         `thrift:"amount,7" frugal:"7,default,i64" json:"amount"`
+	Status             PaymentStatus `thrift:"status,8" frugal:"8,default,PaymentStatus" json:"status"`
 }
 
 func NewPaymentDTO() *PaymentDTO {
@@ -55,7 +55,7 @@ func (p *PaymentDTO) GetAmount() (v int64) {
 	return p.Amount
 }
 
-func (p *PaymentDTO) GetStatus() (v int32) {
+func (p *PaymentDTO) GetStatus() (v PaymentStatus) {
 	return p.Status
 }
 func (p *PaymentDTO) SetId(val int64) {
@@ -79,7 +79,7 @@ func (p *PaymentDTO) SetThirdTransactionNo(val string) {
 func (p *PaymentDTO) SetAmount(val int64) {
 	p.Amount = val
 }
-func (p *PaymentDTO) SetStatus(val int32) {
+func (p *PaymentDTO) SetStatus(val PaymentStatus) {
 	p.Status = val
 }
 
@@ -285,11 +285,11 @@ func (p *PaymentDTO) ReadField7(iprot thrift.TProtocol) error {
 }
 func (p *PaymentDTO) ReadField8(iprot thrift.TProtocol) error {
 
-	var _field int32
+	var _field PaymentStatus
 	if v, err := iprot.ReadI32(); err != nil {
 		return err
 	} else {
-		_field = v
+		_field = PaymentStatus(v)
 	}
 	p.Status = _field
 	return nil
@@ -474,7 +474,7 @@ func (p *PaymentDTO) writeField8(oprot thrift.TProtocol) (err error) {
 	if err = oprot.WriteFieldBegin("status", thrift.I32, 8); err != nil {
 		goto WriteFieldBeginError
 	}
-	if err := oprot.WriteI32(p.Status); err != nil {
+	if err := oprot.WriteI32(int32(p.Status)); err != nil {
 		return err
 	}
 	if err = oprot.WriteFieldEnd(); err != nil {
@@ -577,7 +577,7 @@ func (p *PaymentDTO) Field7DeepEqual(src int64) bool {
 	}
 	return true
 }
-func (p *PaymentDTO) Field8DeepEqual(src int32) bool {
+func (p *PaymentDTO) Field8DeepEqual(src PaymentStatus) bool {
 
 	if p.Status != src {
 		return false

@@ -19,6 +19,9 @@ service MiscService {
     //查看专栏详情
     column_api.ColumnQueryByIdResponse ColumnQueryById(1: column_api.ColumnQueryByIdRequest request)
 
+    //查看专栏详情
+    column_api.ColumnQueryByIdsResponse ColumnQueryByIds(1: column_api.ColumnQueryByIdsRequest request)
+
 
     //**************** 专栏END ****************//
 
@@ -47,6 +50,8 @@ service MiscService {
     //查询读者
     reader_api.ReaderQueryByIdResponse ReaderQueryById(1: reader_api.ReaderQueryByIdRequest request)
 
+    //查询读者列表
+    reader_api.ReaderQueryByIdsResponse ReaderQueryByIds(1: reader_api.ReaderQueryByIdsRequest request)
 
     //**************** 读者END ****************//
 

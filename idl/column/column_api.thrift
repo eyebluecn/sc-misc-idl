@@ -57,3 +57,17 @@ struct ColumnQueryByIdResponse {
 
     255: base.BaseResp baseResp //标准返回内容
 }
+
+//专栏详情 请求体
+struct ColumnQueryByIdsRequest {
+	1: list<i64> columnIds //专栏Id
+
+    255: optional base.Base base //标准请求内容
+}
+
+//专栏详情 响应体
+struct ColumnQueryByIdsResponse {
+	1: list<column_model.ColumnDTO> data //数据信息
+
+    255: base.BaseResp baseResp //标准返回内容
+}

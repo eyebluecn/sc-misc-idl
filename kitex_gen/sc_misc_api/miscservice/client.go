@@ -14,10 +14,12 @@ type Client interface {
 	ColumnOmnibus(ctx context.Context, request *sc_misc_api.ColumnOmnibusRequest, callOptions ...callopt.Option) (r *sc_misc_api.ColumnOmnibusResponse, err error)
 	RichColumnPage(ctx context.Context, request *sc_misc_api.RichColumnPageRequest, callOptions ...callopt.Option) (r *sc_misc_api.RichColumnPageResponse, err error)
 	ColumnQueryById(ctx context.Context, request *sc_misc_api.ColumnQueryByIdRequest, callOptions ...callopt.Option) (r *sc_misc_api.ColumnQueryByIdResponse, err error)
+	ColumnQueryByIds(ctx context.Context, request *sc_misc_api.ColumnQueryByIdsRequest, callOptions ...callopt.Option) (r *sc_misc_api.ColumnQueryByIdsResponse, err error)
 	ColumnQuoteQueryByColumnId(ctx context.Context, request *sc_misc_api.ColumnQuoteQueryByColumnIdRequest, callOptions ...callopt.Option) (r *sc_misc_api.ColumnQuoteQueryByColumnIdResponse, err error)
 	EditorLogin(ctx context.Context, request *sc_misc_api.EditorLoginRequest, callOptions ...callopt.Option) (r *sc_misc_api.EditorLoginResponse, err error)
 	ReaderLogin(ctx context.Context, request *sc_misc_api.ReaderLoginRequest, callOptions ...callopt.Option) (r *sc_misc_api.ReaderLoginResponse, err error)
 	ReaderQueryById(ctx context.Context, request *sc_misc_api.ReaderQueryByIdRequest, callOptions ...callopt.Option) (r *sc_misc_api.ReaderQueryByIdResponse, err error)
+	ReaderQueryByIds(ctx context.Context, request *sc_misc_api.ReaderQueryByIdsRequest, callOptions ...callopt.Option) (r *sc_misc_api.ReaderQueryByIdsResponse, err error)
 	PaymentQueryById(ctx context.Context, request *sc_misc_api.PaymentQueryByIdRequest, callOptions ...callopt.Option) (r *sc_misc_api.PaymentQueryByIdResponse, err error)
 	PaymentPrepare(ctx context.Context, request *sc_misc_api.PaymentPrepareRequest, callOptions ...callopt.Option) (r *sc_misc_api.PaymentPrepareResponse, err error)
 	PaymentCreate(ctx context.Context, request *sc_misc_api.PaymentCreateRequest, callOptions ...callopt.Option) (r *sc_misc_api.PaymentCreateResponse, err error)
@@ -69,6 +71,11 @@ func (p *kMiscServiceClient) ColumnQueryById(ctx context.Context, request *sc_mi
 	return p.kClient.ColumnQueryById(ctx, request)
 }
 
+func (p *kMiscServiceClient) ColumnQueryByIds(ctx context.Context, request *sc_misc_api.ColumnQueryByIdsRequest, callOptions ...callopt.Option) (r *sc_misc_api.ColumnQueryByIdsResponse, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.ColumnQueryByIds(ctx, request)
+}
+
 func (p *kMiscServiceClient) ColumnQuoteQueryByColumnId(ctx context.Context, request *sc_misc_api.ColumnQuoteQueryByColumnIdRequest, callOptions ...callopt.Option) (r *sc_misc_api.ColumnQuoteQueryByColumnIdResponse, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
 	return p.kClient.ColumnQuoteQueryByColumnId(ctx, request)
@@ -87,6 +94,11 @@ func (p *kMiscServiceClient) ReaderLogin(ctx context.Context, request *sc_misc_a
 func (p *kMiscServiceClient) ReaderQueryById(ctx context.Context, request *sc_misc_api.ReaderQueryByIdRequest, callOptions ...callopt.Option) (r *sc_misc_api.ReaderQueryByIdResponse, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
 	return p.kClient.ReaderQueryById(ctx, request)
+}
+
+func (p *kMiscServiceClient) ReaderQueryByIds(ctx context.Context, request *sc_misc_api.ReaderQueryByIdsRequest, callOptions ...callopt.Option) (r *sc_misc_api.ReaderQueryByIdsResponse, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.ReaderQueryByIds(ctx, request)
 }
 
 func (p *kMiscServiceClient) PaymentQueryById(ctx context.Context, request *sc_misc_api.PaymentQueryByIdRequest, callOptions ...callopt.Option) (r *sc_misc_api.PaymentQueryByIdResponse, err error) {

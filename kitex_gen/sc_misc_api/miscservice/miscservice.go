@@ -34,6 +34,13 @@ var serviceMethods = map[string]kitex.MethodInfo{
 		false,
 		kitex.WithStreamingMode(kitex.StreamingNone),
 	),
+	"ColumnQueryByIds": kitex.NewMethodInfo(
+		columnQueryByIdsHandler,
+		newMiscServiceColumnQueryByIdsArgs,
+		newMiscServiceColumnQueryByIdsResult,
+		false,
+		kitex.WithStreamingMode(kitex.StreamingNone),
+	),
 	"ColumnQuoteQueryByColumnId": kitex.NewMethodInfo(
 		columnQuoteQueryByColumnIdHandler,
 		newMiscServiceColumnQuoteQueryByColumnIdArgs,
@@ -59,6 +66,13 @@ var serviceMethods = map[string]kitex.MethodInfo{
 		readerQueryByIdHandler,
 		newMiscServiceReaderQueryByIdArgs,
 		newMiscServiceReaderQueryByIdResult,
+		false,
+		kitex.WithStreamingMode(kitex.StreamingNone),
+	),
+	"ReaderQueryByIds": kitex.NewMethodInfo(
+		readerQueryByIdsHandler,
+		newMiscServiceReaderQueryByIdsArgs,
+		newMiscServiceReaderQueryByIdsResult,
 		false,
 		kitex.WithStreamingMode(kitex.StreamingNone),
 	),
@@ -217,6 +231,24 @@ func newMiscServiceColumnQueryByIdResult() interface{} {
 	return sc_misc_api.NewMiscServiceColumnQueryByIdResult()
 }
 
+func columnQueryByIdsHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	realArg := arg.(*sc_misc_api.MiscServiceColumnQueryByIdsArgs)
+	realResult := result.(*sc_misc_api.MiscServiceColumnQueryByIdsResult)
+	success, err := handler.(sc_misc_api.MiscService).ColumnQueryByIds(ctx, realArg.Request)
+	if err != nil {
+		return err
+	}
+	realResult.Success = success
+	return nil
+}
+func newMiscServiceColumnQueryByIdsArgs() interface{} {
+	return sc_misc_api.NewMiscServiceColumnQueryByIdsArgs()
+}
+
+func newMiscServiceColumnQueryByIdsResult() interface{} {
+	return sc_misc_api.NewMiscServiceColumnQueryByIdsResult()
+}
+
 func columnQuoteQueryByColumnIdHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
 	realArg := arg.(*sc_misc_api.MiscServiceColumnQuoteQueryByColumnIdArgs)
 	realResult := result.(*sc_misc_api.MiscServiceColumnQuoteQueryByColumnIdResult)
@@ -287,6 +319,24 @@ func newMiscServiceReaderQueryByIdArgs() interface{} {
 
 func newMiscServiceReaderQueryByIdResult() interface{} {
 	return sc_misc_api.NewMiscServiceReaderQueryByIdResult()
+}
+
+func readerQueryByIdsHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	realArg := arg.(*sc_misc_api.MiscServiceReaderQueryByIdsArgs)
+	realResult := result.(*sc_misc_api.MiscServiceReaderQueryByIdsResult)
+	success, err := handler.(sc_misc_api.MiscService).ReaderQueryByIds(ctx, realArg.Request)
+	if err != nil {
+		return err
+	}
+	realResult.Success = success
+	return nil
+}
+func newMiscServiceReaderQueryByIdsArgs() interface{} {
+	return sc_misc_api.NewMiscServiceReaderQueryByIdsArgs()
+}
+
+func newMiscServiceReaderQueryByIdsResult() interface{} {
+	return sc_misc_api.NewMiscServiceReaderQueryByIdsResult()
 }
 
 func paymentQueryByIdHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
@@ -419,6 +469,16 @@ func (p *kClient) ColumnQueryById(ctx context.Context, request *sc_misc_api.Colu
 	return _result.GetSuccess(), nil
 }
 
+func (p *kClient) ColumnQueryByIds(ctx context.Context, request *sc_misc_api.ColumnQueryByIdsRequest) (r *sc_misc_api.ColumnQueryByIdsResponse, err error) {
+	var _args sc_misc_api.MiscServiceColumnQueryByIdsArgs
+	_args.Request = request
+	var _result sc_misc_api.MiscServiceColumnQueryByIdsResult
+	if err = p.c.Call(ctx, "ColumnQueryByIds", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
 func (p *kClient) ColumnQuoteQueryByColumnId(ctx context.Context, request *sc_misc_api.ColumnQuoteQueryByColumnIdRequest) (r *sc_misc_api.ColumnQuoteQueryByColumnIdResponse, err error) {
 	var _args sc_misc_api.MiscServiceColumnQuoteQueryByColumnIdArgs
 	_args.Request = request
@@ -454,6 +514,16 @@ func (p *kClient) ReaderQueryById(ctx context.Context, request *sc_misc_api.Read
 	_args.Request = request
 	var _result sc_misc_api.MiscServiceReaderQueryByIdResult
 	if err = p.c.Call(ctx, "ReaderQueryById", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) ReaderQueryByIds(ctx context.Context, request *sc_misc_api.ReaderQueryByIdsRequest) (r *sc_misc_api.ReaderQueryByIdsResponse, err error) {
+	var _args sc_misc_api.MiscServiceReaderQueryByIdsArgs
+	_args.Request = request
+	var _result sc_misc_api.MiscServiceReaderQueryByIdsResult
+	if err = p.c.Call(ctx, "ReaderQueryByIds", &_args, &_result); err != nil {
 		return
 	}
 	return _result.GetSuccess(), nil

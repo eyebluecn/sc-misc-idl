@@ -33,3 +33,18 @@ struct ReaderQueryByIdResponse {
     255: base.BaseResp baseResp //标准返回内容
 
 }
+
+//读者查询 请求体
+struct ReaderQueryByIdsRequest {
+	1: list<i64> readerIds //id
+
+	255: optional base.Base base //标准请求内容
+}
+
+//读者查询 响应体
+struct ReaderQueryByIdsResponse {
+	1: list<reader_model.ReaderDTO> data //数据信息
+
+    255: base.BaseResp baseResp //标准返回内容
+
+}

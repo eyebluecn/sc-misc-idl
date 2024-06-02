@@ -12,31 +12,31 @@ import (
 type PaymentMqEvent int64
 
 const (
-	PaymentMqEvent_CREATED PaymentMqEvent = 0
-	PaymentMqEvent_PAID    PaymentMqEvent = 1
-	PaymentMqEvent_CLOSED  PaymentMqEvent = 2
+	PaymentMqEvent_PAYMENT_CREATED PaymentMqEvent = 0
+	PaymentMqEvent_PAYMENT_PAID    PaymentMqEvent = 1
+	PaymentMqEvent_PAYMENT_CLOSED  PaymentMqEvent = 2
 )
 
 func (p PaymentMqEvent) String() string {
 	switch p {
-	case PaymentMqEvent_CREATED:
-		return "CREATED"
-	case PaymentMqEvent_PAID:
-		return "PAID"
-	case PaymentMqEvent_CLOSED:
-		return "CLOSED"
+	case PaymentMqEvent_PAYMENT_CREATED:
+		return "PAYMENT_CREATED"
+	case PaymentMqEvent_PAYMENT_PAID:
+		return "PAYMENT_PAID"
+	case PaymentMqEvent_PAYMENT_CLOSED:
+		return "PAYMENT_CLOSED"
 	}
 	return "<UNSET>"
 }
 
 func PaymentMqEventFromString(s string) (PaymentMqEvent, error) {
 	switch s {
-	case "CREATED":
-		return PaymentMqEvent_CREATED, nil
-	case "PAID":
-		return PaymentMqEvent_PAID, nil
-	case "CLOSED":
-		return PaymentMqEvent_CLOSED, nil
+	case "PAYMENT_CREATED":
+		return PaymentMqEvent_PAYMENT_CREATED, nil
+	case "PAYMENT_PAID":
+		return PaymentMqEvent_PAYMENT_PAID, nil
+	case "PAYMENT_CLOSED":
+		return PaymentMqEvent_PAYMENT_CLOSED, nil
 	}
 	return PaymentMqEvent(0), fmt.Errorf("not a valid PaymentMqEvent string")
 }

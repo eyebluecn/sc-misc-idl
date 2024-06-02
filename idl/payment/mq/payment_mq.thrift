@@ -6,9 +6,9 @@ namespace go sc_misc_api
 
 //支付单mq事件
 enum PaymentMqEvent {
-    CREATED = 0, //已创建
-    PAID = 1, //已支付
-    CLOSED = 2, //已关闭
+    PAYMENT_CREATED = 0, //已创建
+    PAYMENT_PAID = 1, //已支付
+    PAYMENT_CLOSED = 2, //已关闭
 }
 
 

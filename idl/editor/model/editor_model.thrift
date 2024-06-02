@@ -1,4 +1,4 @@
-include "../enums/enums.thrift"
+include "../enums/editor_enums.thrift"
 namespace go sc_misc_api
 
 

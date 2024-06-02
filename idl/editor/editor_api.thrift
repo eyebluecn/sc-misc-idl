@@ -1,7 +1,7 @@
 include "../base/base.thrift"
 include "../base/pagination.thrift"
-include "enums/enums.thrift"
-include "model/model.thrift"
+include "enums/editor_enums.thrift"
+include "model/editor_model.thrift"
 namespace go sc_misc_api
 
 
@@ -15,7 +15,7 @@ struct EditorLoginRequest {
 
 //编辑登录 响应体
 struct EditorLoginResponse {
-	1: model.EditorDTO data //数据信息
+	1: editor_model.EditorDTO data //数据信息
 
     255: base.BaseResp baseResp //标准返回内容
 

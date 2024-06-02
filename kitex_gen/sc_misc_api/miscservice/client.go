@@ -22,6 +22,7 @@ type Client interface {
 	PaymentPrepare(ctx context.Context, request *sc_misc_api.PaymentPrepareRequest, callOptions ...callopt.Option) (r *sc_misc_api.PaymentPrepareResponse, err error)
 	PaymentCreate(ctx context.Context, request *sc_misc_api.PaymentCreateRequest, callOptions ...callopt.Option) (r *sc_misc_api.PaymentCreateResponse, err error)
 	PaymentPaidCallback(ctx context.Context, request *sc_misc_api.PaymentPaidCallbackRequest, callOptions ...callopt.Option) (r *sc_misc_api.PaymentPaidCallbackResponse, err error)
+	PaymentPublishMq(ctx context.Context, request *sc_misc_api.PaymentPublishMqRequest, callOptions ...callopt.Option) (r *sc_misc_api.PaymentPublishMqResponse, err error)
 }
 
 // NewClient creates a client for the service defined in IDL.
@@ -106,4 +107,9 @@ func (p *kMiscServiceClient) PaymentCreate(ctx context.Context, request *sc_misc
 func (p *kMiscServiceClient) PaymentPaidCallback(ctx context.Context, request *sc_misc_api.PaymentPaidCallbackRequest, callOptions ...callopt.Option) (r *sc_misc_api.PaymentPaidCallbackResponse, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
 	return p.kClient.PaymentPaidCallback(ctx, request)
+}
+
+func (p *kMiscServiceClient) PaymentPublishMq(ctx context.Context, request *sc_misc_api.PaymentPublishMqRequest, callOptions ...callopt.Option) (r *sc_misc_api.PaymentPublishMqResponse, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.PaymentPublishMq(ctx, request)
 }

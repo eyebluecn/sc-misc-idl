@@ -90,6 +90,13 @@ var serviceMethods = map[string]kitex.MethodInfo{
 		false,
 		kitex.WithStreamingMode(kitex.StreamingNone),
 	),
+	"PaymentPublishMq": kitex.NewMethodInfo(
+		paymentPublishMqHandler,
+		newMiscServicePaymentPublishMqArgs,
+		newMiscServicePaymentPublishMqResult,
+		false,
+		kitex.WithStreamingMode(kitex.StreamingNone),
+	),
 }
 
 var (
@@ -354,6 +361,24 @@ func newMiscServicePaymentPaidCallbackResult() interface{} {
 	return sc_misc_api.NewMiscServicePaymentPaidCallbackResult()
 }
 
+func paymentPublishMqHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	realArg := arg.(*sc_misc_api.MiscServicePaymentPublishMqArgs)
+	realResult := result.(*sc_misc_api.MiscServicePaymentPublishMqResult)
+	success, err := handler.(sc_misc_api.MiscService).PaymentPublishMq(ctx, realArg.Request)
+	if err != nil {
+		return err
+	}
+	realResult.Success = success
+	return nil
+}
+func newMiscServicePaymentPublishMqArgs() interface{} {
+	return sc_misc_api.NewMiscServicePaymentPublishMqArgs()
+}
+
+func newMiscServicePaymentPublishMqResult() interface{} {
+	return sc_misc_api.NewMiscServicePaymentPublishMqResult()
+}
+
 type kClient struct {
 	c client.Client
 }
@@ -469,6 +494,16 @@ func (p *kClient) PaymentPaidCallback(ctx context.Context, request *sc_misc_api.
 	_args.Request = request
 	var _result sc_misc_api.MiscServicePaymentPaidCallbackResult
 	if err = p.c.Call(ctx, "PaymentPaidCallback", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) PaymentPublishMq(ctx context.Context, request *sc_misc_api.PaymentPublishMqRequest) (r *sc_misc_api.PaymentPublishMqResponse, err error) {
+	var _args sc_misc_api.MiscServicePaymentPublishMqArgs
+	_args.Request = request
+	var _result sc_misc_api.MiscServicePaymentPublishMqResult
+	if err = p.c.Call(ctx, "PaymentPublishMq", &_args, &_result); err != nil {
 		return
 	}
 	return _result.GetSuccess(), nil

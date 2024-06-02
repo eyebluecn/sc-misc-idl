@@ -1,6 +1,7 @@
 include "../base/base.thrift"
 include "../base/pagination.thrift"
 include "model/payment_model.thrift"
+include "mq/payment_mq.thrift"
 
 namespace go sc_misc_api
 
@@ -77,6 +78,20 @@ struct PaymentPaidCallbackRequest {
 struct PaymentPaidCallbackResponse {
     1: payment_model.PaymentDTO data //数据信息
 
+    255: base.BaseResp baseResp //标准返回内容
+}
+
+
+
+
+// 请求体
+struct PaymentPublishMqRequest {
+    1: payment_mq.PaymentMqPayload payload //消息体内容
+    255: optional base.Base base //标准请求内容
+}
+
+// 响应体
+struct PaymentPublishMqResponse {
     255: base.BaseResp baseResp //标准返回内容
 }
 

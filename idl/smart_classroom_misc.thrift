@@ -65,6 +65,9 @@ service MiscService {
     //第三方支付平台，支付成功后的回调接口。
     payment_api.PaymentPaidCallbackResponse PaymentPaidCallback(1: payment_api.PaymentPaidCallbackRequest request)
 
+    //触发mq消息。该方法只为引用mq相关模型，从而生成接口文件，实际应有mq的publisher发布消息。
+    payment_api.PaymentPublishMqResponse PaymentPublishMq(1: payment_api.PaymentPublishMqRequest request)
+
 
     //**************** 支付单END ****************//
 

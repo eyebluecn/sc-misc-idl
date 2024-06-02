@@ -14,7 +14,10 @@ enum PaymentMqEvent {
 
 //支付单mq消息内容
 struct PaymentMqPayload {
-    1: payment_model.PaymentDTO paymentDTO //支付单
-    2: PaymentMqEvent event //mq事件
-    3: i64 occurTime //消息发生时间
+    1: string topic //主题
+    2: string tags //mq事件
+    3: string keys //事件标识
+    4: PaymentMqEvent event //mq事件
+    5: i64 occurTime //消息发生时间
+    6: payment_model.PaymentDTO paymentDTO //支付单
 }

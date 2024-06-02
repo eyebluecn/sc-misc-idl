@@ -46,7 +46,7 @@ func (p *PaymentMqPayload) FastRead(buf []byte) (int, error) {
 		}
 		switch fieldId {
 		case 1:
-			if fieldTypeId == thrift.STRUCT {
+			if fieldTypeId == thrift.STRING {
 				l, err = p.FastReadField1(buf[offset:])
 				offset += l
 				if err != nil {
@@ -60,7 +60,7 @@ func (p *PaymentMqPayload) FastRead(buf []byte) (int, error) {
 				}
 			}
 		case 2:
-			if fieldTypeId == thrift.I32 {
+			if fieldTypeId == thrift.STRING {
 				l, err = p.FastReadField2(buf[offset:])
 				offset += l
 				if err != nil {
@@ -74,8 +74,50 @@ func (p *PaymentMqPayload) FastRead(buf []byte) (int, error) {
 				}
 			}
 		case 3:
-			if fieldTypeId == thrift.I64 {
+			if fieldTypeId == thrift.STRING {
 				l, err = p.FastReadField3(buf[offset:])
+				offset += l
+				if err != nil {
+					goto ReadFieldError
+				}
+			} else {
+				l, err = bthrift.Binary.Skip(buf[offset:], fieldTypeId)
+				offset += l
+				if err != nil {
+					goto SkipFieldError
+				}
+			}
+		case 4:
+			if fieldTypeId == thrift.I32 {
+				l, err = p.FastReadField4(buf[offset:])
+				offset += l
+				if err != nil {
+					goto ReadFieldError
+				}
+			} else {
+				l, err = bthrift.Binary.Skip(buf[offset:], fieldTypeId)
+				offset += l
+				if err != nil {
+					goto SkipFieldError
+				}
+			}
+		case 5:
+			if fieldTypeId == thrift.I64 {
+				l, err = p.FastReadField5(buf[offset:])
+				offset += l
+				if err != nil {
+					goto ReadFieldError
+				}
+			} else {
+				l, err = bthrift.Binary.Skip(buf[offset:], fieldTypeId)
+				offset += l
+				if err != nil {
+					goto SkipFieldError
+				}
+			}
+		case 6:
+			if fieldTypeId == thrift.STRUCT {
+				l, err = p.FastReadField6(buf[offset:])
 				offset += l
 				if err != nil {
 					goto ReadFieldError
@@ -125,17 +167,46 @@ ReadStructEndError:
 func (p *PaymentMqPayload) FastReadField1(buf []byte) (int, error) {
 	offset := 0
 
-	tmp := NewPaymentDTO()
-	if l, err := tmp.FastRead(buf[offset:]); err != nil {
+	if v, l, err := bthrift.Binary.ReadString(buf[offset:]); err != nil {
 		return offset, err
 	} else {
 		offset += l
+
+		p.Topic = v
+
 	}
-	p.PaymentDTO = tmp
 	return offset, nil
 }
 
 func (p *PaymentMqPayload) FastReadField2(buf []byte) (int, error) {
+	offset := 0
+
+	if v, l, err := bthrift.Binary.ReadString(buf[offset:]); err != nil {
+		return offset, err
+	} else {
+		offset += l
+
+		p.Tags = v
+
+	}
+	return offset, nil
+}
+
+func (p *PaymentMqPayload) FastReadField3(buf []byte) (int, error) {
+	offset := 0
+
+	if v, l, err := bthrift.Binary.ReadString(buf[offset:]); err != nil {
+		return offset, err
+	} else {
+		offset += l
+
+		p.Keys = v
+
+	}
+	return offset, nil
+}
+
+func (p *PaymentMqPayload) FastReadField4(buf []byte) (int, error) {
 	offset := 0
 
 	if v, l, err := bthrift.Binary.ReadI32(buf[offset:]); err != nil {
@@ -149,7 +220,7 @@ func (p *PaymentMqPayload) FastReadField2(buf []byte) (int, error) {
 	return offset, nil
 }
 
-func (p *PaymentMqPayload) FastReadField3(buf []byte) (int, error) {
+func (p *PaymentMqPayload) FastReadField5(buf []byte) (int, error) {
 	offset := 0
 
 	if v, l, err := bthrift.Binary.ReadI64(buf[offset:]); err != nil {
@@ -163,6 +234,19 @@ func (p *PaymentMqPayload) FastReadField3(buf []byte) (int, error) {
 	return offset, nil
 }
 
+func (p *PaymentMqPayload) FastReadField6(buf []byte) (int, error) {
+	offset := 0
+
+	tmp := NewPaymentDTO()
+	if l, err := tmp.FastRead(buf[offset:]); err != nil {
+		return offset, err
+	} else {
+		offset += l
+	}
+	p.PaymentDTO = tmp
+	return offset, nil
+}
+
 // for compatibility
 func (p *PaymentMqPayload) FastWrite(buf []byte) int {
 	return 0
@@ -172,9 +256,12 @@ func (p *PaymentMqPayload) FastWriteNocopy(buf []byte, binaryWriter bthrift.Bina
 	offset := 0
 	offset += bthrift.Binary.WriteStructBegin(buf[offset:], "PaymentMqPayload")
 	if p != nil {
-		offset += p.fastWriteField3(buf[offset:], binaryWriter)
+		offset += p.fastWriteField5(buf[offset:], binaryWriter)
 		offset += p.fastWriteField1(buf[offset:], binaryWriter)
 		offset += p.fastWriteField2(buf[offset:], binaryWriter)
+		offset += p.fastWriteField3(buf[offset:], binaryWriter)
+		offset += p.fastWriteField4(buf[offset:], binaryWriter)
+		offset += p.fastWriteField6(buf[offset:], binaryWriter)
 	}
 	offset += bthrift.Binary.WriteFieldStop(buf[offset:])
 	offset += bthrift.Binary.WriteStructEnd(buf[offset:])
@@ -188,6 +275,9 @@ func (p *PaymentMqPayload) BLength() int {
 		l += p.field1Length()
 		l += p.field2Length()
 		l += p.field3Length()
+		l += p.field4Length()
+		l += p.field5Length()
+		l += p.field6Length()
 	}
 	l += bthrift.Binary.FieldStopLength()
 	l += bthrift.Binary.StructEndLength()
@@ -196,16 +286,17 @@ func (p *PaymentMqPayload) BLength() int {
 
 func (p *PaymentMqPayload) fastWriteField1(buf []byte, binaryWriter bthrift.BinaryWriter) int {
 	offset := 0
-	offset += bthrift.Binary.WriteFieldBegin(buf[offset:], "paymentDTO", thrift.STRUCT, 1)
-	offset += p.PaymentDTO.FastWriteNocopy(buf[offset:], binaryWriter)
+	offset += bthrift.Binary.WriteFieldBegin(buf[offset:], "topic", thrift.STRING, 1)
+	offset += bthrift.Binary.WriteStringNocopy(buf[offset:], binaryWriter, p.Topic)
+
 	offset += bthrift.Binary.WriteFieldEnd(buf[offset:])
 	return offset
 }
 
 func (p *PaymentMqPayload) fastWriteField2(buf []byte, binaryWriter bthrift.BinaryWriter) int {
 	offset := 0
-	offset += bthrift.Binary.WriteFieldBegin(buf[offset:], "event", thrift.I32, 2)
-	offset += bthrift.Binary.WriteI32(buf[offset:], int32(p.Event))
+	offset += bthrift.Binary.WriteFieldBegin(buf[offset:], "tags", thrift.STRING, 2)
+	offset += bthrift.Binary.WriteStringNocopy(buf[offset:], binaryWriter, p.Tags)
 
 	offset += bthrift.Binary.WriteFieldEnd(buf[offset:])
 	return offset
@@ -213,25 +304,52 @@ func (p *PaymentMqPayload) fastWriteField2(buf []byte, binaryWriter bthrift.Bina
 
 func (p *PaymentMqPayload) fastWriteField3(buf []byte, binaryWriter bthrift.BinaryWriter) int {
 	offset := 0
-	offset += bthrift.Binary.WriteFieldBegin(buf[offset:], "occurTime", thrift.I64, 3)
+	offset += bthrift.Binary.WriteFieldBegin(buf[offset:], "keys", thrift.STRING, 3)
+	offset += bthrift.Binary.WriteStringNocopy(buf[offset:], binaryWriter, p.Keys)
+
+	offset += bthrift.Binary.WriteFieldEnd(buf[offset:])
+	return offset
+}
+
+func (p *PaymentMqPayload) fastWriteField4(buf []byte, binaryWriter bthrift.BinaryWriter) int {
+	offset := 0
+	offset += bthrift.Binary.WriteFieldBegin(buf[offset:], "event", thrift.I32, 4)
+	offset += bthrift.Binary.WriteI32(buf[offset:], int32(p.Event))
+
+	offset += bthrift.Binary.WriteFieldEnd(buf[offset:])
+	return offset
+}
+
+func (p *PaymentMqPayload) fastWriteField5(buf []byte, binaryWriter bthrift.BinaryWriter) int {
+	offset := 0
+	offset += bthrift.Binary.WriteFieldBegin(buf[offset:], "occurTime", thrift.I64, 5)
 	offset += bthrift.Binary.WriteI64(buf[offset:], p.OccurTime)
 
 	offset += bthrift.Binary.WriteFieldEnd(buf[offset:])
 	return offset
 }
 
+func (p *PaymentMqPayload) fastWriteField6(buf []byte, binaryWriter bthrift.BinaryWriter) int {
+	offset := 0
+	offset += bthrift.Binary.WriteFieldBegin(buf[offset:], "paymentDTO", thrift.STRUCT, 6)
+	offset += p.PaymentDTO.FastWriteNocopy(buf[offset:], binaryWriter)
+	offset += bthrift.Binary.WriteFieldEnd(buf[offset:])
+	return offset
+}
+
 func (p *PaymentMqPayload) field1Length() int {
 	l := 0
-	l += bthrift.Binary.FieldBeginLength("paymentDTO", thrift.STRUCT, 1)
-	l += p.PaymentDTO.BLength()
+	l += bthrift.Binary.FieldBeginLength("topic", thrift.STRING, 1)
+	l += bthrift.Binary.StringLengthNocopy(p.Topic)
+
 	l += bthrift.Binary.FieldEndLength()
 	return l
 }
 
 func (p *PaymentMqPayload) field2Length() int {
 	l := 0
-	l += bthrift.Binary.FieldBeginLength("event", thrift.I32, 2)
-	l += bthrift.Binary.I32Length(int32(p.Event))
+	l += bthrift.Binary.FieldBeginLength("tags", thrift.STRING, 2)
+	l += bthrift.Binary.StringLengthNocopy(p.Tags)
 
 	l += bthrift.Binary.FieldEndLength()
 	return l
@@ -239,9 +357,35 @@ func (p *PaymentMqPayload) field2Length() int {
 
 func (p *PaymentMqPayload) field3Length() int {
 	l := 0
-	l += bthrift.Binary.FieldBeginLength("occurTime", thrift.I64, 3)
+	l += bthrift.Binary.FieldBeginLength("keys", thrift.STRING, 3)
+	l += bthrift.Binary.StringLengthNocopy(p.Keys)
+
+	l += bthrift.Binary.FieldEndLength()
+	return l
+}
+
+func (p *PaymentMqPayload) field4Length() int {
+	l := 0
+	l += bthrift.Binary.FieldBeginLength("event", thrift.I32, 4)
+	l += bthrift.Binary.I32Length(int32(p.Event))
+
+	l += bthrift.Binary.FieldEndLength()
+	return l
+}
+
+func (p *PaymentMqPayload) field5Length() int {
+	l := 0
+	l += bthrift.Binary.FieldBeginLength("occurTime", thrift.I64, 5)
 	l += bthrift.Binary.I64Length(p.OccurTime)
 
+	l += bthrift.Binary.FieldEndLength()
+	return l
+}
+
+func (p *PaymentMqPayload) field6Length() int {
+	l := 0
+	l += bthrift.Binary.FieldBeginLength("paymentDTO", thrift.STRUCT, 6)
+	l += p.PaymentDTO.BLength()
 	l += bthrift.Binary.FieldEndLength()
 	return l
 }

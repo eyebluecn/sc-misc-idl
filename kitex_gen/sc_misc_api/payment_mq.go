@@ -7,6 +7,7 @@ import (
 	"database/sql/driver"
 	"fmt"
 	"github.com/apache/thrift/lib/go/thrift"
+	"strings"
 )
 
 type PaymentMqEvent int64
@@ -57,9 +58,12 @@ func (p *PaymentMqEvent) Value() (driver.Value, error) {
 }
 
 type PaymentMqPayload struct {
-	PaymentDTO *PaymentDTO    `thrift:"paymentDTO,1" frugal:"1,default,PaymentDTO" json:"paymentDTO"`
-	Event      PaymentMqEvent `thrift:"event,2" frugal:"2,default,PaymentMqEvent" json:"event"`
-	OccurTime  int64          `thrift:"occurTime,3" frugal:"3,default,i64" json:"occurTime"`
+	Topic      string         `thrift:"topic,1" frugal:"1,default,string" json:"topic"`
+	Tags       string         `thrift:"tags,2" frugal:"2,default,string" json:"tags"`
+	Keys       string         `thrift:"keys,3" frugal:"3,default,string" json:"keys"`
+	Event      PaymentMqEvent `thrift:"event,4" frugal:"4,default,PaymentMqEvent" json:"event"`
+	OccurTime  int64          `thrift:"occurTime,5" frugal:"5,default,i64" json:"occurTime"`
+	PaymentDTO *PaymentDTO    `thrift:"paymentDTO,6" frugal:"6,default,PaymentDTO" json:"paymentDTO"`
 }
 
 func NewPaymentMqPayload() *PaymentMqPayload {
@@ -70,13 +74,16 @@ func (p *PaymentMqPayload) InitDefault() {
 	*p = PaymentMqPayload{}
 }
 
-var PaymentMqPayload_PaymentDTO_DEFAULT *PaymentDTO
+func (p *PaymentMqPayload) GetTopic() (v string) {
+	return p.Topic
+}
 
-func (p *PaymentMqPayload) GetPaymentDTO() (v *PaymentDTO) {
-	if !p.IsSetPaymentDTO() {
-		return PaymentMqPayload_PaymentDTO_DEFAULT
-	}
-	return p.PaymentDTO
+func (p *PaymentMqPayload) GetTags() (v string) {
+	return p.Tags
+}
+
+func (p *PaymentMqPayload) GetKeys() (v string) {
+	return p.Keys
 }
 
 func (p *PaymentMqPayload) GetEvent() (v PaymentMqEvent) {
@@ -86,8 +93,23 @@ func (p *PaymentMqPayload) GetEvent() (v PaymentMqEvent) {
 func (p *PaymentMqPayload) GetOccurTime() (v int64) {
 	return p.OccurTime
 }
-func (p *PaymentMqPayload) SetPaymentDTO(val *PaymentDTO) {
-	p.PaymentDTO = val
+
+var PaymentMqPayload_PaymentDTO_DEFAULT *PaymentDTO
+
+func (p *PaymentMqPayload) GetPaymentDTO() (v *PaymentDTO) {
+	if !p.IsSetPaymentDTO() {
+		return PaymentMqPayload_PaymentDTO_DEFAULT
+	}
+	return p.PaymentDTO
+}
+func (p *PaymentMqPayload) SetTopic(val string) {
+	p.Topic = val
+}
+func (p *PaymentMqPayload) SetTags(val string) {
+	p.Tags = val
+}
+func (p *PaymentMqPayload) SetKeys(val string) {
+	p.Keys = val
 }
 func (p *PaymentMqPayload) SetEvent(val PaymentMqEvent) {
 	p.Event = val
@@ -95,11 +117,17 @@ func (p *PaymentMqPayload) SetEvent(val PaymentMqEvent) {
 func (p *PaymentMqPayload) SetOccurTime(val int64) {
 	p.OccurTime = val
 }
+func (p *PaymentMqPayload) SetPaymentDTO(val *PaymentDTO) {
+	p.PaymentDTO = val
+}
 
 var fieldIDToName_PaymentMqPayload = map[int16]string{
-	1: "paymentDTO",
-	2: "event",
-	3: "occurTime",
+	1: "topic",
+	2: "tags",
+	3: "keys",
+	4: "event",
+	5: "occurTime",
+	6: "paymentDTO",
 }
 
 func (p *PaymentMqPayload) IsSetPaymentDTO() bool {
@@ -126,7 +154,7 @@ func (p *PaymentMqPayload) Read(iprot thrift.TProtocol) (err error) {
 
 		switch fieldId {
 		case 1:
-			if fieldTypeId == thrift.STRUCT {
+			if fieldTypeId == thrift.STRING {
 				if err = p.ReadField1(iprot); err != nil {
 					goto ReadFieldError
 				}
@@ -134,7 +162,7 @@ func (p *PaymentMqPayload) Read(iprot thrift.TProtocol) (err error) {
 				goto SkipFieldError
 			}
 		case 2:
-			if fieldTypeId == thrift.I32 {
+			if fieldTypeId == thrift.STRING {
 				if err = p.ReadField2(iprot); err != nil {
 					goto ReadFieldError
 				}
@@ -142,8 +170,32 @@ func (p *PaymentMqPayload) Read(iprot thrift.TProtocol) (err error) {
 				goto SkipFieldError
 			}
 		case 3:
-			if fieldTypeId == thrift.I64 {
+			if fieldTypeId == thrift.STRING {
 				if err = p.ReadField3(iprot); err != nil {
+					goto ReadFieldError
+				}
+			} else if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		case 4:
+			if fieldTypeId == thrift.I32 {
+				if err = p.ReadField4(iprot); err != nil {
+					goto ReadFieldError
+				}
+			} else if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		case 5:
+			if fieldTypeId == thrift.I64 {
+				if err = p.ReadField5(iprot); err != nil {
+					goto ReadFieldError
+				}
+			} else if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		case 6:
+			if fieldTypeId == thrift.STRUCT {
+				if err = p.ReadField6(iprot); err != nil {
 					goto ReadFieldError
 				}
 			} else if err = iprot.Skip(fieldTypeId); err != nil {
@@ -179,14 +231,39 @@ ReadStructEndError:
 }
 
 func (p *PaymentMqPayload) ReadField1(iprot thrift.TProtocol) error {
-	_field := NewPaymentDTO()
-	if err := _field.Read(iprot); err != nil {
+
+	var _field string
+	if v, err := iprot.ReadString(); err != nil {
 		return err
+	} else {
+		_field = v
 	}
-	p.PaymentDTO = _field
+	p.Topic = _field
 	return nil
 }
 func (p *PaymentMqPayload) ReadField2(iprot thrift.TProtocol) error {
+
+	var _field string
+	if v, err := iprot.ReadString(); err != nil {
+		return err
+	} else {
+		_field = v
+	}
+	p.Tags = _field
+	return nil
+}
+func (p *PaymentMqPayload) ReadField3(iprot thrift.TProtocol) error {
+
+	var _field string
+	if v, err := iprot.ReadString(); err != nil {
+		return err
+	} else {
+		_field = v
+	}
+	p.Keys = _field
+	return nil
+}
+func (p *PaymentMqPayload) ReadField4(iprot thrift.TProtocol) error {
 
 	var _field PaymentMqEvent
 	if v, err := iprot.ReadI32(); err != nil {
@@ -197,7 +274,7 @@ func (p *PaymentMqPayload) ReadField2(iprot thrift.TProtocol) error {
 	p.Event = _field
 	return nil
 }
-func (p *PaymentMqPayload) ReadField3(iprot thrift.TProtocol) error {
+func (p *PaymentMqPayload) ReadField5(iprot thrift.TProtocol) error {
 
 	var _field int64
 	if v, err := iprot.ReadI64(); err != nil {
@@ -206,6 +283,14 @@ func (p *PaymentMqPayload) ReadField3(iprot thrift.TProtocol) error {
 		_field = v
 	}
 	p.OccurTime = _field
+	return nil
+}
+func (p *PaymentMqPayload) ReadField6(iprot thrift.TProtocol) error {
+	_field := NewPaymentDTO()
+	if err := _field.Read(iprot); err != nil {
+		return err
+	}
+	p.PaymentDTO = _field
 	return nil
 }
 
@@ -227,6 +312,18 @@ func (p *PaymentMqPayload) Write(oprot thrift.TProtocol) (err error) {
 			fieldId = 3
 			goto WriteFieldError
 		}
+		if err = p.writeField4(oprot); err != nil {
+			fieldId = 4
+			goto WriteFieldError
+		}
+		if err = p.writeField5(oprot); err != nil {
+			fieldId = 5
+			goto WriteFieldError
+		}
+		if err = p.writeField6(oprot); err != nil {
+			fieldId = 6
+			goto WriteFieldError
+		}
 	}
 	if err = oprot.WriteFieldStop(); err != nil {
 		goto WriteFieldStopError
@@ -246,10 +343,10 @@ WriteStructEndError:
 }
 
 func (p *PaymentMqPayload) writeField1(oprot thrift.TProtocol) (err error) {
-	if err = oprot.WriteFieldBegin("paymentDTO", thrift.STRUCT, 1); err != nil {
+	if err = oprot.WriteFieldBegin("topic", thrift.STRING, 1); err != nil {
 		goto WriteFieldBeginError
 	}
-	if err := p.PaymentDTO.Write(oprot); err != nil {
+	if err := oprot.WriteString(p.Topic); err != nil {
 		return err
 	}
 	if err = oprot.WriteFieldEnd(); err != nil {
@@ -263,10 +360,10 @@ WriteFieldEndError:
 }
 
 func (p *PaymentMqPayload) writeField2(oprot thrift.TProtocol) (err error) {
-	if err = oprot.WriteFieldBegin("event", thrift.I32, 2); err != nil {
+	if err = oprot.WriteFieldBegin("tags", thrift.STRING, 2); err != nil {
 		goto WriteFieldBeginError
 	}
-	if err := oprot.WriteI32(int32(p.Event)); err != nil {
+	if err := oprot.WriteString(p.Tags); err != nil {
 		return err
 	}
 	if err = oprot.WriteFieldEnd(); err != nil {
@@ -280,10 +377,10 @@ WriteFieldEndError:
 }
 
 func (p *PaymentMqPayload) writeField3(oprot thrift.TProtocol) (err error) {
-	if err = oprot.WriteFieldBegin("occurTime", thrift.I64, 3); err != nil {
+	if err = oprot.WriteFieldBegin("keys", thrift.STRING, 3); err != nil {
 		goto WriteFieldBeginError
 	}
-	if err := oprot.WriteI64(p.OccurTime); err != nil {
+	if err := oprot.WriteString(p.Keys); err != nil {
 		return err
 	}
 	if err = oprot.WriteFieldEnd(); err != nil {
@@ -294,6 +391,57 @@ WriteFieldBeginError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 3 begin error: ", p), err)
 WriteFieldEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 3 end error: ", p), err)
+}
+
+func (p *PaymentMqPayload) writeField4(oprot thrift.TProtocol) (err error) {
+	if err = oprot.WriteFieldBegin("event", thrift.I32, 4); err != nil {
+		goto WriteFieldBeginError
+	}
+	if err := oprot.WriteI32(int32(p.Event)); err != nil {
+		return err
+	}
+	if err = oprot.WriteFieldEnd(); err != nil {
+		goto WriteFieldEndError
+	}
+	return nil
+WriteFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 4 begin error: ", p), err)
+WriteFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 4 end error: ", p), err)
+}
+
+func (p *PaymentMqPayload) writeField5(oprot thrift.TProtocol) (err error) {
+	if err = oprot.WriteFieldBegin("occurTime", thrift.I64, 5); err != nil {
+		goto WriteFieldBeginError
+	}
+	if err := oprot.WriteI64(p.OccurTime); err != nil {
+		return err
+	}
+	if err = oprot.WriteFieldEnd(); err != nil {
+		goto WriteFieldEndError
+	}
+	return nil
+WriteFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 5 begin error: ", p), err)
+WriteFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 5 end error: ", p), err)
+}
+
+func (p *PaymentMqPayload) writeField6(oprot thrift.TProtocol) (err error) {
+	if err = oprot.WriteFieldBegin("paymentDTO", thrift.STRUCT, 6); err != nil {
+		goto WriteFieldBeginError
+	}
+	if err := p.PaymentDTO.Write(oprot); err != nil {
+		return err
+	}
+	if err = oprot.WriteFieldEnd(); err != nil {
+		goto WriteFieldEndError
+	}
+	return nil
+WriteFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 6 begin error: ", p), err)
+WriteFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 6 end error: ", p), err)
 }
 
 func (p *PaymentMqPayload) String() string {
@@ -310,35 +458,65 @@ func (p *PaymentMqPayload) DeepEqual(ano *PaymentMqPayload) bool {
 	} else if p == nil || ano == nil {
 		return false
 	}
-	if !p.Field1DeepEqual(ano.PaymentDTO) {
+	if !p.Field1DeepEqual(ano.Topic) {
 		return false
 	}
-	if !p.Field2DeepEqual(ano.Event) {
+	if !p.Field2DeepEqual(ano.Tags) {
 		return false
 	}
-	if !p.Field3DeepEqual(ano.OccurTime) {
+	if !p.Field3DeepEqual(ano.Keys) {
+		return false
+	}
+	if !p.Field4DeepEqual(ano.Event) {
+		return false
+	}
+	if !p.Field5DeepEqual(ano.OccurTime) {
+		return false
+	}
+	if !p.Field6DeepEqual(ano.PaymentDTO) {
 		return false
 	}
 	return true
 }
 
-func (p *PaymentMqPayload) Field1DeepEqual(src *PaymentDTO) bool {
+func (p *PaymentMqPayload) Field1DeepEqual(src string) bool {
 
-	if !p.PaymentDTO.DeepEqual(src) {
+	if strings.Compare(p.Topic, src) != 0 {
 		return false
 	}
 	return true
 }
-func (p *PaymentMqPayload) Field2DeepEqual(src PaymentMqEvent) bool {
+func (p *PaymentMqPayload) Field2DeepEqual(src string) bool {
+
+	if strings.Compare(p.Tags, src) != 0 {
+		return false
+	}
+	return true
+}
+func (p *PaymentMqPayload) Field3DeepEqual(src string) bool {
+
+	if strings.Compare(p.Keys, src) != 0 {
+		return false
+	}
+	return true
+}
+func (p *PaymentMqPayload) Field4DeepEqual(src PaymentMqEvent) bool {
 
 	if p.Event != src {
 		return false
 	}
 	return true
 }
-func (p *PaymentMqPayload) Field3DeepEqual(src int64) bool {
+func (p *PaymentMqPayload) Field5DeepEqual(src int64) bool {
 
 	if p.OccurTime != src {
+		return false
+	}
+	return true
+}
+func (p *PaymentMqPayload) Field6DeepEqual(src *PaymentDTO) bool {
+
+	if !p.PaymentDTO.DeepEqual(src) {
 		return false
 	}
 	return true
